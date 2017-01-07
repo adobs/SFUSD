@@ -79,6 +79,19 @@
         padding: 10px;
         display: inline-block;
     }   
+    #before-school-program-form {
+        width: 175px;
+        height: 60px;
+        background: white;
+        /*position: absolute;*/
+        top: 450px;
+        left: 600px;
+        border: 1px solid #999;
+        border-radius: 2px;
+        padding: 10px;
+        /*display: inline-block;*/
+    }   
+
     #age{
         width: 50px;
         border: transparent;
