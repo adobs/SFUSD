@@ -11,59 +11,85 @@
     <!-- Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArY6jsEgpSky7AN31nasjreQ5HHPtmxx0&signed_in=true"></script>
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerwithlabel/src/markerwithlabel.js"></script>
-    
-    <!-- D3 -->
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+  
     
     <link rel="stylesheet" href="/static/css/map3.css">
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid" id="whole-page">
-    <div class="row" id="page">
-      <div id="loading"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"><img class="loading-img" src="../static/gif/horizontal-loading.GIF"></div>
-        <div class="col-md-12 col-xs-12" id="map"></div>
-        <!-- <div class="col-md-3 col-xs-12" id="controls"> -->
-          <form id='map-choices-form'>
-              <div class='form-group'>
-                  <div id="orientation-form">
-                      <label for='orientation'>Orientation <span  data-toggle="tooltip" title="Select the orientations to be represented on the map, then click submit" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></label>
-                        <ul>
-                          {% for orientation in orientations %}
-                              <li>
-                                  <input type="checkbox" name="orientation" value="{{orientation.orientation}}" checked> &nbsp; {{orientation.orientation}}
-                              </li>
-                          {% endfor %}
-                              <li>
-                                  <input type="checkbox" id="check-all-orientation" name="orientation" value="select-all" checked> &nbsp; Select All
-                              </li>
-                        </ul>
-                  </div><!--  close orientation div -->
-                  <div id="gender-form">
-                      <label for='gender'>Gender <span data-toggle="tooltip" title="Select the genders to be represented on the map, then click submit" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></label>
-                        <ul>
-                            {% for gender in genders %}
-                                <li>
-                                    <input type="checkbox" name="gender" value="{{gender.gender}}" checked> &nbsp; {{gender.gender}}
-                                </li>
-                            {% endfor %}
-                            <li>
-                                <input type="checkbox" id="check-all-gender" name="gender" value="select-all" checked> &nbsp; Select All
-                            </li>
-                        </ul>
-                  </div><!-- close gender div -->
-                  <div id="age-form">
-                      <label for="age">Age range</label>
-                      <input type="text" id="age" readonly name="age"><span data-toggle="tooltip" title="Select the age range to be represented on the map, then click submit" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                      <div id="map-slider-range"></div>
-                  </div><!--  close age div -->
-                  <input id="form-submit" type="submit" value="Submit">
-                  <div id="loading-spin"><img src="../static/gif/loading.gif"></div>
-              </div> <!-- close div class -->
-          </form>
-          <div id="sunburst"></div><!--  class="text-center" -->
-        <!-- </div> close column -->
-    </div> <!-- close row -->
+  <div class="row" id="page">
+    <div class="col-md-12 col-xs-12" id="map"></div>
+      <form id='map-choices-form'>
+      <div class='form-group'>
+      {% for key, value in checkbox_labels.iteritems() %}  
+        
+        <!-- Neighborhood Section --> 
+        <div id="orientation-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> +
+          </button>
+          <label for="neighborhood">&nbsp Neighborhood</label>
+        </p>
+        {% if key == "neighborhood" %}
+        <div class="collapse" id="collapseExample">
+          <div class="card card-block">
+          <ul>
+            {% for neighborhood in value %}
+            <li>
+              <input type="checkbox" name="neighborhood" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-orientation" name="orientation" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}
+        </div> <!-- close div form -->
+        <!-- End of Neighborhood Section -->
+
+        <!-- Grades Served Section --> 
+        <div id="gender-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> +
+          </button>
+          <label for="grades-served">&nbsp; Grades Served</label>
+        </p>
+        {% if key == "grades_served" %}
+        <div class="collapse" id="gradesServedCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for gradesserved in value %}
+            <li>
+              <input type="checkbox" name="grades-served" value="{{ gradesserved }}" checked> &nbsp; {{ gradesserved }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-gender" name="grades-served" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}
+        </div> <!-- close div form -->
+        <!-- End of Grades Served Section -->
+
+
+        <!-- Time Section --> 
+        <<!-- div id="age-form">
+            <label for="age">Start and End Time </label>
+            <input type="text" id="age" readonly name="age">
+            <div id="map-slider-range"></div>
+        </div> --><!--  close age div -->
+         <!-- End of Time Section -->
+
+      <input id="form-submit" type="submit" value="Submit">
+      </div> <!-- close div class -->
+      {% endfor %}
+    </form>
+  </div> <!-- close row -->
 </div> <!-- close container -->
 
 <!-- Modal window that pops up inside of Google Maps InfoWindow -->
@@ -91,80 +117,6 @@
     </div>
   </div>
 
-<!-- First Modal -->
-<div class="modal" id="pageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tutorial About Maps Page</h4>
-      </div>
-      <div class="modal-body">
-        <h2>According to OKCupid data, how do people describe themselves?</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#orientation-modal">Next</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- First Modal -->
-<div class="modal" id="orientation-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tutorial About Maps Page</h4>
-      </div>
-      <div class="modal-body">
-        <h1>Orientation</h1>
-        <h2>Click on the <b>orientations</b> you would like to see represented...</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#gender-modal">Next</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Second Modal -->
-<div class="modal" id="gender-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tutorial About Maps Page</h4>
-      </div>
-      <div class="modal-body">
-        <h1>Gender</h1>
-        <h2>Click on the <b>genders</b> you would like to see represented...</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#age-modal">Next</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Third Modal -->
-<div class="modal" id="age-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tutorial About Maps Page</h4>
-      </div>
-      <div class="modal-body">
-        <h1>Age</h1>
-        <h2>Select the <b>age range</b> you would like to see represented...</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Begin!</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- <script src="../static/js/calc-spec.js"></script> -->
 
