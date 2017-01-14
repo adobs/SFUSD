@@ -21,7 +21,7 @@
   <div class="row" id="page">
     <div class="col-md-12 col-xs-12" id="map"></div>
       <form id='map-choices-form'>
-      <div class='form-group'>
+      <div class='form-group' id="flex-box-parent">
       {% for key, value in checkbox_labels.iteritems() %}  
         
         <!-- Neighborhood Section --> 
@@ -41,7 +41,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-orientation" name="orientation" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-neighborhood" name="neighborhood" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -76,20 +76,149 @@
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
 
+        <!-- Before School Program Section --> 
         <div id="before-school-program-form">
-          Before School Program
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse"> +
+          </button>
+          <label for="before-school-program">&nbsp Before School Program</label>
+        </p>
+        {% if key == "before_school_program" %}
+        <div class="collapse" id="beforeSchoolProgramCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for beforeSchoolProgram in value %}
+            <li>
+              <input type="checkbox" name="before-school-program" value="{{ beforeSchoolProgram }}" checked> &nbsp; {{ beforeSchoolProgram }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-before-school-program" name="before-school-program" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}        
         </div>
+        <!-- End of Before School Program Section -->
+
+        <!-- Before School Program Offerings Section --> 
+        <div id="before-school-program-offerings-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramOfferingsCollapse"> +
+          </button>
+          <label for="before-school-program-offerings">&nbsp; Before School Program Offerings</label>
+        </p>
+        {% if key == "before_school_program_offerings" %}
+        <div class="collapse" id="beforeSchoolProgramOfferingsCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for beforeSchoolProgramOfferings in value %}
+            <li>
+              <input type="checkbox" name="before-school-program-offerings" value="{{ beforeSchoolProgramOfferings }}" checked> &nbsp; {{ beforeSchoolProgramOfferings }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-before-school-program-offerings" name="before-school-program-offerings" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}        
+        </div>
+        
+
+        <!-- Multilingual Pathways Section --> 
+        <div id="multilingual-pathways-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multilingualPathwaysCollapse" aria-expanded="false" aria-controls="multilingualPathwaysCollapse"> +
+          </button>
+          <label for="multilingual-pathways">&nbsp; Multilingual Pathways</label>
+        </p>
+        {% if key == "multilingual_pathways" %}
+        <div class="collapse" id="multilingualPathwaysCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for multilingualPathways in value %}
+            <li>
+              <input type="checkbox" name="multilingual-pathways" value="{{ multilingualPathways }}" checked> &nbsp; {{ multilingualPathways }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-multilingual-pathways" name="multilingual-pathways" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}        
+        </div>
+        <!-- End Multilingual Pathways Section -->
+
+
+        <!-- After School Program Section --> 
+        <div id="after-school-program-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramCollapse" aria-expanded="false" aria-controls="afterSchoolProgramCollapse"> +
+          </button>
+          <label for="after-school-program">&nbsp; Afterschool Programs</label>
+        </p>
+        {% if key == "after_school_program" %}
+        <div class="collapse" id="afterSchoolProgramCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for afterSchoolProgram in value %}
+            <li>
+              <input type="checkbox" name="after-school-program" value="{{ afterSchoolProgram }}" checked> &nbsp; {{ afterSchoolProgram }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-after-school-program" name="after-school-program" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}        
+        </div>
+        <!-- End After School Program Section -->
+
+        <!-- After School Program Offerings Section --> 
+        <div id="after-school-program-offerings-form">
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="afterSchoolProgramOfferingsCollapse"> +
+          </button>
+          <label for="after-school-program-offerings">&nbsp; Afterschool Program Offerings</label>
+        </p>
+        {% if key == "after_school_program_offerings" %}
+        <div class="collapse" id="afterSchoolProgramOfferingsCollapse">
+          <div class="card card-block">
+          <ul>
+            {% for afterSchoolProgramOfferings in value %}
+            <li>
+              <input type="checkbox" name="after-school-program-offerings" value="{{ afterSchoolProgramOfferings }}" checked> &nbsp; {{ afterSchoolProgramOfferings }}
+            </li>
+            {% endfor %}
+            <li>
+              <input type="checkbox" id="check-all-after-school-program-offerings" name="after-school-program-offerings" value="select-all" checked> &nbsp; Select All
+            </li>
+          </ul>
+          </div> <!-- close div card card-block -->
+        </div> <!-- close collapseExample -->
+        {% endif %}        
+        </div>
+        <!-- End After School Program Offerings Section -->
+        {% endfor %}
+
         <!-- Time Section --> 
-        <!-- div id="age-form">
+        <div id="age-form">
             <label for="age">Start and End Time </label>
             <input type="text" id="age" readonly name="age">
             <div id="map-slider-range"></div>
-        </div> --><!--  close age div -->
+        </div><!--  close age div -->
          <!-- End of Time Section -->
 
       <input id="form-submit" type="submit" value="Submit">
       </div> <!-- close div class -->
-      {% endfor %}
+      
     </form>
   </div> <!-- close row -->
 </div> <!-- close container -->
@@ -119,8 +248,6 @@
     </div>
   </div>
 
-
-<!-- <script src="../static/js/calc-spec.js"></script> -->
 
 <script src="../static/js/map.js"></script>
 {% endblock %}

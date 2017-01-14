@@ -59,6 +59,7 @@ def get_unqiue_row_data_from_specified_headers(school_objects_list):
 					  "after_school_program": sorted(after_school_program),
 					  "after_school_program_offerings": sorted(after_school_program_offerings)}
 	print "!!!!!!!!!!!!!!!!!!!! IN GET_UNIQUE_ROW_DATA"
+	print "before_school_program_offerings: ", before_school_program_offerings
 	return unique_content
 
 # def parse_list_responses(school_objects_list):

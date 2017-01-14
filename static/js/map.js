@@ -172,11 +172,11 @@ function initialize() {
     $(function() {
         $( "#map-slider-range" ).slider({
             range: true,
-            min: 18,
-            max: 98,
+            min: 6  ,
+            max: 20,
             values: [ 18, 30 ],
             slide: function( event, ui ) {
-                $( "#age" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                $( "#age" ).val( ui.values[ 0 ] + " - " + (ui.values[ 1 ] - 12) );
                 }
             });
         $( "#age" ).val( $( "#map-slider-range" ).slider( "values", 0 ) +
