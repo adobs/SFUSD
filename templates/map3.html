@@ -5,13 +5,9 @@
 {% block head %}
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-
-    <!-- progress bar -->
-    
+ 
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArY6jsEgpSky7AN31nasjreQ5HHPtmxx0&signed_in=true"></script>
-    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerwithlabel/src/markerwithlabel.js"></script>
-  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArY6jsEgpSky7AN31nasjreQ5HHPtmxx0&signed_in=true"></script>  
     
     <link rel="stylesheet" href="/static/css/map3.css">
 {% endblock %}
@@ -19,18 +15,19 @@
 {% block content %}
 <div class="container-fluid" id="whole-page">
   <div class="row" id="page">
-    <div class="col-md-12 col-xs-12" id="map"></div>
+    <div class="col-md-4 col-xs-4">
       <form id='map-choices-form'>
       <div class='form-group' id="flex-box-parent">
-      {% for key, value in checkbox_labels.iteritems() %}  
-        
+        <div id="flex-box-contents">
+
         <!-- Neighborhood Section --> 
-        <div id="orientation-form">
+        <div id="neighborhood-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> +
           </button>
-          <label for="neighborhood">&nbsp Neighborhood</label>
+          <label for="neighborhood">&nbsp; Neighborhood</label>
         </p>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "neighborhood" %}
         <div class="collapse" id="collapseExample">
           <div class="card card-block">
@@ -40,6 +37,7 @@
               <input type="checkbox" name="neighborhood" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
             </li>
             {% endfor %}
+            
             <li>
               <input type="checkbox" id="check-all-neighborhood" name="neighborhood" value="select-all" checked> &nbsp; Select All
             </li>
@@ -47,16 +45,18 @@
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
         {% endif %}
+        {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Neighborhood Section -->
 
         <!-- Grades Served Section --> 
-        <div id="gender-form">
+        <div id="grades-served-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> +
           </button>
           <label for="grades-served">&nbsp; Grades Served</label>
         </p>
+         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "grades_served" %}
         <div class="collapse" id="gradesServedCollapse">
           <div class="card card-block">
@@ -67,22 +67,24 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-gender" name="grades-served" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-grades-served" name="check-all-grades-served" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
         {% endif %}
+        {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
 
         <!-- Before School Program Section --> 
-        <div id="before-school-program-form">
+        <div id="before-school-program-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse"> +
           </button>
           <label for="before-school-program">&nbsp Before School Program</label>
         </p>
+         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program" %}
         <div class="collapse" id="beforeSchoolProgramCollapse">
           <div class="card card-block">
@@ -98,17 +100,19 @@
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
-        {% endif %}        
+        {% endif %}   
+        {% endfor %}     
         </div>
         <!-- End of Before School Program Section -->
 
         <!-- Before School Program Offerings Section --> 
-        <div id="before-school-program-offerings-form">
+        <div id="before-school-program-offerings-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramOfferingsCollapse"> +
           </button>
           <label for="before-school-program-offerings">&nbsp; Before School Program Offerings</label>
         </p>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program_offerings" %}
         <div class="collapse" id="beforeSchoolProgramOfferingsCollapse">
           <div class="card card-block">
@@ -124,17 +128,19 @@
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
-        {% endif %}        
+        {% endif %} 
+        {% endfor %}       
         </div>
         
 
         <!-- Multilingual Pathways Section --> 
-        <div id="multilingual-pathways-form">
+        <div id="multilingual-pathways-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multilingualPathwaysCollapse" aria-expanded="false" aria-controls="multilingualPathwaysCollapse"> +
           </button>
           <label for="multilingual-pathways">&nbsp; Multilingual Pathways</label>
         </p>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "multilingual_pathways" %}
         <div class="collapse" id="multilingualPathwaysCollapse">
           <div class="card card-block">
@@ -150,18 +156,20 @@
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
-        {% endif %}        
+        {% endif %}   
+        {% endfor %}     
         </div>
         <!-- End Multilingual Pathways Section -->
 
 
         <!-- After School Program Section --> 
-        <div id="after-school-program-form">
+        <div id="after-school-program-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramCollapse" aria-expanded="false" aria-controls="afterSchoolProgramCollapse"> +
           </button>
           <label for="after-school-program">&nbsp; Afterschool Programs</label>
         </p>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program" %}
         <div class="collapse" id="afterSchoolProgramCollapse">
           <div class="card card-block">
@@ -177,17 +185,19 @@
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
-        {% endif %}        
+        {% endif %}   
+        {% endfor %}     
         </div>
         <!-- End After School Program Section -->
 
         <!-- After School Program Offerings Section --> 
-        <div id="after-school-program-offerings-form">
+        <div id="after-school-program-offerings-form" class="flex-box-child">
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="afterSchoolProgramOfferingsCollapse"> +
           </button>
           <label for="after-school-program-offerings">&nbsp; Afterschool Program Offerings</label>
         </p>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program_offerings" %}
         <div class="collapse" id="afterSchoolProgramOfferingsCollapse">
           <div class="card card-block">
@@ -203,50 +213,21 @@
           </ul>
           </div> <!-- close div card card-block -->
         </div> <!-- close collapseExample -->
-        {% endif %}        
+        {% endif %}  
+        {% endfor %}      
         </div>
         <!-- End After School Program Offerings Section -->
-        {% endfor %}
+        
 
-        <!-- Time Section --> 
-        <div id="age-form">
-            <label for="age">Start and End Time </label>
-            <input type="text" id="age" readonly name="age">
-            <div id="map-slider-range"></div>
-        </div><!--  close age div -->
-         <!-- End of Time Section -->
-
-      <input id="form-submit" type="submit" value="Submit">
+      <input id="form-submit" type="submit" value="Submit"> 
+      </div> <!-- close flexbox contents -->
       </div> <!-- close div class -->
       
     </form>
+    </div> <!-- close column -->
+    <div class="col-md-8 col-xs-8" id="map"></div>
   </div> <!-- close row -->
 </div> <!-- close container -->
-
-<!-- Modal window that pops up inside of Google Maps InfoWindow -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Send Messages</h4></div>
-          <div class="modal-body">To:<div id="add-recipients"></div>
-          <form id="message-form">
-            <label>
-              <textarea id="message" placeholder="Type your message..."></textarea>
-            </label><br>
-            <input type="submit" value="Send" class="btn btn-default send"> 
-            <div id="loading-2">
-                <img id="loading-img" src="../static/gif/loading.gif">
-            </div>
-          </form>
-          <div id="sent"></div>
-          </div>
-          <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 <script src="../static/js/map.js"></script>
