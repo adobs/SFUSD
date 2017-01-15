@@ -2,9 +2,9 @@ var map;
 
 function initialize() {
     console.log("IN initialize");
-    var sanFrancisco = { lat: 37.7833, lng: -122.4167 };
+    var sanFrancisco = { lat: 37.763816, lng: -122.434760 };
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+        zoom: 13,
         center: sanFrancisco
     });
     // $("#form-submit").on("click", function() {console.log("clicked button");});
@@ -53,10 +53,13 @@ function initialize() {
     function createMarker(lat, lng, name){
         console.log("!!!!IN createMarker");
         var position = {lat: lat, lng: lng};
+        console.log("position: ", position);
+        console.log("name: ", name);
 
         var marker = new google.maps.Marker({
             position: position,
-            title: name
+            title: name,
+            map: map
         });
         // TODO -- add animation to marker with label
         // animation: google.maps.Animation.DROP
@@ -76,13 +79,17 @@ function initialize() {
 
         // Adds a marker to the map
     function addMarkers(data){
-        console.log("data is ", data);
+        console.log("data is ", JSON.parse(data));
         removeAllMarkers();
         console.log("addMarkers");
-        for (var school in data){
+        console.log("data.length is ", JSON.parse(data).length);
+        data = JSON.parse(data);
+        for (var i=0; i<data.length; ++i){
+            var school = data[i];
             var lat = parseFloat(school.lat);
             var lng = parseFloat(school.long);
-
+            console.log("lat ",lat);
+            console.log("lng ",lng);
 
             var name = school.name;
             var startTime = school.start_time;

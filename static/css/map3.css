@@ -26,7 +26,6 @@
 
     #map {
       height: 100%;
-      z-index: -1;
     }
       line {
       stroke: #999;
@@ -59,15 +58,9 @@
     }
 
     #flex-box-parent {
-        /*position: absolute;
-        top: 150px;
-        width: 500px;
-        left: 20px;*/
-
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        z-index: 1;
         justify-content: flex-start;
         align-items: flex-start;
         align-content: flex-start;
@@ -124,3 +117,5 @@
         font-size: 0.8em;
         display: inline-block;
     }
+
+

@@ -77,14 +77,43 @@ def map():
 
 @app.route("/map-checked.json")
 def map_checked_json():
-	print ">>>>>map checked>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n\n\n\n"
-	formData = request.values
-	print ">>>>>form Data", formData
-	response = formData.items(multi=True)
-	print ">>>>>>>>>>>>>response2 ", response
-    # del before_school_program_offerings[0]
-    # print "before school program offe
-	return json.dumps({})
+	form_data = request.values.items(multi=True)
+
+	neighborhood = []
+	grades_served = []
+	before_school_program = []
+	before_school_program_offerings = []
+	multilingual_pathways = []
+	after_school_program = []
+	after_school_program_offerings = []
+
+	for data in form_data:
+		if data[0] == "neighborhood":
+			neighborhood.append(data[1])
+		elif data[0] == "grades-served":
+			grades_served.append(data[1])
+		elif data[0] == "before-school-program":
+			before_school_program.append(data[1])
+		elif data[0] == "before-school-program-offerings":
+			before_school_program_offerings.append(data[1])
+		elif data[0] == "multilingual-pathways":
+			multilingual_pathways.append(data[1])
+		elif data[0] == "after-school-program":
+			after_school_program.append(data[1])
+		elif data[0] == "after-school-program-offerings":
+			after_school_program_offerings.append(data[1])
+
+	inputs = {"neighborhood": neighborhood,
+	    		  "grades_served": grades_served,
+	    		  "before_school_program": before_school_program,
+	    		  "before_school_program_offerings": before_school_program_offerings,
+	    		  "multilingual_pathways": multilingual_pathways,
+	    		  "after_school_program": after_school_program,
+	    		  "after_school_program_offerings": after_school_program_offerings}
+
+	matching_schools = get_matching_schools(read_csv(), inputs)
+	print ">>>>>>>> len(matching_schools: ", len(matching_schools)
+	return json.dumps(matching_schools)
 
 if __name__ == "__main__":
     app.debug = True
