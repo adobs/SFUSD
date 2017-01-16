@@ -2,6 +2,10 @@
         height: 100%;
     }
 
+    #search-bar-row {
+      height: 50px;
+    }
+
 
     #form-submit, .btn-default, .btn-default:hover, .btn-default:focus, .btn-default.focus, 
         .btn-default:active, .btn-default.active, .btn-default.visited,
@@ -55,6 +59,15 @@
     #loading{
         width: 4000px;
         margin: auto;
+    }
+
+    #search-bar-flex-box-parent {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
     }
 
     #flex-box-parent {

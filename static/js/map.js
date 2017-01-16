@@ -20,7 +20,7 @@ function initAutocomplete() {
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function() {
@@ -218,6 +218,18 @@ function initAutocomplete() {
     //check all after school program offerings served checkboxes
     $("#check-all-after-school-program-offerings").change(function () {
         $("input[name='after-school-program-offerings']:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+    // change the arrow direction when toggling to collapse / show checkboxes
+    $(".arrow-collapse-link").on("click", function(e) {
+        $(this).toggleClass("isExpanded")
+        var isExpanded = $(this).hasClass("isExpanded");
+        if (isExpanded) {
+            $(this).removeClass("glyphicon-chevron-right").addClass("glyphicon glyphicon-chevron-down");         
+        } else {
+            $(this).removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-right");
+        }
+        
     });
 
 

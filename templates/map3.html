@@ -14,6 +14,13 @@
 
 {% block content %}
 <div class="container-fluid" id="whole-page">
+  <div class="row" id="search-bar-row">
+    <div class="col-md-12 col-xs-12">
+      <div id="search-bar-flex-box-parent">
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+      </div> <!-- close search-bar-flex-box-parent -->
+    </div> <!-- close column -->
+  </div> <!-- close row -->
   <div class="row" id="page">
     <div class="col-md-4 col-xs-4">
       <form id='map-choices-form'>
@@ -23,13 +30,13 @@
         <!-- Neighborhood Section --> 
         <div id="neighborhood-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> +
-          </button>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#neighborhoodCollapse" aria-expanded="false" aria-controls="neighborhoodCollapse"></a>
+  
           <label for="neighborhood">&nbsp; Neighborhood</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "neighborhood" %}
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="neighborhoodCollapse">
           <div class="card card-block">
           <ul>
             {% for neighborhood in value %}
@@ -52,7 +59,8 @@
         <!-- Grades Served Section --> 
         <div id="grades-served-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> +
+          <button class="btn arrow-collapse-button" type="button" data-toggle="collapse" data-target="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> 
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           </button>
           <label for="grades-served">&nbsp; Grades Served</label>
         </p>
@@ -82,7 +90,7 @@
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse"> +
           </button>
-          <label for="before-school-program">&nbsp Before School Program</label>
+          <label for="before-school-program">&nbsp; Before School Program</label>
         </p>
          {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program" %}
@@ -224,8 +232,7 @@
       </div> <!-- close div class -->
       
     </form>
-      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    </div> <!-- close column -->
+       </div> <!-- close column -->
     <div class="col-md-8 col-xs-8" id="map"></div>
   </div> <!-- close row -->
 </div> <!-- close container -->
