@@ -7,7 +7,7 @@
     <meta charset="utf-8">
  
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArY6jsEgpSky7AN31nasjreQ5HHPtmxx0&signed_in=true"></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArY6jsEgpSky7AN31nasjreQ5HHPtmxx0&signed_in=true&libraries=places"></script>  
     
     <link rel="stylesheet" href="/static/css/map3.css">
 {% endblock %}
@@ -39,7 +39,7 @@
             {% endfor %}
             
             <li>
-              <input type="checkbox" id="check-all-neighborhood" name="neighborhood" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-neighborhood" name="check-all-neighborhood" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -95,7 +95,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-before-school-program" name="before-school-program" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-before-school-program" name="check-all-before-school-program" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -123,7 +123,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-before-school-program-offerings" name="before-school-program-offerings" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-before-school-program-offerings" name="check-all-before-school-program-offerings" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -151,7 +151,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-multilingual-pathways" name="multilingual-pathways" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-multilingual-pathways" name="check-all-multilingual-pathways" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -180,7 +180,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-after-school-program" name="after-school-program" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-after-school-program" name="check-all-after-school-program" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -208,7 +208,7 @@
             </li>
             {% endfor %}
             <li>
-              <input type="checkbox" id="check-all-after-school-program-offerings" name="after-school-program-offerings" value="select-all" checked> &nbsp; Select All
+              <input type="checkbox" id="check-all-after-school-program-offerings" name="check-all-after-school-program-offerings" value="select-all" checked> &nbsp; Select All
             </li>
           </ul>
           </div> <!-- close div card card-block -->
@@ -224,6 +224,7 @@
       </div> <!-- close div class -->
       
     </form>
+      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     </div> <!-- close column -->
     <div class="col-md-8 col-xs-8" id="map"></div>
   </div> <!-- close row -->

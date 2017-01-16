@@ -1,17 +1,78 @@
 var map;
 
 function initialize() {
-    console.log("IN initialize");
-    var sanFrancisco = { lat: 37.763816, lng: -122.434760 };
+    var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
         center: sanFrancisco
     });
-    // $("#form-submit").on("click", function() {console.log("clicked button");});
-    return map;
 
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    $("#map-choices-form").submit();
+     initAutocomplete();
+   
+    return map;
 }
 
+function initAutocomplete() {
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    var homeMarkers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+           return;
+        }
+
+        // Clear out the old markers.
+        homeMarkers.forEach(function(marker) {
+           marker.setMap(null);
+        });
+        homeMarkers = [];
+
+
+        var icon = {
+            url: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // For each place, get the icon, name and location.
+        places.forEach(function(place) {
+            if (!place.geometry) {
+                console.log("Returned place contains no geometry");
+                return;
+            }
+       
+            // Create a marker for each place.
+            homeMarkers = [new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+            })];
+
+        });
+    
+    });
+}
 
 
 (function () {
@@ -25,16 +86,16 @@ function initialize() {
                             principal, address, phone, fax, email, website){
         html =
             '<div id="content">' +
-            '<p><b>' + name + '</b></p>' +
-            '<p><b>Start Time: </b>'+ startTime + '</p>' +
-            '<p><b>End Time: </b>'+ endTime + '</p>' +
-            '<p><b>Feeder: </b>'+ middleSchoolFeeder + '</p>' +
-            '<p><b>Principal: </b>'+ principal + '</p>' +
-            '<p><b>Addresss: </b>'+ address + '</p>' +
-            '<p><b>Phone: </b>'+ phone + '</p>' +
-            '<p><b>Fax: </b>'+ fax + '</p>' +
-            '<p><b>Email: </b>'+ email + '</p>' +
-            '<p><b>Website: </b>'+ website + '</p>' +
+            '<b>' + name + '</b><br>' +
+            '<b>Start Time: </b>'+ startTime + '<br>' +
+            '<b>End Time: </b>'+ endTime + '<br>' +
+            '<b>Feeder: </b>'+ middleSchoolFeeder + '<br>' +
+            '<b>Principal: </b>'+ principal + '<br>' +
+            '<b>Address: </b>'+ address + '<br>' +
+            '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
+            '<b>Fax: </b>'+ fax + '<br>' +
+            '<p><b>Email: </b>'+ email + '<br>' +
+            '<b>Website: </b>'+ '<a href="' + website + '">' + website + '</a><br>' +
             '</div>';
       
         
@@ -77,7 +138,7 @@ function initialize() {
         });
     }
 
-        // Adds a marker to the map
+    // Adds a marker to the map
     function addMarkers(data){
         console.log("data is ", JSON.parse(data));
         removeAllMarkers();
@@ -114,18 +175,9 @@ function initialize() {
 
     }
 
+    
     $('#map-choices-form').on('submit', function (e) {
         e.preventDefault();
-        console.log("in submit");
-        // var inputs = {
-        //     "neighborhood": ($('input[name="neighborhood"]:checked').serialize()),
-        //     "grades-served": ($('input[name="grades-served"]:checked').serialize()),
-        //     "before-school-program": ($('input[name="before-school-program"]:checked').serialize()),
-        //     "before-school-program-offerings": ($('input[name="before-school-program-offerings"]:checked').serialize()),
-        //     "multilingual-pathways": ($('input[name="multilingual-pathways"]:checked').serialize()),
-        //     "after-school-program": ($('input[name="after-school-program"]:checked').serialize()),
-        //     "after-school-program-offerings": ($('input[name="after-school-program-offerings"]:checked').serialize())
-        // };
         var inputs = $("#map-choices-form").serializeArray();
 
         ajaxRequest = $.get("/map-checked.json", inputs, addMarkers);
