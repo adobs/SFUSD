@@ -1,175 +1,172 @@
-    #whole-page{
-        height: 100%;
-    }
+	#whole-page{
+		height: 100%;
+	}
 
-    #search-bar-row {
-      height: 50px;
-    }
-
-
-    #form-submit, .btn-default, .btn-default:hover, .btn-default:focus, .btn-default.focus, 
-        .btn-default:active, .btn-default.active, .btn-default.visited,
-        .btn-default:active:hover, .btn-default.active:hover,  .btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, 
-        .btn-primary:active, .btn-primary.active, .btn-primary.visited,
-        .btn-primary:active:hover, .btn-primary.active:hover{
-            background-color: #BF1E2D;
-            background-image: linear-gradient(to bottom,#BF1E2D 0,#BF1E2D 100%);
-            text-shadow: none;
-            font-family: 'PT Mono', ;
-            color: #F2F2F2;
-    }
-
-    .btn.btn-default.close{
-        background-color: #37465d;
-        background-image: linear-gradient(to bottom,#37465d 0,#37465d 100%);
-        text-shadow: none;
-        font-family: 'PT Mono', ;
-        color: #F2F2F2;
-    }
+	#search-bar-row {
+	  height: 50px;
+	}
 
 
-    #map {
-      height: 100%;
-    }
-      line {
-      stroke: #999;
-      stroke-width: 1px;
-    }
+	#form-submit, .btn-default, .btn-default:hover, .btn-default:focus, .btn-default.focus, 
+		.btn-default:active, .btn-default.active, .btn-default.visited,
+		.btn-default:active:hover, .btn-default.active:hover,  .btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, 
+		.btn-primary:active, .btn-primary.active, .btn-primary.visited,
+		.btn-primary:active:hover, .btn-primary.active:hover{
+			background-color: #BF1E2D;
+			background-image: linear-gradient(to bottom,#BF1E2D 0,#BF1E2D 100%);
+			text-shadow: none;
+			font-family: 'PT Mono', ;
+			color: #F2F2F2;
+	}
 
-    circle {
-      fill: #ccc;
-      stroke: #fff;
-      stroke-width: 1.5px;
-    }
-
-    text {
-      fill: #000;
-      font: 10px sans-serif;
-      pointer-events: none;
-    }
+	.btn.btn-default.close{
+		background-color: #37465d;
+		background-image: linear-gradient(to bottom,#37465d 0,#37465d 100%);
+		text-shadow: none;
+		font-family: 'PT Mono', ;
+		color: #F2F2F2;
+	}
 
 
-    #age{
-        /*width: 50px;*/
-        border: transparent;
-    }
-    #form-submit{
-        height: 30px;
-    }
-    #loading{
-        width: 4000px;
-        margin: auto;
-    }
+	#map {
+	  height: 100%;
+	}
+	  line {
+	  stroke: #999;
+	  stroke-width: 1px;
+	}
 
-    #search-bar-flex-box-parent {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-    }
+	circle {
+	  fill: #ccc;
+	  stroke: #fff;
+	  stroke-width: 1.5px;
+	}
 
-    #flex-box-parent {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-        align-content: flex-start;
-    }
+	text {
+	  fill: #000;
+	  font: 10px sans-serif;
+	  pointer-events: none;
+	}
 
-    ul {
-        margin:0;
-        padding:0;
-    }
-    li{
-      margin-right: 0;
-    }
+	#form-submit{
+		height: 30px;
+	}
 
-    #loading-spin{
-      position: absolute;
-      left: 200px;
-      top: 540px;
-    }
+	#search-bar-flex-box-parent {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+	}
 
-    #content h1{
-      font-size: 1.1em;
-      font-weight: normal;
-      margin-bottom: 0px;
-      margin-top: 10px;
-      margin-right: 0;
-      margin-left: 0,
-    }
+	.checkbox-label, p {
+		display: inline-flex;
+		word-wrap: break-word;
+	}
 
-    #content-first{
-        margin-bottom: 15px;
-    }
+	#flex-box-parent {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		align-items: flex-start;
+		align-content: flex-start;
+	}
 
-    #content h2{
-      font-size: 1.1em;
-      font-weight: normal;
-      margin-top: 0px;
-      margin-bottom: 5px;
-      margin-right: 0;
-      margin-left: 0,
-    }
+	ul {
+		margin:0;
+		padding:0;
+	}
+	li{
+	  margin-right: 0;
+	}
 
-    h2, p{
-      background: white;
-    }
-    h2{
-      text-align: center;
-    }
-     .flex-box-child {
-        width: 175px;
-        background: white;
-        border: 1px solid #999;
-        border-radius: 2px;
-        padding: 10px;
-        font-size: 0.8em;
-        display: inline-block;
-    }
+	#loading-spin{
+	  position: absolute;
+	  left: 200px;
+	  top: 540px;
+	}
 
-    .pac-card {
-            margin: 10px 10px 0 0;
-            border-radius: 2px 0 0 2px;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            outline: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            background-color: #fff;
-            font-family: Roboto;
-          }
+	#content h1{
+	  font-size: 1.1em;
+	  font-weight: normal;
+	  margin-bottom: 0px;
+	  margin-top: 10px;
+	  margin-right: 0;
+	  margin-left: 0,
+	}
 
-          #pac-container {
-            padding-bottom: 12px;
-            margin-right: 12px;
-          }
+	#content-first{
+		margin-bottom: 15px;
+	}
 
-          .pac-controls {
-            display: inline-block;
-            padding: 5px 11px;
-          }
+	#content h2{
+	  font-size: 1.1em;
+	  font-weight: normal;
+	  margin-top: 0px;
+	  margin-bottom: 5px;
+	  margin-right: 0;
+	  margin-left: 0,
+	}
 
-          .pac-controls label {
-            font-family: Roboto;
-            font-size: 13px;
-            font-weight: 300;
-          }
+	h2, p {
+	  background: white;
+	}
 
-          #pac-input {
-            background-color: #fff;
-            font-family: Roboto;
-            font-size: 15px;
-            font-weight: 300;
-            margin-left: 12px;
-            padding: 0 11px 0 13px;
-            text-overflow: ellipsis;
-            width: 400px;
-          }
+	h2 {
+	  text-align: center;
+	}
+	 .flex-box-child {
+		width: 100%;
+		background: white;
+		border: 1px solid #999;
+		border-radius: 2px;
+		padding: 10px;
+		font-size: 0.8em;
+		display: inline-block;
+	}
 
-          #pac-input:focus {
-            border-color: #4d90fe;
-          }
+	.pac-card {
+			margin: 10px 10px 0 0;
+			border-radius: 2px 0 0 2px;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			outline: none;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+			background-color: #fff;
+			font-family: Roboto;
+		  }
 
+		  #pac-container {
+			padding-bottom: 12px;
+			margin-right: 12px;
+		  }
+
+		  .pac-controls {
+			display: inline-block;
+			padding: 5px 11px;
+		  }
+
+		  .pac-controls label {
+			font-family: Roboto;
+			font-size: 13px;
+			font-weight: 300;
+		  }
+
+		  #pac-input {
+			background-color: #fff;
+			font-family: Roboto;
+			font-size: 15px;
+			font-weight: 300;
+			margin-left: 12px;
+			padding: 0 11px 0 13px;
+			text-overflow: ellipsis;
+			width: 400px;
+		  }
+
+		  #pac-input:focus {
+			border-color: #4d90fe;
+		  }
+		 

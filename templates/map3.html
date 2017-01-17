@@ -22,7 +22,7 @@
     </div> <!-- close column -->
   </div> <!-- close row -->
   <div class="row" id="page">
-    <div class="col-md-4 col-xs-4">
+    <div class="col-md-2 col-xs-2">
       <form id='map-choices-form'>
       <div class='form-group' id="flex-box-parent">
         <div id="flex-box-contents">
@@ -32,7 +32,7 @@
         <p>
           <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#neighborhoodCollapse" aria-expanded="false" aria-controls="neighborhoodCollapse"></a>
   
-          <label for="neighborhood">&nbsp; Neighborhood</label>
+          <label for="neighborhood" class="checkbox-label">&nbsp; Neighborhood</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "neighborhood" %}
@@ -59,10 +59,9 @@
         <!-- Grades Served Section --> 
         <div id="grades-served-form" class="flex-box-child">
         <p>
-          <button class="btn arrow-collapse-button" type="button" data-toggle="collapse" data-target="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> 
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          </button>
-          <label for="grades-served">&nbsp; Grades Served</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> 
+          </a>
+          <label for="grades-served" class="checkbox-label">&nbsp; Grades Served</label>
         </p>
          {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "grades_served" %}
@@ -88,9 +87,9 @@
         <!-- Before School Program Section --> 
         <div id="before-school-program-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse"> +
-          </button>
-          <label for="before-school-program">&nbsp; Before School Program</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse">
+          </a>
+          <label for="before-school-program" class="checkbox-label">&nbsp; Before School Program</label>
         </p>
          {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program" %}
@@ -116,9 +115,9 @@
         <!-- Before School Program Offerings Section --> 
         <div id="before-school-program-offerings-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#beforeSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramOfferingsCollapse"> +
-          </button>
-          <label for="before-school-program-offerings">&nbsp; Before School Program Offerings</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#beforeSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramOfferingsCollapse">
+          </a>
+          <label for="before-school-program-offerings" class="checkbox-label">&nbsp; Before School Program Offerings</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program_offerings" %}
@@ -144,9 +143,9 @@
         <!-- Multilingual Pathways Section --> 
         <div id="multilingual-pathways-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multilingualPathwaysCollapse" aria-expanded="false" aria-controls="multilingualPathwaysCollapse"> +
-          </button>
-          <label for="multilingual-pathways">&nbsp; Multilingual Pathways</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#multilingualPathwaysCollapse" aria-expanded="false" aria-controls="multilingualPathwaysCollapse">
+          </a>
+          <label for="multilingual-pathways" class="checkbox-label">&nbsp; Multilingual Pathways</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "multilingual_pathways" %}
@@ -173,9 +172,9 @@
         <!-- After School Program Section --> 
         <div id="after-school-program-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramCollapse" aria-expanded="false" aria-controls="afterSchoolProgramCollapse"> +
-          </button>
-          <label for="after-school-program">&nbsp; Afterschool Programs</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#afterSchoolProgramCollapse" aria-expanded="false" aria-controls="afterSchoolProgramCollapse">
+          </a>
+          <label for="after-school-program" class="checkbox-label">&nbsp; Afterschool Programs</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program" %}
@@ -201,9 +200,9 @@
         <!-- After School Program Offerings Section --> 
         <div id="after-school-program-offerings-form" class="flex-box-child">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#afterSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="afterSchoolProgramOfferingsCollapse"> +
-          </button>
-          <label for="after-school-program-offerings">&nbsp; Afterschool Program Offerings</label>
+          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#afterSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="afterSchoolProgramOfferingsCollapse">
+          </a>
+          <label for="after-school-program-offerings" class="checkbox-label">&nbsp; Afterschool Program Offerings</label>
         </p>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program_offerings" %}
@@ -233,7 +232,7 @@
       
     </form>
        </div> <!-- close column -->
-    <div class="col-md-8 col-xs-8" id="map"></div>
+    <div class="col-md-10 col-xs-10" id="map"></div>
   </div> <!-- close row -->
 </div> <!-- close container -->
 
