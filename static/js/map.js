@@ -10,8 +10,7 @@ function initialize() {
     var transitLayer = new google.maps.TransitLayer();
     transitLayer.setMap(map);
 
-    $("#map-choices-form").submit();
-     initAutocomplete();
+    initAutocomplete();
    
     return map;
 }
@@ -112,10 +111,7 @@ function initAutocomplete() {
 
 
     function createMarker(lat, lng, name){
-        console.log("!!!!IN createMarker");
         var position = {lat: lat, lng: lng};
-        console.log("position: ", position);
-        console.log("name: ", name);
 
         var marker = new google.maps.Marker({
             position: position,
@@ -133,24 +129,19 @@ function initAutocomplete() {
             infoWindow.close();
             infoWindow.setContent(html);
             infoWindow.open(map, marker);
-            console.log("inside bind infos");
-
         });
     }
 
     // Adds a marker to the map
     function addMarkers(data){
-        console.log("data is ", JSON.parse(data));
         removeAllMarkers();
-        console.log("addMarkers");
-        console.log("data.length is ", JSON.parse(data).length);
+
         data = JSON.parse(data);
-        for (var i=0; i<data.length; ++i){
+
+            for (var i=0; i<data.length; ++i){
             var school = data[i];
             var lat = parseFloat(school.lat);
             var lng = parseFloat(school.long);
-            console.log("lat ",lat);
-            console.log("lng ",lng);
 
             var name = school.name;
             var startTime = school.start_time;
@@ -232,9 +223,45 @@ function initAutocomplete() {
         
     });
 
+    $(":checkbox").on("change", function(e) {
+        console.log("change, this is ", $(this));
+        console.log("testing to print");
+        console.log("name is ", $(this).context.name);
+        var name = $(this).context.name;
+        var numTotal = $('input[name=' + name + ']').length;
+
+        var numChecked = $('input[name=' + name + ']:checked').length;
+        console.log("whats printed?: #"+name+"-checked-count");
+        $("#" + name + "-count").html(numChecked);
+ 
+
+    });
+
 
     $(document).ready(function() {
         var chart = initialize();
+        var countArr = $(".count");
+        console.log("CountARR:  ", countArr.length);
+        for (var i=0; i < countArr.length; ++i) {
+            var element = countArr[i];
+            var name = ($(element).attr('id')).slice(0, -6);
+            var numCheckboxes = $("#" + name + "-collapse li").length - 1;
+            $(element).html(numCheckboxes);            
+        };
+            // .parent().attr('id')).slice(0,-5);
+        // console.log("name is ", name);
+        // var numCheckboxes = $("#" + name + "Collapse li").length;
+
+        // $(".count").html(numCheckboxes);
+        
+        $("#map-choices-form").submit();
+        
+        // console.log($("#" + name + "-count").siblings());
+        // var relSibling = ($("#" + name + "-count").siblings())[1];
+        // console.log("relSibling: ", relSibling);
+        // var relId = $(relSibling).attr('id')
+        // console.log("relID: ", relId);
+    
     });
 
 })();

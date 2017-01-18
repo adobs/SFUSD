@@ -29,14 +29,17 @@
 
         <!-- Neighborhood Section --> 
         <div id="neighborhood-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#neighborhoodCollapse" aria-expanded="false" aria-controls="neighborhoodCollapse"></a>
-  
-          <label for="neighborhood" class="checkbox-label">&nbsp; Neighborhood</label>
-        </p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#neighborhood-collapse" aria-expanded="false" aria-controls="neighborhood-collapse"></a>
+      
+              <label for="neighborhood" class="checkbox-label">&nbsp; Neighborhood</label>
+              <span class="count badge" id="neighborhood-count"></span>
+            </li>
+          </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "neighborhood" %}
-        <div class="collapse" id="neighborhoodCollapse">
+        <div class="collapse" id="neighborhood-collapse">
           <div class="card card-block">
           <ul>
             {% for neighborhood in value %}
@@ -58,14 +61,17 @@
 
         <!-- Grades Served Section --> 
         <div id="grades-served-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#gradesServedCollapse" aria-expanded="false" aria-controls="gradesServedCollapse"> 
-          </a>
-          <label for="grades-served" class="checkbox-label">&nbsp; Grades Served</label>
-        </p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#grades-served-collapse" aria-expanded="false" aria-controls="grades-served-collapse"> 
+              </a>
+              <label for="grades-served" class="checkbox-label">&nbsp; Grades Served</label>
+              <span class="count badge" id="grades-served-count"></span>
+            </li>
+          </ul>
          {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "grades_served" %}
-        <div class="collapse" id="gradesServedCollapse">
+        <div class="collapse" id="grades-served-collapse">
           <div class="card card-block">
           <ul>
             {% for gradesserved in value %}
@@ -86,14 +92,17 @@
 
         <!-- Before School Program Section --> 
         <div id="before-school-program-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#beforeSchoolProgramCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramCollapse">
-          </a>
-          <label for="before-school-program" class="checkbox-label">&nbsp; Before School Program</label>
-        </p>
-         {% for key, value in checkbox_labels.iteritems() %}  
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#before-school-program-collapse" aria-expanded="false" aria-controls="before-school-program-collapse">
+            </a>
+            <label for="before-school-program" class="checkbox-label">&nbsp; Before School Program</label>
+            <span class="count badge" id="before-school-program-count"></span>
+          </li>
+        </ul>
+        {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program" %}
-        <div class="collapse" id="beforeSchoolProgramCollapse">
+        <div class="collapse" id="before-school-program-collapse">
           <div class="card card-block">
           <ul>
             {% for beforeSchoolProgram in value %}
@@ -114,14 +123,17 @@
 
         <!-- Before School Program Offerings Section --> 
         <div id="before-school-program-offerings-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#beforeSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="beforeSchoolProgramOfferingsCollapse">
-          </a>
-          <label for="before-school-program-offerings" class="checkbox-label">&nbsp; Before School Program Offerings</label>
-        </p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#before-school-program-offerings-collapse" aria-expanded="false" aria-controls="before-school-program-offerings-collapse">
+            </a>
+            <label for="before-school-program-offerings" class="checkbox-label">&nbsp; Before School Program Offerings</label>
+            <span class="count badge" id="before-school-program-offerings-count"></span>
+          </li>
+        </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "before_school_program_offerings" %}
-        <div class="collapse" id="beforeSchoolProgramOfferingsCollapse">
+        <div class="collapse" id="before-school-program-offerings-collapse">
           <div class="card card-block">
           <ul>
             {% for beforeSchoolProgramOfferings in value %}
@@ -142,14 +154,17 @@
 
         <!-- Multilingual Pathways Section --> 
         <div id="multilingual-pathways-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#multilingualPathwaysCollapse" aria-expanded="false" aria-controls="multilingualPathwaysCollapse">
-          </a>
-          <label for="multilingual-pathways" class="checkbox-label">&nbsp; Multilingual Pathways</label>
-        </p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#multilingual-pathways-collapse" aria-expanded="false" aria-controls="multilingual-pathways-collapse">
+            </a>
+            <label for="multilingual-pathways" class="checkbox-label">&nbsp; Multilingual Pathways</label>
+            <span class="count badge" id="multilingual-pathways-count"></span>
+          </li>
+        </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "multilingual_pathways" %}
-        <div class="collapse" id="multilingualPathwaysCollapse">
+        <div class="collapse" id="multilingual-pathways-collapse">
           <div class="card card-block">
           <ul>
             {% for multilingualPathways in value %}
@@ -171,14 +186,17 @@
 
         <!-- After School Program Section --> 
         <div id="after-school-program-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#afterSchoolProgramCollapse" aria-expanded="false" aria-controls="afterSchoolProgramCollapse">
-          </a>
-          <label for="after-school-program" class="checkbox-label">&nbsp; Afterschool Programs</label>
-        </p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#after-school-program-collapse" aria-expanded="false" aria-controls="after-school-program-collapse">
+            </a>
+            <label for="after-school-program" class="checkbox-label">&nbsp; Afterschool Programs</label>
+            <span class="count badge" id="after-school-program-count"></span>
+          </li>
+        </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program" %}
-        <div class="collapse" id="afterSchoolProgramCollapse">
+        <div class="collapse" id="after-school-program-collapse">
           <div class="card card-block">
           <ul>
             {% for afterSchoolProgram in value %}
@@ -199,14 +217,17 @@
 
         <!-- After School Program Offerings Section --> 
         <div id="after-school-program-offerings-form" class="flex-box-child">
-        <p>
-          <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#afterSchoolProgramOfferingsCollapse" aria-expanded="false" aria-controls="afterSchoolProgramOfferingsCollapse">
-          </a>
-          <label for="after-school-program-offerings" class="checkbox-label">&nbsp; Afterschool Program Offerings</label>
-        </p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#after-school-program-offerings-collapse" aria-expanded="false" aria-controls="after-school-program-offerings-collapse">
+            </a>
+            <label for="after-school-program-offerings" class="checkbox-label">&nbsp; Afterschool Program Offerings</label>
+            <span class="count badge" id="after-school-program-offerings-count"></span> 
+          </li>
+        </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
         {% if key == "after_school_program_offerings" %}
-        <div class="collapse" id="afterSchoolProgramOfferingsCollapse">
+        <div class="collapse" id="after-school-program-offerings-collapse">
           <div class="card card-block">
           <ul>
             {% for afterSchoolProgramOfferings in value %}

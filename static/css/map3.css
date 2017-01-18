@@ -61,8 +61,8 @@
 		align-content: center;
 	}
 
-	.checkbox-label, p {
-		display: inline-flex;
+	.checkbox-label, .list-group {
+		display: inline;
 		word-wrap: break-word;
 	}
 
@@ -75,6 +75,14 @@
 		align-content: flex-start;
 	}
 
+	.header-div {
+		width: 80%;
+		display: block;
+	}
+
+	.count {
+		width: 20%;
+	}
 	ul {
 		margin:0;
 		padding:0;
