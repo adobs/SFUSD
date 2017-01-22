@@ -22,55 +22,6 @@ def map():
     return render_template("map3.html", checkbox_labels=checkbox_labels)
 
 
-# @app.route("/", methods=["POST"])
-# def checked():
-#     """ Gets JSON - map marker/label inputs 
-	
-# 	Parses serialized checkbox form data and returns input marker data with matching schools
-#     """
-#     # neighborhood = ("&" + request.args.get("neighborhood")).split("&neighborhood=")
-#     # del neighborhood[0]
-
-#     # grades_served = ("&" + request.args.get("grades-served")).split("&grades-served=")
-#     # del grades_served[0]
-    
-#     # before_school_program = request.args.getlist("before-school-program")
-#     # 	# ).split("&before-school-program=")
-#     # # del before_school_program[0]
-
-#     # before_school_program_offerings = request.values.getlist("before-school-program-offerings")
-#     formData = request.values
-#     response = formData.items(multi=True)
-#     # print ">>>>> formData: ", formData
-#     print "response ", response
-#     # del before_school_program_offerings[0]
-#     # print "before school program offer", before_school_program_offerings
-#     # multilingual_pathways = ("&" + request.args.get("multilingual-pathways")).split("&multilingual-pathways=")
-#     # del multilingual_pathways[0]
-
-#     # after_school_program = ("&" + request.args.get("after-school-program")).split("&after-school-program=")
-#     # del after_school_program[0]
-
-#     # print "after_school_program", after_school_program
-
-
-#     # after_school_program_offerings = ("&" + request.args.get("after-school-program-offerings")).split("&after-school-program-offerings=")
-#     # del after_school_program_offerings[0]
-#     # print "afterSchool progr off", after_school_program_offerings
-
-#     # inputs = {"neighborhood": neighborhood,
-#     # 		  "grades_served": grades_served,
-#     # 		  "before_school_program": before_school_program,
-#     # 		  "before_school_program_offerings": before_school_program_offerings,
-#     # 		  "multilingual_pathways": multilingual_pathways,
-#     # 		  "after_school_program": after_school_program,
-#     # 		  "after_school_program_offerings": after_school_program_offerings}
-
-#     # matching_schools = get_matching_schools(read_csv(), inputs)
-    
-#     # return json.dumps(matching_schools)
-#     return redirect("/")
-
 @app.route("/map-checked.json")
 def map_checked_json():
 	form_data = request.values.items(multi=True)
