@@ -74,7 +74,6 @@ def get_unqiue_row_data_from_specified_headers(school_objects_list):
 def get_matching_schools(school_objects_list, matching_parameters):
 	output_schools = []
 	for school in school_objects_list:
-		print "matching_parameters: ", matching_parameters
 		if ([neighborhood for neighborhood in matching_parameters["neighborhood"] if neighborhood in school.neighborhood or "" in school.neighborhood] 
 			and [grades_served for grades_served in matching_parameters["grades_served"] if grades_served in school.grades_served or "" in school.grades_served] 
 			and [before_school_program for before_school_program in matching_parameters["before_school_program"] if before_school_program in school.before_school_program or "" in school.before_school_program]

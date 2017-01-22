@@ -264,14 +264,10 @@ function initAutocomplete() {
     });
 
     $(":checkbox").on("change", function(e) {
-        console.log("change, this is ", $(this));
-        console.log("testing to print");
-        console.log("name is ", $(this).context.name);
         var name = $(this).context.name;
         var numTotal = $('input[name=' + name + ']').length;
 
         var numChecked = $('input[name=' + name + ']:checked').length;
-        console.log("whats printed?: #"+name+"-checked-count");
         $("#" + name + "-count").html(numChecked);
  
 

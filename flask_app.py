@@ -35,19 +35,19 @@ def map_checked_json():
 	after_school_program_offerings = []
 
 	for data in form_data:
-		if data[0] == "neighborhood":
+		if data[0] == "n":
 			neighborhood.append(data[1])
-		elif data[0] == "grades-served":
+		elif data[0] == "g-s":
 			grades_served.append(data[1])
-		elif data[0] == "before-school-program":
+		elif data[0] == "b-s-p":
 			before_school_program.append(data[1])
-		elif data[0] == "before-school-program-offerings":
+		elif data[0] == "b-s-p-o":
 			before_school_program_offerings.append(data[1])
-		elif data[0] == "multilingual-pathways":
+		elif data[0] == "m-p":
 			multilingual_pathways.append(data[1])
-		elif data[0] == "after-school-program":
+		elif data[0] == "a-s-p":
 			after_school_program.append(data[1])
-		elif data[0] == "after-school-program-offerings":
+		elif data[0] == "a-s-p-o":
 			after_school_program_offerings.append(data[1])
 
 	inputs = {"neighborhood": neighborhood,
