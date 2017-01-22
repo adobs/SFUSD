@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash, session, jsonify, g
 from jinja2 import StrictUndefined
-from model import Profile, Adjective, Gender, Orientation, Location, db, connect_to_db
 import re
 from okcupyd.session import Session
 from okcupyd.user import User
