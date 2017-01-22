@@ -12,16 +12,12 @@ lxml==3.5.0
 MarkupSafe==0.23
 nltk==3.1
 numpy==1.10.1
-okcupyd==1.0.0a2
 path.py==8.1.2
 pexpect==4.0.1
 pickleshare==0.5
 ptyprocess==0.5
 PyVirtualDisplay==0.1.5
 requests==2.8.1
-scikit-learn==0.17
-scipy==0.16.1
-selenium==2.48.0
 simplegeneric==0.8.1
 simplejson==3.8.1
 six==1.10.0
