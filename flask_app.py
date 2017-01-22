@@ -116,8 +116,9 @@ def map_checked_json():
 	return json.dumps(matching_schools)
 
 if __name__ == "__main__":
-    app.debug = True
-    connect_to_db(app)
-
-    app.run() 
-    import sys
+    # app.debug = True
+    # connect_to_db(app)
+    import os, sys
+    PORT = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=PORT) 
+	
