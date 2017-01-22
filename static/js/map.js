@@ -211,7 +211,7 @@ function initAutocomplete() {
         e.preventDefault();
         var inputs = $("#map-choices-form").serializeArray();
 
-        ajaxRequest = $.get("/map-checked.json", inputs, addMarkers);
+        $.get("/map-checked.json", inputs, addMarkers);
 
     });
 
@@ -288,11 +288,7 @@ function initAutocomplete() {
             var numCheckboxes = $("#" + name + "-collapse li").length - 1;
             $(element).html(numCheckboxes);            
         };
-            // .parent().attr('id')).slice(0,-5);
-        // console.log("name is ", name);
-        // var numCheckboxes = $("#" + name + "Collapse li").length;
-
-        // $(".count").html(numCheckboxes);
+       
         
         $("#map-choices-form").submit();
         
