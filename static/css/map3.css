@@ -31,6 +31,11 @@
 	#map {
 	  height: 100%;
 	}
+
+	#page{
+  height: 100%;
+}
+
 	  line {
 	  stroke: #999;
 	  stroke-width: 1px;
