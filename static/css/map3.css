@@ -80,8 +80,8 @@
 		display: block;
 	}
 
-	.count {
-		width: 20%;
+	.badge {
+		font-size: 10px;
 	}
 	ul {
 		margin:0;

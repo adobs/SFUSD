@@ -1,4 +1,24 @@
 var map;
+// var directionsDisplay;
+// var directionsService = new google.maps.DirectionsService();
+// // call DirectionsService.route() to initiate a request to the Directions service, passing it a
+// // DirectionsRequest object literal containing the input terms and a callback method to execute upon receipt of the response.
+// var DirectionsRequestObjectLiteral = {
+//   origin: LatLng | String | google.maps.Place,
+//   destination: LatLng | String | google.maps.Place,
+//   travelMode: TravelMode, //DRIVING | BICYCLING | TRANSIT | WALKING
+//   transitOptions: TransitOptions,
+//   drivingOptions: DrivingOptions,
+//   unitSystem: UnitSystem,
+//   waypoints[]: DirectionsWaypoint,
+//   optimizeWaypoints: Boolean,
+//   provideRouteAlternatives: Boolean,
+//   avoidHighways: Boolean,
+//   avoidTolls: Boolean,
+//   region: String
+// };
+// directionsDisplay = new google.maps.DirectionsRenderer();
+
 
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
@@ -7,8 +27,11 @@ function initialize() {
         center: sanFrancisco
     });
 
-    var transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
+    // directionsDisplay.setMap(map);
+    // directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+    // var transitLayer = new google.maps.TransitLayer();
+    // transitLayer.setMap(map);
 
     initAutocomplete();
    
@@ -22,9 +45,9 @@ function initAutocomplete() {
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-    });
+    // map.addListener('bounds_changed', function() {
+    //     searchBox.setBounds(map.getBounds());
+    // });
 
     var homeMarkers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -43,13 +66,6 @@ function initAutocomplete() {
         homeMarkers = [];
 
 
-        var icon = {
-            url: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-        };
 
         // For each place, get the icon, name and location.
         places.forEach(function(place) {
@@ -57,22 +73,46 @@ function initAutocomplete() {
                 console.log("Returned place contains no geometry");
                 return;
             }
-       
+
+            var image = new google.maps.MarkerImage(
+                '/static/img/home.png',
+                new google.maps.Size(32, 32),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(0, 32),
+                new google.maps.Size(25, 25)
+            );
             // Create a marker for each place.
             homeMarkers = [new google.maps.Marker({
                 map: map,
-                draggable: true,
+                // draggable: true,
                 animation: google.maps.Animation.DROP,
-                icon: icon,
+                icon: image,
                 title: place.name,
                 position: place.geometry.location
             })];
 
+            map.setCenter(place.geometry.location);
+
         });
     
     });
-}
+};
 
+// function calcRoute() {
+//     var start = document.getElementById('start').value;
+//     var end = document.getElementById('end').value;
+//     var request = {
+//         origin: start,
+//         destination: end,
+//         travelMode: 'DRIVING'
+//     };
+
+//     directionsService.route(request, function(response, status) {
+//         if (status == 'OK') {
+//             directionsDisplay.setDirections(response);
+//         }
+//     });
+// }
 
 (function () {
 
