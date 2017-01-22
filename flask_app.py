@@ -1,8 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash, session, jsonify, g
 from jinja2 import StrictUndefined
-import re
-from okcupyd.session import Session
-from okcupyd.user import User
 import json
 from hardcoded_data_source.inputs import get_checkbox_headers
 from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools
@@ -111,7 +108,6 @@ def map_checked_json():
 	    		  "after_school_program_offerings": after_school_program_offerings}
 
 	matching_schools = get_matching_schools(read_csv(), inputs)
-	print ">>>>>>>> len(matching_schools: ", len(matching_schools)
 	return json.dumps(matching_schools)
 
 if __name__ == "__main__":
