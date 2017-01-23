@@ -274,7 +274,7 @@ function initAutocomplete() {
                 paths: coordinates,
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
-                strokeWeight: 3,
+                strokeWeight: 2,
                 fillColor: '#FF0000',
                 fillOpacity: 0.8
             });
@@ -287,7 +287,7 @@ function initAutocomplete() {
     function populateAttendanceAreaPolygon () {
         var inputs = "test";
 
-        // $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
+        $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
     }
 
     $(document).ready(function() {
@@ -305,7 +305,7 @@ function initAutocomplete() {
         $("#map-choices-form").submit();
 
         // change this to populate after filling out the house value
-        // populateAttendanceAreaPolygon();
+        populateAttendanceAreaPolygon();
         
     
     });
