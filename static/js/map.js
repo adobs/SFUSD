@@ -273,11 +273,55 @@ function initAutocomplete() {
 
     });
 
+    
+
+    function populateSFAttendanceAreaPolygon(data) {
+        // data = JSON.parse(data);
+
+
+        for (var aaName in data) {
+            
+            // skip loop if the property is from prototype
+            if (!data.hasOwnProperty(aaName)) continue;
+
+            var coordinates = data[aaName]
+
+            // convert lat/lng from string to float
+            for (var i=0; i<coordinates.length; ++i) {
+                var coordinate = coordinates[i];
+                coordinate.lat = parseFloat(coordinate.lat);
+                coordinate.lng = parseFloat(coordinate.lng);
+            }
+            // TODO MAKE THIS NOT BREAK
+            coordinates = orderCoordinates(coordinates);
+            console.log("coordinates is ", coordinates);
+            break;
+        }
+
+        var polygon = new google.maps.Polygon({
+            paths: coordinates,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 3,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+        });
+        
+        polygon.setMap(map);
+        
+           
+    }
+
+    function populateAttendanceAreaPolygon () {
+        var inputs = "test";
+        console.log("populateAttendanceAreaPolygon");
+        $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
+    }
 
     $(document).ready(function() {
         var chart = initialize();
         var countArr = $(".count");
-        console.log("CountARR:  ", countArr.length);
+      
         for (var i=0; i < countArr.length; ++i) {
             var element = countArr[i];
             var name = ($(element).attr('id')).slice(0, -6);
@@ -285,14 +329,12 @@ function initAutocomplete() {
             $(element).html(numCheckboxes);            
         };
        
+        // change this to populate after filling out the house value
+        populateAttendanceAreaPolygon();
         
         $("#map-choices-form").submit();
+
         
-        // console.log($("#" + name + "-count").siblings());
-        // var relSibling = ($("#" + name + "-count").siblings())[1];
-        // console.log("relSibling: ", relSibling);
-        // var relId = $(relSibling).attr('id')
-        // console.log("relID: ", relId);
     
     });
 

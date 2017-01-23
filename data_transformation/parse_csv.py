@@ -95,3 +95,35 @@ def get_matching_schools(school_objects_list, matching_parameters):
 		   						   "principal": school.principal})
 
 	return output_schools
+
+def get_sf_googlemapspolygon_coordinates():
+	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
+	sf_googlemaps_coordinates_dict = {}
+
+	sf_coordinates = csv.DictReader(open('data_transformation/sf_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	for sf_coordinate in sf_coordinates:
+		name = sf_coordinate["aaname"]
+		lat = sf_coordinate["lat"]
+		lng = sf_coordinate["lng"]
+
+		sf_googlemaps_coordinates_dict[name] = sf_googlemaps_coordinates_dict.get(name, [])
+		sf_googlemaps_coordinates_dict[name].append({"lat": lat, "lng"	: lng})
+
+
+	return sf_googlemaps_coordinates_dict
+
+# def get_ti_googlemapspolygon_coordinates():
+# 	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
+# 	ti_googlemaps_coordinates_dict = {}
+
+# 	ti_coordinates = csv.DictReader(open('data_transformation/ti_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+# 	for ti_coordinate in ti_coordinates:
+# 		name = sf_coordinate["aaname"]
+# 		lat = sf_coordinate["lat"]
+# 		lng = sf_coordinate["lng"]
+
+# 		ti_googlemaps_coordinates_dict[name] = sf_googlemaps_coordinates_dict.get(name, [])
+# 		ti_googlemaps_coordinates_dict[name].append({lat: lat, lng: lng})
+
+
+	return ti_googlemaps_coordinates_dict

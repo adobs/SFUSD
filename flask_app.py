@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, session, jso
 from jinja2 import StrictUndefined
 import json
 from hardcoded_data_source.inputs import get_checkbox_headers
-from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools
+from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools, get_sf_googlemapspolygon_coordinates
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -60,6 +60,16 @@ def map_checked_json():
 
 	matching_schools = get_matching_schools(read_csv(), inputs)
 	return json.dumps(matching_schools)
+
+@app.route("/sf-attendance-area.json")
+def sf_attendance_area_json():
+	# change this to get the input of the region clicked on; will have to parse request.args data
+
+	print "\n\n\nsf_attendance_area_json \n\n\n"
+	coordinates = get_sf_googlemapspolygon_coordinates()
+	print "sf_attendance_area => coordinates: ", coordinates
+	return jsonify(coordinates)
+
 
 if __name__ == "__main__":
     app.debug = True
