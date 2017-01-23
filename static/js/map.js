@@ -158,8 +158,6 @@ function initAutocomplete() {
             title: name,
             map: map
         });
-        // TODO -- add animation to marker with label
-        // animation: google.maps.Animation.DROP
 
         return marker;
     }
@@ -216,39 +214,20 @@ function initAutocomplete() {
     });
 
 
-    //check all neighborhood checkboxes
-    $("#check-all-neighborhood").change(function () {
-        $("input[name='neighborhood']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all grades served checkboxes
-    $("#check-all-grades-served").change(function () {
-        $("input[name='grades-served']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all before school program checkboxes
-    $("#check-all-before-school-program").change(function () {
-        $("input[name='before-school-program']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all before school program offerings checkboxes
-    $("#check-all-before-school-program-offerings").change(function () {
-        $("input[name='before-school-program-offerings']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all multilingual checkboxes
-    $("#check-all-multilingual-pathways").change(function () {
-        $("input[name='multilingual-pathways']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all after school program checkboxes
-    $("#check-all-after-school-program").change(function () {
-        $("input[name='after-school-program']:checkbox").prop('checked', $(this).prop("checked"));
-    });
-
-    //check all after school program offerings served checkboxes
-    $("#check-all-after-school-program-offerings").change(function () {
-        $("input[name='after-school-program-offerings']:checkbox").prop('checked', $(this).prop("checked"));
+    //check all checkboxes
+   // TODO bind all checkboxes so that when they are clicked they are checked
+    $(".check-all").change(function () {
+        // slice the 'check-all'
+        var num = "check-all".length;
+        var name = ($(this).attr('id')).slice(num + 1);
+        if ($(this).prop("checked")) {
+            $("input[name='" + name + "']").removeProp("checked");
+            $("input[name='" + name + "']").click();
+        } else {
+            $("input[name='" + name + "']").prop("checked");
+            $("input[name='" + name + "']").click();
+        }
+        // $("input[name='" + name + "']:checkbox").prop('checked', $(this).prop("checked"));
     });
 
     // change the arrow direction when toggling to collapse / show checkboxes
@@ -263,59 +242,52 @@ function initAutocomplete() {
         
     });
 
-    $(":checkbox").on("change", function(e) {
-        var name = $(this).context.name;
-        var numTotal = $('input[name=' + name + ']').length;
 
-        var numChecked = $('input[name=' + name + ']:checked').length;
+   $(".check").on("change", function(e) {
+        console.log("clicked on a checkbox");
+        var name = $(this)[0].name;
+        var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
         $("#" + name + "-count").html(numChecked);
- 
-
     });
 
     
 
     function populateSFAttendanceAreaPolygon(data) {
-        // data = JSON.parse(data);
-
-
         for (var aaName in data) {
             
-            // skip loop if the property is from prototype
-            if (!data.hasOwnProperty(aaName)) continue;
+            // // skip loop if the property is from prototype
+            if (!data.hasOwnProperty(aaName)) {
+                continue;
+            }
 
             var coordinates = data[aaName]
-
+            
             // convert lat/lng from string to float
             for (var i=0; i<coordinates.length; ++i) {
                 var coordinate = coordinates[i];
                 coordinate.lat = parseFloat(coordinate.lat);
                 coordinate.lng = parseFloat(coordinate.lng);
             }
-            // TODO MAKE THIS NOT BREAK
-            coordinates = orderCoordinates(coordinates);
-            console.log("coordinates is ", coordinates);
-            break;
-        }
+        
 
-        var polygon = new google.maps.Polygon({
-            paths: coordinates,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 3,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
-        });
-        
-        polygon.setMap(map);
-        
+            var polygon = new google.maps.Polygon({
+                paths: coordinates,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 3,
+                fillColor: '#FF0000',
+                fillOpacity: 0.8
+            });
+            
+            polygon.setMap(map);
+        }
            
     }
 
     function populateAttendanceAreaPolygon () {
         var inputs = "test";
-        console.log("populateAttendanceAreaPolygon");
-        $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
+
+        // $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
     }
 
     $(document).ready(function() {
@@ -325,15 +297,15 @@ function initAutocomplete() {
         for (var i=0; i < countArr.length; ++i) {
             var element = countArr[i];
             var name = ($(element).attr('id')).slice(0, -6);
-            var numCheckboxes = $("#" + name + "-collapse li").length - 1;
-            $(element).html(numCheckboxes);            
+            var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
+            $(element).html(numChecked);            
         };
        
-        // change this to populate after filling out the house value
-        populateAttendanceAreaPolygon();
         
         $("#map-choices-form").submit();
 
+        // change this to populate after filling out the house value
+        // populateAttendanceAreaPolygon();
         
     
     });

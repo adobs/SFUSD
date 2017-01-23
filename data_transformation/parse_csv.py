@@ -76,11 +76,13 @@ def get_matching_schools(school_objects_list, matching_parameters):
 	for school in school_objects_list:
 		if ([neighborhood for neighborhood in matching_parameters["neighborhood"] if neighborhood in school.neighborhood or "" in school.neighborhood] 
 			and [grades_served for grades_served in matching_parameters["grades_served"] if grades_served in school.grades_served or "" in school.grades_served] 
-			and [before_school_program for before_school_program in matching_parameters["before_school_program"] if before_school_program in school.before_school_program or "" in school.before_school_program]
-			and [before_school_program_offerings for before_school_program_offerings in matching_parameters["before_school_program_offerings"] if before_school_program_offerings in school.before_school_program_offerings  or "" in school.before_school_program_offerings]
+			# and [before_school_program for before_school_program in matching_parameters["before_school_program"] if !("") in school.before_school_program or "" in school.before_school_program]
+			and (school.before_school_program != "" or school.before_school_program_offerings != "")
+			# and [before_school_program_offerings for before_school_program_offerings in matching_parameters["before_school_program_offerings"] if before_school_program_offerings in school.before_school_program_offerings  or "" in school.before_school_program_offerings]
 			and [multilingual_pathways for multilingual_pathways in matching_parameters["multilingual_pathways"] if multilingual_pathways in school.multilingual_pathways or "" in school.multilingual_pathways]  
-			and [after_school_program for after_school_program in matching_parameters["after_school_program"] if after_school_program in school.after_school_program or "" in school.after_school_program]
-			and [after_school_program_offerings for after_school_program_offerings in matching_parameters["after_school_program_offerings"] if after_school_program_offerings in school.after_school_program_offerings or "" in school.after_school_program_offerings]):  
+			and (school.after_school_program != "" or school.after_school_program_offerings != "")):
+			# and [after_school_program for after_school_program in matching_parameters["after_school_program"] if after_school_program in school.after_school_program or "" in school.after_school_program]
+			# and [after_school_program_offerings for after_school_program_offerings in matching_parameters["after_school_program_offerings"] if after_school_program_offerings in school.after_school_program_offerings or "" in school.after_school_program_offerings]):  
 		   	output_schools.append({"name": school.name, 
 		   						   "start_time": school.start_time,
 		   						   "end_time": school.end_time,
