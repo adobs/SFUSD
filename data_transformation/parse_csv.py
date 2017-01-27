@@ -98,21 +98,39 @@ def get_matching_schools(school_objects_list, matching_parameters):
 
 	return output_schools
 
+# def attendance_area_schools(school_objects_list, )
 def get_sf_googlemapspolygon_coordinates():
 	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
 	sf_googlemaps_coordinates_dict = {}
 
 	sf_coordinates = csv.DictReader(open('data_transformation/sf_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
 	for sf_coordinate in sf_coordinates:
-		name = sf_coordinate["aaname"]
-		lat = sf_coordinate["lat"]
-		lng = sf_coordinate["lng"]
-
-		sf_googlemaps_coordinates_dict[name] = sf_googlemaps_coordinates_dict.get(name, [])
-		sf_googlemaps_coordinates_dict[name].append({"lat": lat, "lng"	: lng})
+		aaname = sf_coordinate["aaname"]
+		place_id = sf_coordinate["place_id"]
+		# lat = sf_coordinate["lat"]
+		# lng = sf_coordinate["lng"]
+		ctip = sf_coordinate["ctip"]
+		# sfaddress = sf_coordinate["sfaddress"]
+		# sf_googlemaps_coordinates_dict[place_id] = sf_googlemaps_coordinates_dict.get(aaname, [])
+		sf_googlemaps_coordinates_dict[place_id] = {"ctip": ctip, "aaname": aaname, "place_id": place_id}
 
 
 	return sf_googlemaps_coordinates_dict
+
+def write_to_sf_csv(place_ids_dict):
+
+	reader = csv.DictReader(open('data_transformation/sf_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	out_file = open("data_transformation/sf_address1617_edited.csv", "wb")
+	writer = csv.writer(out_file)
+	for row in reader:
+		sfaddress = row["sfaddress"]
+		ctip = row["ctip"]
+		aaname = row["aaname"]
+		place_id = place_ids_dict[sfaddress]
+		writer.writerow(sfaddress, place_id, aaname, ctip)
+
+	return "success"
+
 
 # def get_ti_googlemapspolygon_coordinates():
 # 	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
@@ -128,4 +146,4 @@ def get_sf_googlemapspolygon_coordinates():
 # 		ti_googlemaps_coordinates_dict[name].append({lat: lat, lng: lng})
 
 
-	return ti_googlemaps_coordinates_dict
+	# return ti_googlemaps_coordinates_dict

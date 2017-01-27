@@ -1,33 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Adjective Map{% endblock %}
+{% block title %}SFUSD{% endblock %}
 
 {% block head %}
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
  
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwVRAUTbBSUnZVyjciba5LgxSV9od2vY&libraries=places"></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Q8s8XrW3FwGSp_D8vQUtZxBDjc3RnDs&libraries=places"></script>  
     
     <link rel="stylesheet" href="/static/css/map3.css">
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid" id="whole-page">
-  <div class="row" id="search-bar-row">
-    <div class="col-md-12 col-xs-12">
-      <div id="search-bar-flex-box-parent">
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-      </div> <!-- close search-bar-flex-box-parent -->
-    </div> <!-- close column -->
-  </div> <!-- close row -->
   <div class="row" id="page">
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div class="col-md-2 col-xs-2">
       <form id='map-choices-form'>
       <div class='form-group' id="flex-box-parent">
         <div id="flex-box-contents">
 
-        <!-- Neighborhood Section --> 
+        <!-- Neighborhood Section = n --> 
         <div id="n-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
@@ -38,28 +32,28 @@
             </li>
           </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
-        {% if key == "neighborhood" %}
-        <div class="collapse" id="n-collapse">
-          <div class="card card-block">
-          <ul>
-            {% for neighborhood in value %}
-            <li>
-              <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
-            </li>
-            {% endfor %}
-            
-            <li>
-              <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked> &nbsp; Select All
-            </li>
-          </ul>
-          </div> <!-- close div card card-block -->
-        </div> <!-- close collapseExample -->
-        {% endif %}
+          {% if key == "neighborhood" %}
+          <div class="collapse" id="n-collapse">
+            <div class="card card-block">
+            <ul>
+              <li>
+                <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked>
+                <label for="check-all-n"> &nbsp; Deselect All</label>
+              </li>
+              {% for neighborhood in value %}
+              <li>
+                <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
+              </li>
+              {% endfor %}
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}
         {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Neighborhood Section -->
 
-        <!-- Grades Served Section --> 
+        <!-- Grades Served Section = g-s --> 
         <div id="g-s-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
@@ -70,27 +64,28 @@
             </li>
           </ul>
          {% for key, value in checkbox_labels.iteritems() %}  
-        {% if key == "grades_served" %}
-        <div class="collapse" id="g-s-collapse">
-          <div class="card card-block">
-          <ul>
-            {% for gradesserved in value %}
-            <li>
-              <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked> &nbsp; {{ gradesserved }}
-            </li>
-            {% endfor %}
-            <li>
-              <input type="checkbox" id="check-all-g-s" class="check-all" name="check-all-g-s" value="select-all" checked> &nbsp; Select All
-            </li>
-          </ul>
-          </div> <!-- close div card card-block -->
-        </div> <!-- close collapseExample -->
-        {% endif %}
+          {% if key == "grades_served" %}
+          <div class="collapse" id="g-s-collapse">
+            <div class="card card-block">
+            <ul>
+              <li>
+                <input type="checkbox" id="check-all-g-s" class="check-all" name="check-all-g-s" value="select-all" checked>
+                <label for="check-all-g-s"> &nbsp; Deselect All</label>
+              </li>
+              {% for gradesserved in value %}
+              <li>
+                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked> &nbsp; {{ gradesserved }}
+              </li>
+              {% endfor %}
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}
         {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
 
-        <!-- Before School Program Section --> 
+        <!-- Before School Program Section = b-s-p --> 
         <div id="b-s-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
@@ -101,25 +96,27 @@
           </li>
         </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
-        {% if key == "before_school_program" %}
-        <div class="collapse" id="b-s-p-collapse">
-          <div class="card card-block">
-          <ul>
-            <li>
-              <input type="checkbox" name="b-s-p" class="check" value="Yes" checked> &nbsp; Yes
-            </li>
-            <li>
-              <input type="checkbox" id="check-all-b-s-p" class="check-all" name="check-all-b-s-p" value="select-all" checked> &nbsp; Select All
-            </li>
-          </ul>
-          </div> <!-- close div card card-block -->
-        </div> <!-- close collapseExample -->
-        {% endif %}   
+          {% if key == "before_school_program" %}
+          <div class="collapse" id="b-s-p-collapse">
+            <div class="card card-block">
+            <ul>
+              <li>
+                <input type="checkbox" id="check-all-b-s-p" class="check-all" name="check-all-b-s-p" value="select-all" checked>
+                <label for="check-all-b-s-p"> &nbsp; Deselect All </label>
+              </li>
+              <li>
+                <input type="checkbox" name="b-s-p" class="check" value="Yes" checked> &nbsp; Yes
+              </li>
+            
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}   
         {% endfor %}     
         </div>
         <!-- End of Before School Program Section -->
 
-        <!-- Multilingual Pathways Section --> 
+        <!-- Multilingual Pathways Section = m-p --> 
         <div id="m-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
@@ -130,28 +127,29 @@
           </li>
         </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
-        {% if key == "multilingual_pathways" %}
-        <div class="collapse" id="m-p-collapse">
-          <div class="card card-block">
-          <ul>
-            {% for multilingualPathways in value %}
-            <li>
-              <input type="checkbox" name="m-p" class="check" value="{{ multilingualPathways }}" checked> &nbsp; {{ multilingualPathways }}
-            </li>
-            {% endfor %}
-            <li>
-              <input type="checkbox" id="check-all-m-p" class="check-all" name="check-all-m-p" value="select-all" checked> &nbsp; Select All
-            </li>
-          </ul>
-          </div> <!-- close div card card-block -->
-        </div> <!-- close collapseExample -->
-        {% endif %}   
+          {% if key == "multilingual_pathways" %}
+          <div class="collapse" id="m-p-collapse">
+            <div class="card card-block">
+            <ul>
+              <li>
+                <input type="checkbox" id="check-all-m-p" class="check-all" name="check-all-m-p" value="select-all" checked>
+                <label for="check-all-m-p"> &nbsp; Deselect All </label>
+              </li>
+              {% for multilingualPathways in value %}
+              <li>
+                <input type="checkbox" name="m-p" class="check" value="{{ multilingualPathways }}" checked> &nbsp; {{ multilingualPathways }}
+              </li>
+              {% endfor %}
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}   
         {% endfor %}     
         </div>
         <!-- End Multilingual Pathways Section -->
 
 
-        <!-- After School Program Section = A-S-P --> 
+        <!-- After School Program Section = a-s-p --> 
         <div id="a-s-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
@@ -162,20 +160,21 @@
           </li>
         </ul>
         {% for key, value in checkbox_labels.iteritems() %}  
-        {% if key == "after_school_program" %}
-        <div class="collapse" id="a-s-p-collapse">
-          <div class="card card-block">
-          <ul>
-            <li>
-              <input type="checkbox" name="a-s-p" class="check" value="Yes" checked> &nbsp; Yes
-            </li>
-            <li>
-              <input type="checkbox" id="check-all-a-s-p" class="check-all" name="check-all-a-s-p" value="select-all" checked> &nbsp; Select All
-            </li>
-          </ul>
-          </div> <!-- close div card card-block -->
-        </div> <!-- close collapseExample -->
-        {% endif %}   
+          {% if key == "after_school_program" %}
+          <div class="collapse" id="a-s-p-collapse">
+            <div class="card card-block">
+            <ul>
+              <li>
+                <input type="checkbox" id="check-all-a-s-p" class="check-all" name="check-all-a-s-p" value="select-all" checked>
+              </li>
+              <label for="check-all-a-s-p"> &nbsp; Deselect All </label>
+              <li>
+                <input type="checkbox" name="a-s-p" class="check" value="Yes" checked> &nbsp; Yes
+              </li>
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}   
         {% endfor %}     
         </div>
         <!-- End After School Program Section -->
@@ -187,9 +186,6 @@
     </form>
     </div> <!-- close column -->
     <div class="col-md-10 col-xs-10" id="map">
-      <!-- <div id="map"></div> -->
-
-      <!-- <div id="directionsPanel" style="float:right;width:30%;height 100%"></div> -->
     </div> <!-- close column -->
   </div> <!-- close row -->
 </div> <!-- close container -->
@@ -197,5 +193,4 @@
 
 <script src="/static/js/map.js"></script>
 
-<script type="text/javascript"></script>
 {% endblock %}

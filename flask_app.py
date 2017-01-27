@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, session, jso
 from jinja2 import StrictUndefined
 import json
 from hardcoded_data_source.inputs import get_checkbox_headers
-from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools, get_sf_googlemapspolygon_coordinates
+from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools, get_sf_googlemapspolygon_coordinates, write_to_sf_csv
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -21,9 +21,14 @@ def map():
 
     return render_template("map3.html", checkbox_labels=checkbox_labels)
 
+# @app.route("/attendance-area.json")
+# def attendance_area():
+# 	attendance_area = request.args.get("attendanceArea")
+
+# 	attendance_area_schools = get_matching_attendance_area_schools(read_csv(), attendance_area)
 
 @app.route("/map-checked.json")
-def map_checked_json():
+def map_checked():
 	form_data = request.values.items(multi=True)
 
 	neighborhood = []
@@ -61,14 +66,31 @@ def map_checked_json():
 	matching_schools = get_matching_schools(read_csv(), inputs)
 	return json.dumps(matching_schools)
 
-@app.route("/sf-attendance-area.json")
-def sf_attendance_area_json():
+@app.route("/ctip.json")
+def ctip():
 	# change this to get the input of the region clicked on; will have to parse request.args data
+	print "IN CTIP\n\n"
+	place_id = request.args.get("placeId")
+	print "\n\n place_id is ", place_id
+	csv_info = get_sf_googlemapspolygon_coordinates()
+	return jsonify(csv_info[place_id])
 
-	print "\n\n\nsf_attendance_area_json \n\n\n"
-	coordinates = get_sf_googlemapspolygon_coordinates()
-	print "sf_attendance_area => coordinates: ", coordinates
-	return jsonify(coordinates)
+# @app.route("/make-place-ids.json")
+# def make_place_ids():
+# 	print "\n\n\n STEP 2 IN MAKE PLACE IDS\n\n"
+# 	coordinates_dict = get_sf_googlemapspolygon_coordinates()
+
+# 	return jsonify(coordinates_dict)
+
+# @app.route("/add-place-id-to-csv.json")
+# def add_place_ids():
+# 	print "\n\n\n STEP 4 IN ADD PLACE IDS \n\n"
+
+# 	place_id_dict = request.args.get("placeIds")
+
+# 	write_to_sf_csv(place_id_dict)
+# 	return "success"
+
 
 
 if __name__ == "__main__":
