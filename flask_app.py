@@ -3,20 +3,19 @@ from jinja2 import StrictUndefined
 import json
 from hardcoded_data_source.inputs import get_checkbox_headers
 from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools, get_sf_googlemapspolygon_coordinates, write_to_sf_csv
+from data_transformation.parse_xml import get_xml_information
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = "ABC"
+# app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
 
 @app.route("/", methods=["GET"])
 def map():
     """ Map page. """
-
+    get_xml_information()
     checkbox_labels = get_unqiue_row_data_from_specified_headers(read_csv())
 
     return render_template("map3.html", checkbox_labels=checkbox_labels)
@@ -94,8 +93,6 @@ def ctip():
 
 
 if __name__ == "__main__":
-    app.debug = True
-    # connect_to_db(app)
     import os, sys
     DEBUG = "NO_DEBUG" not in os.environ
     PORT = int(os.environ.get("PORT", 5000))
