@@ -13,31 +13,36 @@ function initialize() {
         center: sanFrancisco
     });
 
+    var toggleButton = document.getElementById('toggle-button');
+    toggleButton.index = 1;
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(toggleButton);
+
     initAutocomplete();
 
     return map;
 }
 
-function loadKmlLayer(src, map) {
-    console.log("in load layer");
-        var kmlLayer = new google.maps.KmlLayer(src, {
-          suppressInfoWindows: true,
-          preserveViewport: false,
-          map: map
-        });
-        google.maps.event.addListener(kmlLayer, 'click', function(event) {
-          var content = event.featureData.infoWindowHtml;
-          // var testimonial = document.getElementById('capture');
-          // testimonial.innerHTML = content;
-        });
-      }
+// function loadKmlLayer(src, map) {
+//     console.log("in load layer");
+//         var kmlLayer = new google.maps.KmlLayer(src, {
+//           suppressInfoWindows: true,
+//           preserveViewport: false,
+//           map: map
+//         });
+//         google.maps.event.addListener(kmlLayer, 'click', function(event) {
+//           var content = event.featureData.infoWindowHtml;
+//           // var testimonial = document.getElementById('capture');
+//           // testimonial.innerHTML = content;
+//         });
+//       }
+
 
 function initAutocomplete() {
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
-
+    
 
     var homeMarkers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -80,9 +85,8 @@ function initAutocomplete() {
                 position: place.geometry.location
             });
 
+            var ctipName;
             google.maps.event.addListener(homeMarker, "click", function(event) { 
-                    var ctipName;
-
                     attendanceAreaPolygonArray.forEach(function(element, index, array) {
                         if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
                             ctipName = element.name; 
@@ -266,13 +270,10 @@ $(".check").on("change", function(e) {
 
 var attendanceAreaPolygonArray = []
 function populateAttendanceAreaPolygon (data) {
-    console.log("in populate attendanceArea polygon");
     // return a list of dictionaries [{name: [coordinates]}]
     // where coordinates = [lat, lng] 
 
-    console.log("data is", data);
     data = JSON.parse(data);
-    console.log("data is", data);
 
     for (var i=0; i<data.length; ++i) {
 
