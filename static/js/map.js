@@ -314,8 +314,7 @@ function populateAttendanceAreaPolygon (data) {
 }
 
 function getAttendanceAreaName(event) {
-    console.log("this is ", this  );
-    console.log("evts is ", event);
+    console.log("AA name: ", this.name);
     // var attendanceAreaName = this.name;
     // console.log("CONENTS STRING ", this.name);
 
@@ -344,9 +343,14 @@ $(document).ready(function() {
     
     $("#map-choices-form").submit();
 
-    // change this to populate after filling out the house value
-   
     $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon)
 
-    // makePlaceIds();
+    var windowWidth = parseInt(window.getComputedStyle(document.getElementsByTagName("body")[0]).width);
+    var MD_WIDTH = 992;
+    console.log("WINDOW WIDTH IS ", windowWidth);
+    if (windowWidth >= MD_WIDTH) {
+        console.log("greater");
+        $("#wrapper").toggleClass("toggled");
+    }
+
 });
