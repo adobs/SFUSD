@@ -24,6 +24,6 @@ def get_xml_information():
 				edited_coordinates_list.append(lat_lng)
 
 
-		esaa_boundaries.append({name: edited_coordinates_list})
+			esaa_boundaries.append({name: edited_coordinates_list})
 
-	print "ESAAA BOUND:: ", esaa_boundaries
+	return esaa_boundaries

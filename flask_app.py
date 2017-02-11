@@ -15,7 +15,7 @@ app.jinja_env.undefined = StrictUndefined
 @app.route("/", methods=["GET"])
 def map():
     """ Map page. """
-    get_xml_information()
+    
     checkbox_labels = get_unqiue_row_data_from_specified_headers(read_csv())
 
     return render_template("map3.html", checkbox_labels=checkbox_labels)
@@ -25,6 +25,14 @@ def map():
 # 	attendance_area = request.args.get("attendanceArea")
 
 # 	attendance_area_schools = get_matching_attendance_area_schools(read_csv(), attendance_area)
+@app.route("/attendance-area-coordinates.json")
+def attendance_area_coordinates():
+	""" Retrieves parsed attendance area and sends back in AJAX GET request """
+
+	attendance_area = get_xml_information()
+	print "ATTENDANCE AREA IS ", attendance_area
+	return json.dumps(attendance_area)
+
 
 @app.route("/map-checked.json")
 def map_checked():

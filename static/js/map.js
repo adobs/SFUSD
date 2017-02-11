@@ -80,8 +80,18 @@ function initAutocomplete() {
                 position: place.geometry.location
             });
 
+            google.maps.event.addListener(homeMarker, "click", function(event) { 
+                    var ctipName;
+
+                    attendanceAreaPolygonArray.forEach(function(element, index, array) {
+                        if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
+                            ctipName = element.name; 
+                        }
+                   });
+                    console.log("CTIP IS ", ctipName);
+                }); 
             // get the CTIP info for the marker
-            $.get("/ctip.json", {placeId: place.place_id}, addHomeMarkerInfoWindow.bind(this, homeMarker));
+            // $.get("/ctip.json", {placeId: place.place_id}, addHomeMarkerInfoWindow.bind(this, homeMarker));
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
@@ -93,74 +103,24 @@ function initAutocomplete() {
 
 var attendanceArea;
 function addHomeMarkerInfoWindow (homeMarker, data) {
-    attendanceArea = data.aaname;
-    var ctipScore = data.ctip;
-    var homeInfoWindow = new google.maps.InfoWindow({
-        width: 150
-    });
+    // attendanceArea = data.aaname;
+    // var ctipScore = data.ctip;
+    // var homeInfoWindow = new google.maps.InfoWindow({
+    //     width: 150
+    // });
 
-    var html =
-        '<div id="home-info-window-content">' +
-            '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
-            '<b>CTIP score: </b>'+ ctipScore + '<br>' +
-            // '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only schools in my attendance area</button>' +
-        '</div>';
+    // var html =
+    //     '<div id="home-info-window-content">' +
+    //         '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
+    //         '<b>CTIP score: </b>'+ ctipScore + '<br>' +
+    //         // '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only schools in my attendance area</button>' +
+    //     '</div>';
     
-    bindInfoWindow(homeMarker, map, homeInfoWindow, html);
+    // bindInfoWindow(homeMarker, map, homeInfoWindow, html);
    
 
     
 }
-function onShowAttendanceArea() {
-    // console.log("e is ", e);
-    console.log("worked");
-    console.log("attendacne area of ", attendanceArea);
-    // $.get("/attendance-area.json", {attendanceArea: attendanceArea}, addMarkers);
-    // console.log("this is ", this);
-    // console.log("$(this) is ", $(this));
-}
-// function addHomeMarkerInfoWindow (homeMarker, data) {
-
-//     var attendanceArea = data.aaname;
-//     var ctipScore = data.ctip;
-//     var html =
-//         '<div id="home-info-window-content">' +
-//             '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
-//             '<b>CTIP score: </b>'+ ctipScore +
-//         '</div>';
-
-//     bindInfoWindow(homeMarker, map, homeInfoWindow, html);    
-// }
-
-
-// function calcRoute() {
-//     var start = document.getElementById('start').value;
-//     var end = document.getElementById('end').value;
-//     var request = {
-//         origin: start,
-//         destination: end,
-//         travelMode: 'DRIVING'
-//     };
-
-//     directionsService.route(request, function(response, status) {
-//         if (status == 'OK') {
-//             directionsDisplay.setDirections(response);
-//         }
-//     });
-// }
-
-var onDirectionsToHere = function() {
-        // change this to feed and receive the lat and the long
-        var address = $("#address")[0].innerText.slice("Address:".length + 1)
-        console.log("this is ", $(this));
-        console.log("address is ", address);
-
-        return false;
-};
-
-
-
-var markers = [];
 
 function getHtml(name, startTime, endTime, middleSchoolFeeder,
                         principal, address, phone, fax, email, website){
@@ -192,14 +152,9 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 
 
 
-function removeAllMarkers() {
-    for (var j = 0; j < markers.length; j++) {
-        var marker = markers[j];
-        marker.setMap(null);
-    }
-}
 
 
+var markers = [];
 function createMarker(lat, lng, name){
     var position = {lat: lat, lng: lng};
 
@@ -210,6 +165,13 @@ function createMarker(lat, lng, name){
     });
 
     return marker;
+}
+
+function removeAllMarkers() {
+    for (var j = 0; j < markers.length; j++) {
+        var marker = markers[j];
+        marker.setMap(null);
+    }
 }
 
 function bindInfoWindow(marker, map, infoWindow, html) {
@@ -302,89 +264,49 @@ $(".check").on("change", function(e) {
     $("#" + name + "-count").html(numChecked);
 });
 
+var attendanceAreaPolygonArray = []
+function populateAttendanceAreaPolygon (data) {
+    console.log("in populate attendanceArea polygon");
+    // return a list of dictionaries [{name: [coordinates]}]
+    // where coordinates = [lat, lng] 
 
+    console.log("data is", data);
+    data = JSON.parse(data);
+    console.log("data is", data);
 
-function populateSFAttendanceAreaPolygon(data) {
-    for (var aaName in data) {
+    for (var i=0; i<data.length; ++i) {
+
+        var attendanceArea = data[i];
+        for (name in attendanceArea) {
         
-        // // skip loop if the property is from prototype
-        if (!data.hasOwnProperty(aaName)) {
-            continue;
+            // turn items into integers
+
+            console.log('name is ', name);
+            var paths = attendanceArea[name];
+            paths.forEach(function(element, index, array) {
+                array[index] = {lat: parseFloat(element.lat), lng: parseFloat(element.lng)}
+            });
+            var attendanceAreaPolygon = new google.maps.Polygon({
+                name: name,
+                paths: paths
+            });
+            attendanceAreaPolygon.setMap(map);
+
+            // Add a listener for the click event.
+            attendanceAreaPolygon.addListener('click', getAttendanceAreaName);
+
+            attendanceAreaPolygonArray.push(attendanceAreaPolygon);
         }
-
-        var coordinates = data[aaName]
-        
-        // convert lat/lng from string to float
-        for (var i=0; i<coordinates.length; ++i) {
-            var coordinate = coordinates[i];
-            coordinate.lat = parseFloat(coordinate.lat);
-            coordinate.lng = parseFloat(coordinate.lng);
-        }
-    
-
-        var polygon = new google.maps.Polygon({
-            paths: coordinates,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.8
-        });
-        
-        polygon.setMap(map);
     }
-       
 }
 
+function getAttendanceAreaName(event) {
+    console.log("this is ", this  );
+    console.log("evts is ", event);
+    // var attendanceAreaName = this.name;
+    // console.log("CONENTS STRING ", this.name);
 
-// function calculatePlaceId(data) {
-
-//     console.log("STEP 3 in calculate Place Id");
-//     console.log("data is ", data);
-//     var placeIds = {};
-//     var counter = 0;
-//     var geocoder = new google.maps.Geocoder;
-            
-//     for (var aanameKey in data) {
-//         console.log("aanameKey is", aanameKey);
-//         var aanameArr = data[aanameKey];
-//         console.log("aanameArr is ", aanameArr);
-//         for (var i=0; i<aanameArr.length; ++i) {
-//             var prop = aanameArr[i];
-//             // console.log("key is ", key);
-//             var lat = prop.lat;
-//             var lng = prop.lng;
-//             var ctip = prop.ctip;
-//             var aaname = prop.aaname;
-//             var sfaddress = prop.sfaddress;
-            
-//             var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-//             geocoder.geocode({'location': latlng}, function(results, status) {
-//                 console.log("status: ",status);
-//                 if (status === 'OK') {
-//                     for (var j=0; j< results.length; ++j) {
-//                         console.log("place_id: ", results[j].place_id, "; aaname: ", aaname);
-//                         counter = counter +1;
-//                         console.log("counter ", counter);
-//                     }
-//                 }
-//             });
-//         }
-//     }
-//     // $.get("/add-place-id-to-csv.json", placeIds, function(){console.log("suuccesss");});
-// }
-
-// function makePlaceIds() {
-//     console.log("STEP 1 in make place Is")
-//     var inputs = {hello:"hello"};
-//     $.get("/make-place-ids.json", inputs, calculatePlaceId)
-// }
-
-// function populateAttendanceAreaPolygon () {
-//     var inputs = "test";
-
-//     // $.get("/sf-attendance-area.json", inputs, populateSFAttendanceAreaPolygon);
-// }
+}
 
 $(document).ready(function() {
     var chart = initialize();
@@ -401,7 +323,8 @@ $(document).ready(function() {
     $("#map-choices-form").submit();
 
     // change this to populate after filling out the house value
-    // populateAttendanceAreaPolygon();
-    
+   
+    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon)
+
     // makePlaceIds();
 });
