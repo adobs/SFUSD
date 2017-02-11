@@ -1,4 +1,4 @@
-bs4==4.5.3
+beautifulsoup4==4.5.3
 decorator==4.0.4
 EasyProcess==0.2.1
 Flask==0.10.1
