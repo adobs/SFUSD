@@ -13,10 +13,7 @@ function initialize() {
         center: sanFrancisco
     });
 
-    var toggleButton = document.getElementById('toggle-button');
-    toggleButton.index = 1;
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(toggleButton);
-
+    
     initAutocomplete();
 
     return map;
@@ -41,7 +38,22 @@ function initAutocomplete() {
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
+    var toggleButton = document.getElementById('toggle-button');
+    var inputDiv = document.createElement('div');
+
+    
+    inputDiv.id = "inputDiv";
+    // $("#inputDiv").append($("#toggle-button"));
+
+    // $("#inputDiv").append($("#pac-input"));
+    inputDiv.appendChild(toggleButton);
+    inputDiv.appendChild(input);
+
+    inputDiv.index = 1;
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
+
+
+    // map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
     
 
     var homeMarkers = [];
@@ -310,6 +322,15 @@ function getAttendanceAreaName(event) {
 }
 
 $(document).ready(function() {
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+    $("#hide-side-nav").click(function(e) {
+        e.preventDefault();
+          console.log("clicked link");
+      $("#wrapper").toggleClass("toggled");
+    });
     var chart = initialize();
     var countArr = $(".count");
   

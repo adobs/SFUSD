@@ -134,7 +134,7 @@
 	 .flex-box-child {
 		width: 100%;
 		background: white;
-		border: 1px solid #999;
+		border: none;
 		border-radius: 2px;
 		padding: 10px;
 		font-size: 0.8em;
@@ -183,3 +183,10 @@
 		  #pac-input:focus {
 			border-color: #4d90fe;
 		  }
+
+	#hide-side-nav {
+		float: right;
+		padding-right: 20px;
+		padding-bottom: 10px;
+		text-align: right;
+	}
