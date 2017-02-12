@@ -339,7 +339,6 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
     } else {
         $("#wrapper").addClass("toggled");
-        $("#wrapper").hide();
     }
     $("#show-side-nav").hide();
 
