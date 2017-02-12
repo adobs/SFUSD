@@ -335,10 +335,10 @@ $(document).ready(function() {
     console.log("windowidth is ", windowWidth);
     var MD_WIDTH = 992;
     if (windowWidth >= MD_WIDTH) {
-        $("#wrapper").removeClass("toggled");
+        // $("#wrapper").removeClass("toggled");
         $("#menu-toggle").hide();
     } else {
-        // $("#wrapper").addClass("toggled");
+        $("#wrapper").addClass("toggled");
     }
     $("#show-side-nav").hide();
 
@@ -376,10 +376,5 @@ $(document).ready(function() {
     $("#map-choices-form").submit();
 
     $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon)
-
-    
-    
-windowWidth = $(window).width();
-    console.log("windowidth2 is ", windowWidth);
 
 });
