@@ -36,6 +36,13 @@ function initAutocomplete() {
 
         inputDiv.index = 1;
         map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
+    } else {
+        // set right size of the hamburger option
+        var menuHeight = $("#pac-input").height();
+        $("#menu-toggle").height(menuHeight);
+        var menuWidth = $("#menu-toggle").width();
+        var searchBarWidth = windowWidth - menuWidth - 10;
+        $("#pac-input").width(searchBarWidth);
     }
 
     
@@ -349,13 +356,6 @@ $(document).ready(function() {
         // $("#wrapper").toggleClass("toggled");
     }
     $("#show-side-nav").hide();
-
-    // set right size of the hamburger option
-    var menuHeight = $("#pac-input").height();
-    $("#menu-toggle").height(menuHeight);
-    var menuWidth = $("#menu-toggle").width();
-    var searchBarWidth = windowWidth - menuWidth - 10;
-    $("#pac-input").width(searchBarWidth);
 
 
     var chart = initialize();
