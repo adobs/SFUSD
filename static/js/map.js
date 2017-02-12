@@ -332,6 +332,7 @@ function getAttendanceAreaName(event) {
 
 $(document).ready(function() {
     var windowWidth = $(window).width();
+    console.log("windowidth is ", windowWidth);
     var MD_WIDTH = 992;
     if (windowWidth >= MD_WIDTH) {
         $("#wrapper").toggleClass("toggled");
@@ -376,6 +377,7 @@ $(document).ready(function() {
 
     
     
-
+windowWidth = $(window).width();
+    console.log("windowidth2 is ", windowWidth);
 
 });
