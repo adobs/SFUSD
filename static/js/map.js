@@ -335,9 +335,11 @@ $(document).ready(function() {
     console.log("windowidth is ", windowWidth);
     var MD_WIDTH = 992;
     if (windowWidth >= MD_WIDTH) {
-        $("#wrapper").toggleClass("toggled");
+        $("#wrapper").removeClass("toggled");
         $("#menu-toggle").hide();
-    } 
+    } else {
+        $("#wrapper").addClass("toggled");
+    }
     $("#show-side-nav").hide();
 
     $("#menu-toggle").click(function(e) {
