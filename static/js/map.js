@@ -1,10 +1,12 @@
 // TODO
- // 72 elementary schools, 13 middle schools, and 14 high schools to choose from
-
+// 72 elementary schools, 13 middle schools, and 14 high schools to choose from
+// general formatting
+// messaging to expalin attendance area
 var map;
 var infoWindow = new google.maps.InfoWindow({
   width: 150
 });
+var gtMdWidth;
 
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
@@ -19,39 +21,27 @@ function initialize() {
     return map;
 }
 
-// function loadKmlLayer(src, map) {
-//     console.log("in load layer");
-//         var kmlLayer = new google.maps.KmlLayer(src, {
-//           suppressInfoWindows: true,
-//           preserveViewport: false,
-//           map: map
-//         });
-//         google.maps.event.addListener(kmlLayer, 'click', function(event) {
-//           var content = event.featureData.infoWindowHtml;
-//           // var testimonial = document.getElementById('capture');
-//           // testimonial.innerHTML = content;
-//         });
-//       }
-
 function initAutocomplete() {
    
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    var toggleButton = document.getElementById('toggle-button');
-    var inputDiv = document.createElement('div');
+    console.log("this._gtMdWidth is ", gtMdWidth);
+    if (gtMdWidth) {
+        var toggleButton = document.getElementById('toggle-button');
+        var inputDiv = document.createElement('div');
 
-    
-    inputDiv.id = "inputDiv";
-    // $("#inputDiv").append($("#toggle-button"));
+        
+        inputDiv.id = "inputDiv";
+        // $("#inputDiv").append($("#toggle-button"));
 
-    // $("#inputDiv").append($("#pac-input"));
-    inputDiv.appendChild(toggleButton);
-    inputDiv.appendChild(input);
+        // $("#inputDiv").append($("#pac-input"));
+        inputDiv.appendChild(toggleButton);
+        inputDiv.appendChild(input);
 
-    inputDiv.index = 1;
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
-
+        inputDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
+    }
 
     // map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
     
@@ -330,6 +320,7 @@ function getAttendanceAreaName(event) {
 
 }
 
+
 $(document).ready(function() {
     var windowWidth = $(window).width();
     console.log("windowidth is ", windowWidth);
@@ -358,15 +349,17 @@ $(document).ready(function() {
 
     // setting up screen
     if (windowWidth >= MD_WIDTH) {
+        gtMdWidth = true;
         console.log("SCREEN LARGER THAN MD");
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
     } else {
+        gtMdWidth = false;
         $("#hide-side-nav").click();
         // $("#wrapper").toggleClass("toggled");
     }
     $("#show-side-nav").hide();
-    
+
     var chart = initialize();
     var countArr = $(".count");
   
