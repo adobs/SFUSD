@@ -334,13 +334,6 @@ $(document).ready(function() {
     var windowWidth = $(window).width();
     console.log("windowidth is ", windowWidth);
     var MD_WIDTH = 992;
-    if (windowWidth >= MD_WIDTH) {
-        // $("#wrapper").removeClass("toggled");
-        $("#menu-toggle").hide();
-    } else {
-        $("#wrapper").addClass("toggled");
-    }
-    $("#show-side-nav").hide();
 
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
@@ -362,6 +355,18 @@ $(document).ready(function() {
         $("#wrapper").toggleClass("toggled");
         $("#show-side-nav").hide();
     });
+
+    // setting up screen
+    if (windowWidth >= MD_WIDTH) {
+        console.log("SCREEN LARGER THAN MD");
+        $("#wrapper").toggleClass("toggled");
+        $("#menu-toggle").hide();
+    } else {
+        $("#hide-side-nav").click();
+        // $("#wrapper").toggleClass("toggled");
+    }
+    $("#show-side-nav").hide();
+    
     var chart = initialize();
     var countArr = $(".count");
   
