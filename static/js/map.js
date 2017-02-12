@@ -30,21 +30,13 @@ function initAutocomplete() {
     if (gtMdWidth) {
         var toggleButton = document.getElementById('toggle-button');
         var inputDiv = document.createElement('div');
-
-        
-        inputDiv.id = "inputDiv";
-        // $("#inputDiv").append($("#toggle-button"));
-
-        // $("#inputDiv").append($("#pac-input"));
+    
         inputDiv.appendChild(toggleButton);
         inputDiv.appendChild(input);
 
         inputDiv.index = 1;
         map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
     }
-
-    // map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
-    
 
     
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -63,8 +55,6 @@ function initAutocomplete() {
            marker.setMap(null);
         });
         homeMarkers = [];
-
-
 
         // For each place, get the icon, name and location.
         places.forEach(function(place) {
@@ -359,6 +349,14 @@ $(document).ready(function() {
         // $("#wrapper").toggleClass("toggled");
     }
     $("#show-side-nav").hide();
+
+    // set right size of the hamburger option
+    var menuHeight = $("#pac-input").height();
+    $("#menu-toggle").height(menuHeight);
+    var menuWidth = $("#menu-toggle").width();
+    var searchBarWidth = windowWidth - menuWidth - 10;
+    $("#pac-input").width(searchBarWidth);
+
 
     var chart = initialize();
     var countArr = $(".count");
