@@ -27,11 +27,11 @@
         <div id="flex-box-contents">
         <div class="flex-box-child">
    
-    <ul class="sidebar-nav">
-      <li>
+    <!-- <ul class="sidebar-nav"> -->
+      <!-- <li> -->
          <a id="hide-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-backward" aria-hidden="true">&nbsp;Hide</span></a>
-      </li>
-    </ul>
+      <!-- </li> -->
+    <!-- </ul> -->
 
     </div>
 
@@ -203,7 +203,10 @@
 
 <div id="page-content-wrapper">
 <div class="container-fluid" id="whole-page">
-  <div class="row" id="page">
+  <div class="row flex-box-child">
+       <a id="show-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-forward" aria-hidden="true">&nbsp;Show</span></a>
+  </div> <!-- close row -->
+  <div class="row" id="page-content-wrapper">
    <div id="toggle-button">
      <a href="#menu-toggle" class="btn btn-default controls menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
    </div>

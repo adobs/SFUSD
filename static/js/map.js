@@ -33,8 +33,8 @@ function initialize() {
 //         });
 //       }
 
-
 function initAutocomplete() {
+   
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -56,10 +56,12 @@ function initAutocomplete() {
     // map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
     
 
-    var homeMarkers = [];
+    
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
+    var homeMarkers = [];
     searchBox.addListener('places_changed', function() {
+
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -96,7 +98,7 @@ function initAutocomplete() {
                 title: place.name,
                 position: place.geometry.location
             });
-
+            homeMarkers.push(homeMarker);
             var ctipName;
             google.maps.event.addListener(homeMarker, "click", function(event) { 
                     attendanceAreaPolygonArray.forEach(function(element, index, array) {
@@ -259,7 +261,20 @@ $(".check-all").change(function () {
         $("input[name='" + name + "']").prop("checked", false);
         $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
     }
+
+    countCheckboxes(name);
 });
+
+$(".check").on("change", function() {
+    var name = $(this)[0].name;
+    countCheckboxes(name);
+});
+
+function countCheckboxes(name) {
+    // var name = $(this)[0].name;
+    var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
+    $("#" + name + "-count").html(numChecked);
+}
 
 // change the arrow direction when toggling to collapse / show checkboxes
 $(".arrow-collapse-link").on("click", function(e) {
@@ -274,11 +289,6 @@ $(".arrow-collapse-link").on("click", function(e) {
 });
 
 
-$(".check").on("change", function(e) {
-    var name = $(this)[0].name;
-    var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
-    $("#" + name + "-count").html(numChecked);
-});
 
 var attendanceAreaPolygonArray = []
 function populateAttendanceAreaPolygon (data) {
@@ -321,14 +331,33 @@ function getAttendanceAreaName(event) {
 }
 
 $(document).ready(function() {
+    var windowWidth = parseInt(window.getComputedStyle(document.getElementsByTagName("body")[0]).width);
+    var MD_WIDTH = 992;
+    if (windowWidth >= MD_WIDTH) {
+        $("#wrapper").toggleClass("toggled");
+        $("#menu-toggle").hide();
+    } 
+    $("#show-side-nav").hide();
+    
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+
     $("#hide-side-nav").click(function(e) {
         e.preventDefault();
-          console.log("clicked link");
-      $("#wrapper").toggleClass("toggled");
+        if (windowWidth >= MD_WIDTH) { 
+            $("#show-side-nav").show();
+        }
+        $("#wrapper").toggleClass("toggled");
+        $("#hide-side-nav").hide();
+    });
+    
+    $("#show-side-nav").click(function(e) {
+        e.preventDefault();
+        $("#hide-side-nav").show();
+        $("#wrapper").toggleClass("toggled");
+        $("#show-side-nav").hide();
     });
     var chart = initialize();
     var countArr = $(".count");
@@ -345,12 +374,8 @@ $(document).ready(function() {
 
     $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon)
 
-    var windowWidth = parseInt(window.getComputedStyle(document.getElementsByTagName("body")[0]).width);
-    var MD_WIDTH = 992;
-    console.log("WINDOW WIDTH IS ", windowWidth);
-    if (windowWidth >= MD_WIDTH) {
-        console.log("greater");
-        $("#wrapper").toggleClass("toggled");
-    }
+    
+    
+
 
 });
