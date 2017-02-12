@@ -331,14 +331,14 @@ function getAttendanceAreaName(event) {
 }
 
 $(document).ready(function() {
-    var windowWidth = parseInt(window.getComputedStyle(document.getElementsByTagName("body")[0]).width);
+    var windowWidth = $(window).width();
     var MD_WIDTH = 992;
     if (windowWidth >= MD_WIDTH) {
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
     } 
     $("#show-side-nav").hide();
-    
+
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
