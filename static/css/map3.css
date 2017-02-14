@@ -243,3 +243,12 @@
 .checkbox-li {
 	padding-left: 15px;
 }
+
+.elementary {
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+br {
+	font-size: 1px;
+}

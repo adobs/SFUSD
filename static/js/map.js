@@ -7,9 +7,10 @@
 // messaging to expalin attendance area
 // add all relevant commenting to code
 // add directions to here/from here
+
 // get school tour information
 // add the CTIP to the info window
-
+// on click on school marker recenter the map
 
 var map;
 var infoWindow = new google.maps.InfoWindow({
@@ -185,12 +186,26 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 function createMarker(lat, lng, name){
     var position = {lat: lat, lng: lng};
 
-    var marker = new google.maps.Marker({
-        position: position,
-        title: name,
-        map: map
-    });
+    // var marker = new google.maps.Marker({
+    //     position: position,
+    //     title: name,
+    //     map: map
+    // });
 
+    // return marker;
+
+    var marker = new Marker({
+        map: map,
+        position: position,
+        icon: {
+            path: SQUARE_PIN,
+            fillColor: '#00CCBB',
+            fillOpacity: 1,
+            strokeColor: '#fff',
+            strokeWeight: 1
+        },
+        map_icon_label: '<span class="map-icon map-icon-school"><span class="elementary"><br>Elem</span></span>'
+    });
     return marker;
 }
 
