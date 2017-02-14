@@ -42,7 +42,7 @@ function initAutocomplete() {
         $("#menu-toggle").height(menuHeight);
         var menuWidth = $("#menu-toggle").width();
         var searchBarWidth = windowWidth - menuWidth - 10;
-        $("#pac-input").width(searchBarWidth);
+        $(".pac-card").width(searchBarWidth);
     }
 
     
