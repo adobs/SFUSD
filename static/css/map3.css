@@ -218,9 +218,9 @@
 	border-width: 4px;
 }
 #toggle-search-div {
-	display: flex;
-	flex-direction: row;
+	display: inline;
+/*	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: center;
-}
+*/}
