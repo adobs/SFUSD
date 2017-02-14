@@ -39,6 +39,7 @@ function initAutocomplete() {
     } else {
         // set right size of the hamburger option
         var menuHeight = $("#pac-input").height();
+
         $("#menu-toggle").height(menuHeight);
         var menuWidth = $("#menu-toggle").width();
         var windowWidth = $(window).width();
