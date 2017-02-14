@@ -44,12 +44,12 @@
           <div class="collapse" id="n-collapse">
             <div class="card card-block">
             <ul>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked>
                 <label for="check-all-n"> &nbsp; Deselect All</label>
               </li>
               {% for neighborhood in value %}
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
               </li>
               {% endfor %}
@@ -76,12 +76,12 @@
           <div class="collapse" id="g-s-collapse">
             <div class="card card-block">
             <ul>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" id="check-all-g-s" class="check-all" name="check-all-g-s" value="select-all" checked>
                 <label for="check-all-g-s"> &nbsp; Deselect All</label>
               </li>
               {% for gradesserved in value %}
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked> &nbsp; {{ gradesserved }}
               </li>
               {% endfor %}
@@ -108,12 +108,12 @@
           <div class="collapse" id="m-p-collapse">
             <div class="card card-block">
             <ul>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" id="check-all-m-p" class="check-all" name="check-all-m-p" value="select-all" checked>
                 <label for="check-all-m-p"> &nbsp; Deselect All </label>
               </li>
               {% for multilingualPathways in value %}
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" name="m-p" class="check" value="{{ multilingualPathways }}" checked> &nbsp; {{ multilingualPathways }}
               </li>
               {% endfor %}
@@ -140,11 +140,11 @@
           <div class="collapse" id="b-s-p-collapse">
             <div class="card card-block">
             <ul>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" id="check-all-b-s-p" class="check-all" name="check-all-b-s-p" value="select-all" checked>
                 <label for="check-all-b-s-p"> &nbsp; Deselect All </label>
               </li>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" name="b-s-p" class="check" value="Yes" checked> &nbsp; Yes
               </li>
             
@@ -172,11 +172,11 @@
           <div class="collapse" id="a-s-p-collapse">
             <div class="card card-block">
             <ul>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" id="check-all-a-s-p" class="check-all" name="check-all-a-s-p" value="select-all" checked>
                 <label for="check-all-a-s-p"> &nbsp; Deselect All </label>
               </li>
-              <li>
+              <li class="checkbox-li">
                 <input type="checkbox" name="a-s-p" class="check" value="Yes" checked> &nbsp; Yes
               </li>
             </ul>

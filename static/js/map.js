@@ -373,6 +373,7 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
+        $("#show-side-nav").hide();
         $("#hide-side-nav").click();
         $("#hide-side-nav-div").hide();
     }
