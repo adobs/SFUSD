@@ -184,6 +184,13 @@
 			border-color: #4d90fe;
 		  }
 
+	@media(max-width:991px) {
+		.pac-card, #toggle-button{
+			box-sizing: unset;
+			-moz-box-sizing: unset;
+		}
+
+	}
 	#hide-side-nav {
 		float: right;
 		padding-right: 20px;
