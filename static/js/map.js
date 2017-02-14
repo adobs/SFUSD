@@ -28,7 +28,7 @@ function initAutocomplete() {
     var searchBox = new google.maps.places.SearchBox(input);
     console.log("this._gtMdWidth is ", gtMdWidth);
     if (gtMdWidth) {
-        var toggleButton = document.getElementById('toggle-button');
+        var toggleButton = document.getElementById('toggle-search-div');
         var inputDiv = document.createElement('div');
     
         inputDiv.appendChild(toggleButton);

@@ -141,7 +141,7 @@
 		display: inline-block;
 	}
 
-	.pac-card, #toggle-button{
+	.pac-card {
 			display: inline-block;
 			margin: 10px 10px 0 0;
 			border-radius: 2px 0 0 2px;
@@ -216,11 +216,20 @@
 #menu-toggle {
 	border-color: solid #fff000;
 	border-width: 4px;
+		display: inline-block;
+			margin: 0;
+			border-radius: 2px 0 0 2px;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			outline: none;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+			background-color: #fff;
+			font-family: Roboto;
 }
 #toggle-search-div {
-	display: inline;
-/*	flex-direction: row;
+	display: flex;
+	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: center;
-*/}
+}
