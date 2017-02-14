@@ -351,14 +351,14 @@ $(document).ready(function() {
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
         console.log("SCREEN LARGER THAN MD");
+        $("#show-side-nav").hide();
         $("#wrapper").toggleClass("toggled");
-        // $("#menu-toggle").hide();
+        $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
         $("#hide-side-nav").click();
-        // $("#wrapper").toggleClass("toggled");
+        $("#flex-box-parent").hide();
     }
-    $("#show-side-nav").hide();
 
 
     var chart = initialize();
