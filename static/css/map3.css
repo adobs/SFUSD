@@ -197,7 +197,7 @@
 	#hide-side-nav {
 		float: right;
 		padding-right: 20px;
-		padding-bottom: 10px;
+		padding-bottom: 0px;
 		text-align: right;
 	}
 
@@ -226,6 +226,7 @@
 			background-color: #fff;
 			font-family: Roboto;
 }
+
 #toggle-search-div {
 	display: flex;
 	flex-direction: row;
@@ -233,4 +234,8 @@
 	justify-content: flex-start;
 	align-items: center;
 	margin-bottom: 10px;
+}
+
+#n-form{
+	padding-top: 0px;
 }

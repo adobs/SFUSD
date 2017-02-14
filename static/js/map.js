@@ -1,12 +1,25 @@
 // TODO
-// 72 elementary schools, 13 middle schools, and 14 high schools to choose from
+// add the complete elementary, middle, high school
+// color code the e, m, h, school and add a key
+// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood
+
 // general formatting
 // messaging to expalin attendance area
+// add all relevant commenting to code
+// add directions to here/from here
+// figure out how to center mobile page on load
+// get school tour information
+// add the CTIP to the info window
+
+
 var map;
 var infoWindow = new google.maps.InfoWindow({
   width: 150
 });
 var gtMdWidth;
+var attendanceArea;
+
+var markers = [];
 
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
@@ -90,17 +103,15 @@ function initAutocomplete() {
                 position: place.geometry.location
             });
             homeMarkers.push(homeMarker);
-            var ctipName;
+            var aaname;
             google.maps.event.addListener(homeMarker, "click", function(event) { 
                     attendanceAreaPolygonArray.forEach(function(element, index, array) {
                         if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
-                            ctipName = element.name; 
+                            aaname = element.name; 
                         }
                    });
-                    console.log("CTIP IS ", ctipName);
+                    addHomeMarkerInfoWindow(homeMarker, { aaname: aaname })
                 }); 
-            // get the CTIP info for the marker
-            // $.get("/ctip.json", {placeId: place.place_id}, addHomeMarkerInfoWindow.bind(this, homeMarker));
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
@@ -110,26 +121,35 @@ function initAutocomplete() {
     });
 }
 
-var attendanceArea;
-function addHomeMarkerInfoWindow (homeMarker, data) {
-    // attendanceArea = data.aaname;
-    // var ctipScore = data.ctip;
-    // var homeInfoWindow = new google.maps.InfoWindow({
-    //     width: 150
-    // });
-
-    // var html =
-    //     '<div id="home-info-window-content">' +
-    //         '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
-    //         '<b>CTIP score: </b>'+ ctipScore + '<br>' +
-    //         // '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only schools in my attendance area</button>' +
-    //     '</div>';
-    
-    // bindInfoWindow(homeMarker, map, homeInfoWindow, html);
-   
-
-    
+function onShowAttendanceArea() {
+    attendanceAreaPolygonArray.forEach(function(element) {
+        markers.forEach(function(marker) {
+            if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== attendanceArea) {
+                marker.setMap(null);
+            }  
+        })
+    });
+    $("#form-submit").val("Redo Search")
 }
+
+
+function addHomeMarkerInfoWindow (homeMarker, data) {
+    attendanceArea = data.aaname;
+    // var ctipScore = data.ctip;
+    var homeInfoWindow = new google.maps.InfoWindow({
+        width: 150
+    });
+
+    var html = '<div id="home-info-window-content">' +
+            '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
+            // '<b>CTIP score: </b>'+ ctipScore + '<br>' +
+            '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only schools in my attendance area</button>' +
+        '</div>';
+    
+    bindInfoWindow(homeMarker, map, homeInfoWindow, html);
+}
+
+
 
 function getHtml(name, startTime, endTime, middleSchoolFeeder,
                         principal, address, phone, fax, email, website){
@@ -163,7 +183,6 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 
 
 
-var markers = [];
 function createMarker(lat, lng, name){
     var position = {lat: lat, lng: lng};
 
@@ -228,6 +247,7 @@ function addMarkers(data){
 
 $('#map-choices-form').on('submit', function (e) {
     e.preventDefault();
+    $("#form-submit").val("Submit");
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
@@ -236,7 +256,6 @@ $('#map-choices-form').on('submit', function (e) {
 
 
 //check all checkboxes
-// TODO bind all checkboxes so that when they are clicked they are checked
 $(".check-all").change(function () {
     // slice the 'check-all'
     var num = "check-all-".length;
@@ -294,15 +313,18 @@ function populateAttendanceAreaPolygon (data) {
         for (name in attendanceArea) {
         
             // turn items into integers
-
-            console.log('name is ', name);
             var paths = attendanceArea[name];
             paths.forEach(function(element, index, array) {
                 array[index] = {lat: parseFloat(element.lat), lng: parseFloat(element.lng)}
             });
             var attendanceAreaPolygon = new google.maps.Polygon({
                 name: name,
-                paths: paths
+                paths: paths,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.0,
+                strokeWeight: 2,
+                fillColor: '#0000FF',
+                fillOpacity: 0.0
             });
             attendanceAreaPolygon.setMap(map);
 
@@ -315,10 +337,6 @@ function populateAttendanceAreaPolygon (data) {
 }
 
 function getAttendanceAreaName(event) {
-    console.log("AA name: ", this.name);
-    // var attendanceAreaName = this.name;
-    // console.log("CONENTS STRING ", this.name);
-
 }
 
 
@@ -350,17 +368,16 @@ $(document).ready(function() {
     // setting up screen
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
-        console.log("SCREEN LARGER THAN MD");
         $("#show-side-nav").hide();
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
         $("#hide-side-nav").click();
-        $("#flex-box-parent").hide();
+        $("#hide-side-nav-div").hide();
     }
 
-
+    // instantiate map and populate counts on criteria
     var chart = initialize();
     var countArr = $(".count");
   

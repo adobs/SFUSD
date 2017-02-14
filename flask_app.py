@@ -20,18 +20,20 @@ def map():
 
     return render_template("map3.html", checkbox_labels=checkbox_labels)
 
-# @app.route("/attendance-area.json")
-# def attendance_area():
-# 	attendance_area = request.args.get("attendanceArea")
 
-# 	attendance_area_schools = get_matching_attendance_area_schools(read_csv(), attendance_area)
 @app.route("/attendance-area-coordinates.json")
 def attendance_area_coordinates():
 	""" Retrieves parsed attendance area and sends back in AJAX GET request """
 
 	attendance_area = get_xml_information()
-	print "ATTENDANCE AREA IS ", attendance_area
 	return json.dumps(attendance_area)
+
+
+# @app.route("/attendance-area-schools.json")
+# def attendance_area_schools():
+# 	""" Obtains list of schools that are in user's selected attendance area """
+
+# 	aaname = request.args.get("aaname")
 
 
 @app.route("/map-checked.json")
@@ -72,32 +74,6 @@ def map_checked():
 
 	matching_schools = get_matching_schools(read_csv(), inputs)
 	return json.dumps(matching_schools)
-
-@app.route("/ctip.json")
-def ctip():
-	# change this to get the input of the region clicked on; will have to parse request.args data
-	print "IN CTIP\n\n"
-	place_id = request.args.get("placeId")
-	print "\n\n place_id is ", place_id
-	csv_info = get_sf_googlemapspolygon_coordinates()
-	return jsonify(csv_info[place_id])
-
-# @app.route("/make-place-ids.json")
-# def make_place_ids():
-# 	print "\n\n\n STEP 2 IN MAKE PLACE IDS\n\n"
-# 	coordinates_dict = get_sf_googlemapspolygon_coordinates()
-
-# 	return jsonify(coordinates_dict)
-
-# @app.route("/add-place-id-to-csv.json")
-# def add_place_ids():
-# 	print "\n\n\n STEP 4 IN ADD PLACE IDS \n\n"
-
-# 	place_id_dict = request.args.get("placeIds")
-
-# 	write_to_sf_csv(place_id_dict)
-# 	return "success"
-
 
 
 if __name__ == "__main__":
