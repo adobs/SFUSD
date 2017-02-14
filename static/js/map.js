@@ -7,7 +7,6 @@
 // messaging to expalin attendance area
 // add all relevant commenting to code
 // add directions to here/from here
-// figure out how to center mobile page on load
 // get school tour information
 // add the CTIP to the info window
 
@@ -143,7 +142,7 @@ function addHomeMarkerInfoWindow (homeMarker, data) {
     var html = '<div id="home-info-window-content">' +
             '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
             // '<b>CTIP score: </b>'+ ctipScore + '<br>' +
-            '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only schools in my attendance area</button>' +
+            '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only ' + attendanceArea.toUpperCase() + ' schools</button>' +
         '</div>';
     
     bindInfoWindow(homeMarker, map, homeInfoWindow, html);
