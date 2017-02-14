@@ -185,9 +185,9 @@
 		  }
 
 	@media(max-width:991px) {
-		.pac-card, #toggle-button{
-			box-sizing: unset;
-			-moz-box-sizing: unset;
+		.pac-card{
+			box-sizing: content-box;
+			-moz-box-sizing: content-box;
 		}
 
 	}

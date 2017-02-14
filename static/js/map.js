@@ -41,8 +41,8 @@ function initAutocomplete() {
         var menuHeight = $("#pac-input").height();
         $("#menu-toggle").height(menuHeight);
         var menuWidth = $("#menu-toggle").width();
-        var searchBarWidth = windowWidth - menuWidth - 10;
-        $(".pac-card").width(searchBarWidth);
+        // var searchBarWidth = windowWidth - menuWidth - 10;
+        // $("#pac-input").width(searchBarWidth);
     }
 
     
