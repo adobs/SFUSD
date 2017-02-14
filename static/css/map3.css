@@ -185,7 +185,7 @@
 		  }
 
 	@media(max-width:991px) {
-		#pac-input {
+		.pac-card {
 			box-sizing: unset;
 			-moz-box-sizing: unset;
 		}

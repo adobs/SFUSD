@@ -44,7 +44,7 @@ function initAutocomplete() {
         var windowWidth = $(window).width();
 
         var searchBarWidth = windowWidth - menuWidth - 10;
-        $("#pac-input").width(searchBarWidth);
+        $(".pac-card").width(searchBarWidth);
     }
 
     
