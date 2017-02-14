@@ -38,9 +38,6 @@ function initAutocomplete() {
         map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
     } else {
         // set right size of the hamburger option
-        var menuHeight = $("#pac-input").height();
-
-        $("#menu-toggle").height(menuHeight);
         var menuWidth = $("#menu-toggle").width();
         var windowWidth = $(window).width();
 
@@ -325,7 +322,6 @@ function getAttendanceAreaName(event) {
 
 $(document).ready(function() {
     var windowWidth = $(window).width();
-    console.log("windowidth is ", windowWidth);
     var MD_WIDTH = 992;
 
     $("#menu-toggle").click(function(e) {
@@ -354,7 +350,7 @@ $(document).ready(function() {
         gtMdWidth = true;
         console.log("SCREEN LARGER THAN MD");
         $("#wrapper").toggleClass("toggled");
-        $("#menu-toggle").hide();
+        // $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
         $("#hide-side-nav").click();
