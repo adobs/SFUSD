@@ -13,15 +13,22 @@ def read_csv():
 
 	# TODO strip all input of spaces
 
-	schools = csv.DictReader(open('data_transformation/input_data.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	elementary_schools = csv.DictReader(open('data_transformation/2017-18 Elementary School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	middle_schools = csv.DictReader(open('data_transformation/2017-18 Middle School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	high_schools = csv.DictReader(open('data_transformation/2017-18 High School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
 	
-	for school in schools:
-		new_school_object = School(school)
+	for elementary_school in elementary_schools:
+		new_school_object = School(elementary_school)
 		school_objects_list.append(new_school_object)
 
-	# parse_phone_number(school_objects_list)
+	for middle_school in middle_schools:
+		new_school_object = School(middle_school)
+		school_objects_list.append(new_school_object)
 
-	# TODO -> freeze this (pickle)? so this doesn't have to be read every single time, just if the file has change
+	for high_school in high_schools:
+		new_school_object = School(high_school)
+		school_objects_list.append(new_school_object)
+
 	return school_objects_list
 
 def get_unqiue_row_data_from_specified_headers(school_objects_list):
@@ -90,7 +97,8 @@ def get_matching_schools(school_objects_list, matching_parameters):
 		   						   "email": school.email,
 		   						   "fax_number": school.fax_number,
 		   						   "middle_school_feeder": school.middle_school_feeder,
-		   						   "principal": school.principal})
+		   						   "principal": school.principal,
+		   						   "grades_served": school.grades_served})
 
 	return output_schools
 

@@ -12,7 +12,6 @@ class School:
 
     def populate_properties(self):
     	self.timestamp = self.inputs["Timestamp"]
-    	self.username = self.inputs["Username"]
     	self.name = self.inputs["School name"]
     	self.grades_served = self.inputs["Grades served"].split(", ")
     	self.id_number = self.inputs["School ID number"]
@@ -28,9 +27,6 @@ class School:
     	self.neighborhood = self.inputs["Neighborhood"].split(", ")
     	self.principal = self.inputs["Principal"]
     	self.tours = self.inputs["School tours"]
-    	self.uniforms = self.inputs["Uniforms and dress code"]
-    	self.prek = self.inputs["Pre-Kindergarten"]
-    	self.tk = self.inputs["Transitional Kindergarten (TK)"]
     	self.before_school_program = self.inputs["Before school programs"].split(", ")
     	self.before_school_program_offerings = self.inputs["Does your before school program offer:"].split(", ")
     	self.after_school_program = self.inputs["Afterschool programs"].split(", ")
@@ -38,8 +34,6 @@ class School:
     	self.multilingual_pathways = self.inputs["Multilingual Pathways"].split(", ")
     	self.special_education = self.inputs["Special education classes"]
     	self.student_support_programs = self.inputs["Student support programs"]
-    	self.arts = self.inputs["Arts enrichment"]
-    	self.academics = self.inputs["Academic enrichment"]
     	self.middle_school_feeder = self.inputs["Middle school feeder"]
 
 

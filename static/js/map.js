@@ -95,13 +95,27 @@ function initAutocomplete() {
                 new google.maps.Size(25, 25)
             );
             // Create a marker for each place.
-            var homeMarker = new google.maps.Marker({
+            // var homeMarker = new google.maps.Marker({
+            //     map: map,
+            //     animation: google.maps.Animation.DROP,
+            //     icon: image,
+            //     title: place.name,
+            //     position: place.geometry.location
+            // });
+
+            var homeMarker = new Marker({
                 map: map,
-                animation: google.maps.Animation.DROP,
-                icon: image,
-                title: place.name,
-                position: place.geometry.location
+                position: place.geometry.location,
+                icon: {
+                    path: SQUARE_PIN,
+                    fillColor: "#000",
+                    fillOpacity: 1,
+                    strokeColor: '#fff',
+                    strokeWeight: 1
+                },
+                map_icon_label: '<span class="map-icon map-icon-map-pin"><span class="marker-label"><br>HOME</span></span>'
             });
+            
             homeMarkers.push(homeMarker);
             var aaname;
             google.maps.event.addListener(homeMarker, "click", function(event) { 
@@ -115,7 +129,7 @@ function initAutocomplete() {
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
-
+    
         });
     
     });
@@ -183,28 +197,37 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 
 
 
-function createMarker(lat, lng, name){
+function createMarker(lat, lng, name, gradesServed){
     var position = {lat: lat, lng: lng};
 
-    // var marker = new google.maps.Marker({
-    //     position: position,
-    //     title: name,
-    //     map: map
-    // });
-
-    // return marker;
+    var fillColor;
+    var grade;
+    switch(gradesServed) {
+        case "9-12":
+            fillColor = '#f765b9';
+            grade = "High";
+            break;
+        case "6-8":
+            fillColor = '#f9f069';
+            grade = "Mid";
+            break;
+        default: 
+            fillColor = '#00CCBB';
+            grade = "Elem";
+            break;
+    }
 
     var marker = new Marker({
         map: map,
         position: position,
         icon: {
             path: SQUARE_PIN,
-            fillColor: '#00CCBB',
+            fillColor: fillColor,
             fillOpacity: 1,
             strokeColor: '#fff',
             strokeWeight: 1
         },
-        map_icon_label: '<span class="map-icon map-icon-school"><span class="elementary"><br>Elem</span></span>'
+        map_icon_label: '<span class="map-icon map-icon-school"><span class="marker-label"><br>' + grade + '</span></span>'
     });
     return marker;
 }
@@ -226,6 +249,7 @@ function bindInfoWindow(marker, map, infoWindow, html) {
 
 // Adds a marker to the map
 function addMarkers(data){
+    console.log("DATA IS",data);
     removeAllMarkers();
 
     data = JSON.parse(data);
@@ -245,12 +269,13 @@ function addMarkers(data){
         var fax = school.fax_number;
         var email = school.email;
         var website = school.website;
+        var gradesServed = school.grades_served[0];
         
 
         var html = getHtml(name, startTime, endTime, middleSchoolFeeder,
                         principal, address, phone, fax, email, website);
 
-        var marker = createMarker(lat, lng, name);
+        var marker = createMarker(lat, lng, name, gradesServed);
         markers.push(marker);
 
         bindInfoWindow(marker, map, infoWindow, html);

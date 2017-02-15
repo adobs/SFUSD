@@ -244,11 +244,13 @@
 	padding-left: 15px;
 }
 
-.elementary {
+.marker-label {
 	font-size: 12px;
 	margin: 0;
 	padding: 0;
 }
-br {
-	font-size: 1px;
+
+#home {
+	font-size: 10px;
 }
+
