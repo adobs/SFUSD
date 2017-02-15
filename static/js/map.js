@@ -1,16 +1,18 @@
 // TODO
-// add the complete elementary, middle, high school
-// color code the e, m, h, school and add a key
-// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood
 
-// general formatting
+// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood
+// add in website header
+
+// collapse the languages
 // messaging to expalin attendance area
-// add all relevant commenting to code
+
 // add directions to here/from here
 
+// add all relevant commenting to code
+// general formatting
 // get school tour information
 // add the CTIP to the info window
-// on click on school marker recenter the map
+// rate limiting
 
 var map;
 var infoWindow = new google.maps.InfoWindow({
@@ -94,15 +96,8 @@ function initAutocomplete() {
                 new google.maps.Point(0, 32),
                 new google.maps.Size(25, 25)
             );
-            // Create a marker for each place.
-            // var homeMarker = new google.maps.Marker({
-            //     map: map,
-            //     animation: google.maps.Animation.DROP,
-            //     icon: image,
-            //     title: place.name,
-            //     position: place.geometry.location
-            // });
 
+            // Create a marker for each place.
             var homeMarker = new Marker({
                 map: map,
                 position: place.geometry.location,
@@ -135,17 +130,6 @@ function initAutocomplete() {
     });
 }
 
-function onShowAttendanceArea() {
-    attendanceAreaPolygonArray.forEach(function(element) {
-        markers.forEach(function(marker) {
-            if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== attendanceArea) {
-                marker.setMap(null);
-            }  
-        })
-    });
-    $("#form-submit").val("Redo Search")
-}
-
 
 function addHomeMarkerInfoWindow (homeMarker, data) {
     attendanceArea = data.aaname;
@@ -157,12 +141,32 @@ function addHomeMarkerInfoWindow (homeMarker, data) {
     var html = '<div id="home-info-window-content">' +
             '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
             // '<b>CTIP score: </b>'+ ctipScore + '<br>' +
-            '<button id="showAttendanceArea" onclick="onShowAttendanceArea()">Show only ' + attendanceArea.toUpperCase() + ' schools</button>' +
+            '<button id="show-attendance-area" onclick="onShowAttendanceArea()">Show only ' + attendanceArea.toUpperCase() + ' schools</button>' +
         '</div>';
     
     bindInfoWindow(homeMarker, map, homeInfoWindow, html);
 }
 
+
+function onShowAttendanceArea() {
+    
+    if ($("#show-attendance-area").hasClass("toggled")) {
+        $("#map-choices-form").submit();
+        $("#show-attendance-area").text("Show only " + attendanceArea.toUpperCase() + " schools")
+        
+    } else {
+        attendanceAreaPolygonArray.forEach(function(element) {
+            markers.forEach(function(marker) {
+                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== attendanceArea) {
+                    marker.setMap(null);
+                }  
+            })
+        });
+        $("#show-attendance-area").text("Reset");
+    }
+    
+    $("#show-attendance-area").toggleClass("toggled");
+}
 
 
 function getHtml(name, startTime, endTime, middleSchoolFeeder,
@@ -192,9 +196,6 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
     return html;
 
 }
-
-
-
 
 
 function createMarker(lat, lng, name, gradesServed){
@@ -286,7 +287,7 @@ function addMarkers(data){
 
 $('#map-choices-form').on('submit', function (e) {
     e.preventDefault();
-    $("#form-submit").val("Submit");
+    // $("#form-submit").val("Submit");
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
@@ -427,7 +428,14 @@ $(document).ready(function() {
         var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
         $(element).html(numChecked);            
     };
-   
+    
+
+    $(".K-5").css("color", "#00CCBB");
+    $(".K-8").css("color", "#00CCBB");
+    $(".PreK-5").css("color", "#00CCBB");
+    $(".PreK-8").css("color", "#00CCBB");
+    $(".6-8").css("color", "#f9f069");
+    $(".9-12").css("color", "#f765b9");
     
     $("#map-choices-form").submit();
 

@@ -93,7 +93,8 @@
               </li>
               {% for gradesserved in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked> &nbsp; {{ gradesserved }}
+                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked><span class="map-icon map-icon-school {{ gradesserved }} icon-legend"></span>
+                &nbsp; {{ gradesserved }}
               </li>
               {% endfor %}
             </ul>

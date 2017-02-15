@@ -31,6 +31,7 @@ def read_csv():
 
 	return school_objects_list
 
+
 def get_unqiue_row_data_from_specified_headers(school_objects_list):
 	""" Based on HARDCODED specified identyfing column names, returns data to populate checkboxes """
 
@@ -65,8 +66,35 @@ def get_unqiue_row_data_from_specified_headers(school_objects_list):
 	before_school_program_offerings.discard("")
 	after_school_program.discard("")
 	after_school_program_offerings.discard("")
-	
-	unique_content = {"grades_served": sorted(grades_served), 
+		
+	def grades_sorted(grades):
+		grades = list(grades)
+
+		pre = []
+		k = []
+		number = []
+		
+		output = []
+
+		for grade in grades:
+			if grade[0] == "P":
+				pre.append(grade)
+			elif grade[0] == "K":
+				k.append (grade)
+			else:
+				number.append(grade)
+
+		pre.sort()
+		k.sort()
+		number.sort()
+		[output.append(element) for element in pre]
+		[output.append(element) for element in k]
+		[output.append(element) for element in number]
+
+		return output
+
+
+	unique_content = {"grades_served": grades_sorted(grades_served), 
 					  "start_time": sorted(start_time), 
 					  "end_time": sorted(end_time), 
 					  "neighborhood": sorted(neighborhood),
@@ -102,7 +130,7 @@ def get_matching_schools(school_objects_list, matching_parameters):
 
 	return output_schools
 
-# def attendance_area_schools(school_objects_list, )
+
 def get_sf_googlemapspolygon_coordinates():
 	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
 	sf_googlemaps_coordinates_dict = {}
@@ -121,6 +149,7 @@ def get_sf_googlemapspolygon_coordinates():
 
 	return sf_googlemaps_coordinates_dict
 
+
 def write_to_sf_csv(place_ids_dict):
 
 	reader = csv.DictReader(open('data_transformation/sf_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
@@ -135,19 +164,3 @@ def write_to_sf_csv(place_ids_dict):
 
 	return "success"
 
-
-# def get_ti_googlemapspolygon_coordinates():
-# 	# {name of region: [{lat, lng}], name of region1: [{lat, lng}]}
-# 	ti_googlemaps_coordinates_dict = {}
-
-# 	ti_coordinates = csv.DictReader(open('data_transformation/ti_address1617.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
-# 	for ti_coordinate in ti_coordinates:
-# 		name = sf_coordinate["aaname"]
-# 		lat = sf_coordinate["lat"]
-# 		lng = sf_coordinate["lng"]
-
-# 		ti_googlemaps_coordinates_dict[name] = sf_googlemaps_coordinates_dict.get(name, [])
-# 		ti_googlemaps_coordinates_dict[name].append({lat: lat, lng: lng})
-
-
-	# return ti_googlemaps_coordinates_dict
