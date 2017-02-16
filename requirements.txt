@@ -20,7 +20,7 @@ ptyprocess==0.5
 PyVirtualDisplay==0.1.5
 requests==2.8.1
 scikit-learn==0.17
-scipy==0.16.1
+SciPy==0.18.1
 simplegeneric==0.8.1
 simplejson==3.8.1
 six==1.10.0
