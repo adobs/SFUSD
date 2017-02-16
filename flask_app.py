@@ -29,13 +29,6 @@ def attendance_area_coordinates():
 	return json.dumps(attendance_area)
 
 
-# @app.route("/attendance-area-schools.json")
-# def attendance_area_schools():
-# 	""" Obtains list of schools that are in user's selected attendance area """
-
-# 	aaname = request.args.get("aaname")
-
-
 @app.route("/map-checked.json")
 def map_checked():
 	form_data = request.values.items(multi=True)

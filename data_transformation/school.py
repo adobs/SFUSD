@@ -24,7 +24,7 @@ class School:
     	self.fax_number = self.inputs["School fax number"]
     	self.email = self.inputs["School email"]
     	self.website = self.inputs["School website link"]
-    	self.neighborhood = self.inputs["Neighborhood"].split(", ")
+    	self.neighborhood = self.inputs["Neighborhood"]
     	self.principal = self.inputs["Principal"]
     	self.tours = self.inputs["School tours"]
     	self.before_school_program = self.inputs["Before school programs"].split(", ")

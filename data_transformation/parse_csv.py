@@ -5,6 +5,8 @@ File creates a list of School objects based on the input csv file
 """
 import csv
 from school import School
+import googlemaps 
+from sklearn.externals import joblib
 
 def read_csv():
 	""" Read csv file and create School objects from it """
@@ -29,8 +31,32 @@ def read_csv():
 		new_school_object = School(high_school)
 		school_objects_list.append(new_school_object)
 
+
+	""" If adding a new school, uncomment the below code ONCE to run the fix_neighborhoods code.  
+	 The result of the code is pickled, so the new neighborhood information will persist over new sessions  """
+	# joblib.dump(fix_neighborhoods(school_objects_list), 'static/pkl/school_objects.pkl')
+
+	school_objects_list = joblib.load('static/pkl/school_objects.pkl')
+
 	return school_objects_list
 
+
+def fix_neighborhoods(school_objects_list):
+	""" Rewrite neighborhoods based on Google Maps and Lat/Long column """
+	
+	gmaps = googlemaps.Client(key='AIzaSyA6Q8s8XrW3FwGSp_D8vQUtZxBDjc3RnDs')
+	
+	output = []
+
+	for school in school_objects_list:
+		lat = float(school.lat)
+		lng = float(school.long)
+		reverse_geocode_result = gmaps.reverse_geocode((lat, lng))
+		neighborhood = reverse_geocode_result[0]["address_components"][2]["long_name"]
+		school.neighborhood = neighborhood
+		output.append(school) 
+	
+	return output
 
 def get_unqiue_row_data_from_specified_headers(school_objects_list):
 	""" Based on HARDCODED specified identyfing column names, returns data to populate checkboxes """
@@ -49,7 +75,7 @@ def get_unqiue_row_data_from_specified_headers(school_objects_list):
 		grades_served.update(school.grades_served)
 		start_time.update(school.start_time)
 		end_time.update(school.end_time)
-		neighborhood.update(school.neighborhood)
+		neighborhood.update([school.neighborhood])
 		multilingual_pathways.update(school.multilingual_pathways)
 		before_school_program.update(school.before_school_program)
 		before_school_program_offerings.update(school.before_school_program_offerings)

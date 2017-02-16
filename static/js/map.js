@@ -1,13 +1,15 @@
 // TODO
 
-// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood
+// email back Hans
+// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood => in a pickle
 // add in website header
 
-// collapse the languages
+// collapse the languages - ask Zach about the ALL one
 // messaging to expalin attendance area
 
 // add directions to here/from here
-
+// fix all the overlapping infowinows for the home
+// fix overlapping icons
 // add all relevant commenting to code
 // general formatting
 // get school tour information
@@ -20,8 +22,8 @@ var infoWindow = new google.maps.InfoWindow({
 });
 var gtMdWidth;
 var attendanceArea;
-
 var markers = [];
+var homeMarkers = [];
 
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
@@ -67,7 +69,7 @@ function initAutocomplete() {
     
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    var homeMarkers = [];
+    
     searchBox.addListener('places_changed', function() {
 
         var places = searchBox.getPlaces();
@@ -80,7 +82,6 @@ function initAutocomplete() {
         homeMarkers.forEach(function(marker) {
            marker.setMap(null);
         });
-        homeMarkers = [];
 
         // For each place, get the icon, name and location.
         places.forEach(function(place) {
@@ -134,9 +135,6 @@ function initAutocomplete() {
 function addHomeMarkerInfoWindow (homeMarker, data) {
     attendanceArea = data.aaname;
     // var ctipScore = data.ctip;
-    var homeInfoWindow = new google.maps.InfoWindow({
-        width: 150
-    });
 
     var html = '<div id="home-info-window-content">' +
             '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
@@ -144,17 +142,17 @@ function addHomeMarkerInfoWindow (homeMarker, data) {
             '<button id="show-attendance-area" onclick="onShowAttendanceArea()">Show only ' + attendanceArea.toUpperCase() + ' schools</button>' +
         '</div>';
     
-    bindInfoWindow(homeMarker, map, homeInfoWindow, html);
+    bindInfoWindow(homeMarker, map, html);
 }
 
 
 function onShowAttendanceArea() {
     
     if ($("#show-attendance-area").hasClass("toggled")) {
-        $("#map-choices-form").submit();
         $("#show-attendance-area").text("Show only " + attendanceArea.toUpperCase() + " schools")
-        
+        $("#map-choices-form").submit();
     } else {
+        $("#show-attendance-area").text("Reset");
         attendanceAreaPolygonArray.forEach(function(element) {
             markers.forEach(function(marker) {
                 if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== attendanceArea) {
@@ -162,7 +160,7 @@ function onShowAttendanceArea() {
                 }  
             })
         });
-        $("#show-attendance-area").text("Reset");
+        
     }
     
     $("#show-attendance-area").toggleClass("toggled");
@@ -234,13 +232,14 @@ function createMarker(lat, lng, name, gradesServed){
 }
 
 function removeAllMarkers() {
-    for (var j = 0; j < markers.length; j++) {
-        var marker = markers[j];
+    for (var i = 0; i < markers.length; i++) {
+        var marker = markers[i];
         marker.setMap(null);
     }
 }
 
-function bindInfoWindow(marker, map, infoWindow, html) {
+
+function bindInfoWindow(marker, map, html) {
     google.maps.event.addListener(marker, 'click', function () {
         infoWindow.close();
         infoWindow.setContent(html);
@@ -250,7 +249,7 @@ function bindInfoWindow(marker, map, infoWindow, html) {
 
 // Adds a marker to the map
 function addMarkers(data){
-    console.log("DATA IS",data);
+
     removeAllMarkers();
 
     data = JSON.parse(data);
@@ -279,7 +278,7 @@ function addMarkers(data){
         var marker = createMarker(lat, lng, name, gradesServed);
         markers.push(marker);
 
-        bindInfoWindow(marker, map, infoWindow, html);
+        bindInfoWindow(marker, map, html);
     }
 
 }
