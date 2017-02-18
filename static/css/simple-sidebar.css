@@ -132,3 +132,8 @@
         margin-right: 0;
     }
 }
+
+#toggle-search-div {
+    display: flex;
+    align-items: flex-end;
+}
