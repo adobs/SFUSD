@@ -324,12 +324,11 @@ div#page-content-wrapper.row {
 	#map {
 		border: 0px solid transparent;
 	}
-}
-@media(min-width: 992px) {
-	#pac-input {
-		border: 2px solid #fad355;
+	#toggle-search-div {
+		border: 4px solid #fad355;
 	}
 }
+
 body {
 	background: #EDEDED;
 }
