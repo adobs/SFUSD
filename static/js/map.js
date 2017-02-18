@@ -1,20 +1,18 @@
 // TODO
 
 // email back Hans
-// geocode the addresses of the schools (reverse geocode) to get the actual neighborhood => in a pickle
 // add in website header
 
-// collapse the languages - ask Zach about the ALL one
 // messaging to expalin attendance area
 
 // add directions to here/from here
-// fix all the overlapping infowinows for the home
 // fix overlapping icons
 // add all relevant commenting to code
 // general formatting
 // get school tour information
 // add the CTIP to the info window
 // rate limiting
+// fix the mobile experience - not have polygons maybe?
 
 var map;
 var infoWindow = new google.maps.InfoWindow({
@@ -203,15 +201,15 @@ function createMarker(lat, lng, name, gradesServed){
     var grade;
     switch(gradesServed) {
         case "9-12":
-            fillColor = '#f765b9';
+            fillColor = '#414141';
             grade = "High";
             break;
         case "6-8":
-            fillColor = '#f9f069';
+            fillColor = '#87CCE2';
             grade = "Mid";
             break;
         default: 
-            fillColor = '#00CCBB';
+            fillColor = '#F54900';
             grade = "Elem";
             break;
     }
@@ -417,6 +415,11 @@ $(document).ready(function() {
         $("#hide-side-nav-div").hide();
     }
 
+    var headerHeight = $("#header").height();
+    $("#header-row").height(0.7 * headerHeight);
+    console.log("heder row height", 0.7 * $("#header-row").height());
+    console.log("heaer height ", headerHeight);
+
     // instantiate map and populate counts on criteria
     var chart = initialize();
     var countArr = $(".count");
@@ -429,12 +432,12 @@ $(document).ready(function() {
     };
     
 
-    $(".K-5").css("color", "#00CCBB");
-    $(".K-8").css("color", "#00CCBB");
-    $(".PreK-5").css("color", "#00CCBB");
-    $(".PreK-8").css("color", "#00CCBB");
-    $(".6-8").css("color", "#f9f069");
-    $(".9-12").css("color", "#f765b9");
+    $(".K-5").css("color", "#F54900");
+    $(".K-8").css("color", "#F54900");
+    $(".PreK-5").css("color", "#F54900");
+    $(".PreK-8").css("color", "#F54900");
+    $(".6-8").css("color", "#87CCE2");
+    $(".9-12").css("color", "#414141");
     
     $("#map-choices-form").submit();
 

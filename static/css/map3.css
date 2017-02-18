@@ -1,5 +1,6 @@
 	#whole-page{
 		height: 100%;
+		
 	}
 
 	#search-bar-row {
@@ -30,6 +31,9 @@
 
 	#map {
 	  height: 100%;
+	  border: solid  #fad355 20px;
+	  margin-right: -20px;
+	  margin-top: 5px;
 	}
 
 	#page{
@@ -259,3 +263,49 @@
 	font-size: 12px; 
 	padding-left: 3px;
 }
+
+#header {
+    background: transparent url(/static/img/bg-paper.jpg) no-repeat center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /*height: 70%;*/
+}
+
+.container, #whole-page, #header, body, #header-row {
+	background-clip: content-box;
+	/*background-color: #66c1d4;*/
+	/*padding-bottom: 0px*/
+	margin-bottom: 0px;
+}
+
+
+#header-row {
+	height: 20%;
+}
+
+#page-content-wrapper:after, #whole-page:after {
+	/*background-image: linear-gradient(#000, #000), */
+        /*linear-gradient("#66c1d4",  "#66c1d4");*/
+        /*background-color: #ededed;*/
+}
+#page-content-wrapper {
+    background-image: url(/static/img/bg-blue-grey.png);
+    background-repeat: repeat-x;
+    height: 100% !important;
+    /*padding-bottom: 0px !important;*/
+}
+
+div#page-content-wrapper.row {
+	background: transparent;
+	margin-left: -5px !important;
+	margin-right: -30px !important;
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+	margin-top: 10px;
+}
+
+
+#show-side-nav-div {
+	background: transparent;
+}
+

@@ -31,6 +31,8 @@ def read_csv():
 		new_school_object = School(high_school)
 		school_objects_list.append(new_school_object)
 
+	# edit the multilingual pathways
+	schools_objects_list = fix_multilingual_pathways(school_objects_list)
 
 	""" If adding a new school, uncomment the below code ONCE to run the fix_neighborhoods code.  
 	 The result of the code is pickled, so the new neighborhood information will persist over new sessions  """
@@ -39,6 +41,22 @@ def read_csv():
 	school_objects_list = joblib.load('static/pkl/school_objects.pkl')
 
 	return school_objects_list
+
+def fix_multilingual_pathways(school_objects_list):
+	""" Condense the inputs for Multilingual Pathways (e.g. Cantonese Biliteracy Pathway => Cantonese """
+	output = []
+	for school in school_objects_list:
+		new_multilingual_pathway = []
+		for multilingual_pathway in school.multilingual_pathways:
+			first_word = multilingual_pathway.split(" ")[0]
+			print "first_word is ", first_word
+			multilingual_pathway = multilingual_pathway if first_word == "All" else first_word
+			new_multilingual_pathway.append(multilingual_pathway)
+
+		school.multilingual_pathways = new_multilingual_pathway
+		output.append(school)
+
+	return output 
 
 
 def fix_neighborhoods(school_objects_list):
