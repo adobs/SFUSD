@@ -325,6 +325,11 @@ div#page-content-wrapper.row {
 		border: 0px solid transparent;
 	}
 }
+@media(min-width: 992px) {
+	#pac-input {
+		border: 2px solid #fad355;
+	}
+}
 body {
 	background: #EDEDED;
 }

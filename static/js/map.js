@@ -1,7 +1,7 @@
 // TODO
 
 // email back Hans
-// add in website header
+// add in remaining elementary school
 
 // messaging to expalin attendance area
 
