@@ -416,9 +416,14 @@ $(document).ready(function() {
     }
 
     var headerHeight = $("#header").height();
-    $("#header-row").height(0.7 * headerHeight);
+    $("#header-row").height(headerHeight);
     console.log("heder row height", 0.7 * $("#header-row").height());
     console.log("heaer height ", headerHeight);
+
+    var headerImgWidth = 0.7 * $("#header-img").width();
+    var headerImgHeight = 0.7 * $("#header-img").height();
+    $("#header-img").width(headerImgWidth);
+    $("#header-img").height(headerImgHeight);
 
     // instantiate map and populate counts on criteria
     var chart = initialize();
