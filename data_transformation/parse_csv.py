@@ -11,32 +11,35 @@ from sklearn.externals import joblib
 def read_csv():
 	""" Read csv file and create School objects from it """
 
-	school_objects_list = []
 
 	# TODO strip all input of spaces
 
-	elementary_schools = csv.DictReader(open('data_transformation/2017-18 Elementary School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
-	middle_schools = csv.DictReader(open('data_transformation/2017-18 Middle School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
-	high_schools = csv.DictReader(open('data_transformation/2017-18 High School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
-	
-	for elementary_school in elementary_schools:
-		new_school_object = School(elementary_school)
-		school_objects_list.append(new_school_object)
-
-	for middle_school in middle_schools:
-		new_school_object = School(middle_school)
-		school_objects_list.append(new_school_object)
-
-	for high_school in high_schools:
-		new_school_object = School(high_school)
-		school_objects_list.append(new_school_object)
-
-	# edit the multilingual pathways
-	schools_objects_list = fix_multilingual_pathways(school_objects_list)
-
 	""" If adding a new school, uncomment the below code ONCE to run the fix_neighborhoods code.  
 	 The result of the code is pickled, so the new neighborhood information will persist over new sessions  """
-	# joblib.dump(fix_neighborhoods(school_objects_list), 'static/pkl/school_objects.pkl')
+
+	# school_objects_list = []
+	
+	# elementary_schools = csv.DictReader(open('data_transformation/2017-18 Elementary School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	# middle_schools = csv.DictReader(open('data_transformation/2017-18 Middle School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	# high_schools = csv.DictReader(open('data_transformation/2017-18 High School Description- Responses.csv', 'rU'), dialect=csv.excel_tab, delimiter=",")
+	
+	# for elementary_school in elementary_schools:
+	# 	new_school_object = School(elementary_school)
+	# 	school_objects_list.append(new_school_object)
+
+	# for middle_school in middle_schools:
+	# 	new_school_object = School(middle_school)
+	# 	school_objects_list.append(new_school_object)
+
+	# for high_school in high_schools:
+	# 	new_school_object = School(high_school)
+	# 	school_objects_list.append(new_school_object)
+
+	# # edit the multilingual pathways
+	# schools_objects_list = fix_multilingual_pathways(school_objects_list)
+
+	# schools_objects_list = fix_neighborhoods(school_objects_list)
+	# joblib.dump(school_objects_list, 'static/pkl/school_objects.pkl')
 
 	school_objects_list = joblib.load('static/pkl/school_objects.pkl')
 
@@ -70,6 +73,7 @@ def fix_neighborhoods(school_objects_list):
 		lng = float(school.long)
 		reverse_geocode_result = gmaps.reverse_geocode((lat, lng))
 		neighborhood = reverse_geocode_result[0]["address_components"][2]["long_name"]
+		print "fix_neighborhood ", neighborhood
 		school.neighborhood = neighborhood
 		output.append(school) 
 	
@@ -152,10 +156,10 @@ def get_unqiue_row_data_from_specified_headers(school_objects_list):
 def get_matching_schools(school_objects_list, matching_parameters):
 	output_schools = []
 	for school in school_objects_list:
-		if ([neighborhood for neighborhood in matching_parameters["neighborhood"] if neighborhood in school.neighborhood or "" in school.neighborhood] 
-			and [grades_served for grades_served in matching_parameters["grades_served"] if grades_served in school.grades_served or "" in school.grades_served] 
+		if ([neighborhood for neighborhood in matching_parameters["neighborhood"] if neighborhood in school.neighborhood or "" == school.neighborhood] 
+			and [grades_served for grades_served in matching_parameters["grades_served"] if grades_served in school.grades_served or "" == school.grades_served] 
 			and (school.before_school_program != "" or school.before_school_program_offerings != "")
-			and [multilingual_pathways for multilingual_pathways in matching_parameters["multilingual_pathways"] if multilingual_pathways in school.multilingual_pathways or "" in school.multilingual_pathways]  
+			and [multilingual_pathways for multilingual_pathways in matching_parameters["multilingual_pathways"] if multilingual_pathways in school.multilingual_pathways or "" == school.multilingual_pathways]  
 			and (school.after_school_program != "" or school.after_school_program_offerings != "")):
 			output_schools.append({"name": school.name, 
 		   						   "start_time": school.start_time,

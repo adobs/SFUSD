@@ -1,9 +1,7 @@
 // TODO
 
 /// current list
-// fix the neighborhood
-// change home marker color to yellow
-// hide other markers during directions
+// fix how directions show / hide in the directions-panel
 // make whole criteria label clickable
 // make attendance areas show up
 // fix the reverse
@@ -15,16 +13,17 @@
 // link the address in mobile
 // better home mobile experience (entering home address)
 // ->fix the mobile experience - not have polygons maybe?
+// hide the favorite star buttons on the info window and the show my favorite schools button
 
 //// longer term considerations
-// general formatting
+// general / massive formatting
 // fix overlapping icons
 // add all relevant commenting to code
 // add in remaining elementary school
 // figure out why getting console error occasionally about rowIndex of undefined for moving arrow down/up
 
 ///// to discuss with others
-// photoshop for the images
+// photoshop for the images -> must fix
 // send out my excels -> to add the SARC performance reports and the tours 
 // messaging to expalin attendance area
 // rate limiting
@@ -124,9 +123,9 @@ function initAutocomplete() {
                 position: place.geometry.location,
                 icon: {
                     path: SQUARE_PIN,
-                    fillColor: "#000",
+                    fillColor: "#fad355",
                     fillOpacity: 1,
-                    strokeColor: '#fff',
+                    strokeColor: '#000',
                     strokeWeight: 1
                 },
                 map_icon_label: '<span class="map-icon map-icon-map-pin"><span class="marker-label"><br>HOME</span></span>'
@@ -195,10 +194,21 @@ function onShowAttendanceArea() {
 }
 
 function getDirections(origin, destination, travelMode) {
+    // hide the left side nav
+    $("#hide-side-nav").click();
 
     directionsDisplay.setMap(map);
-    $("#directions-panel").removeClass("col-xs-0").addClass("col-xs-2");
-    $("#map").removeClass("col-xs-12").addClass("col-xs-10");
+    // $("#directions-panel").removeClass("col-xs-0").addClass("col-xs-2");
+    // $("#map").removeClass("col-xs-12").addClass("col-xs-0");
+    var pageWidth = $("#page-content-wrapper").width() + 220;
+    var mapWidth = 0.75 * pageWidth - 30;
+    var directionsWidth = 0.25 * pageWidth - 50;
+    console.log("pageWidth ", pageWidth);
+    console.log("mapWidth ", mapWidth);
+    console.log("directionsWidth ",directionsWidth);
+
+    $("#map").width(mapWidth);
+    $("#directions-panel").width(directionsWidth);
 
     var request = {
         origin: origin, 
@@ -210,7 +220,14 @@ function getDirections(origin, destination, travelMode) {
         directionsDisplay.setPanel(document.getElementById("directions-panel"));
         directionsDisplay.setDirections(response); 
     });
-   
+
+    // hide markers and home marker
+    removeAllMarkers();
+    homeMarkers.forEach(function(marker) {
+       marker.setMap(null);
+    });
+    
+    
 }
 
 function onToHere (travelMode) {
@@ -748,6 +765,21 @@ function populateCtip1Polygon(data) {
     });
 }
 
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+
+    var $printSection = document.getElementById("printSection");
+
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+}
 
 $(document).ready(function() {
     var windowWidth = $(window).width();
@@ -765,13 +797,19 @@ $(document).ready(function() {
         }
         $("#wrapper").toggleClass("toggled");
         $("#hide-side-nav").hide();
+        // fix this
+        $("#directions-panel").show();
     });
+
     
     $("#show-side-nav").click(function(e) {
         e.preventDefault();
         $("#hide-side-nav").show();
         $("#wrapper").toggleClass("toggled");
         $("#show-side-nav").hide();
+        $("#directions-panel").hide();
+        document.getElementById('map').style.width = '100%';
+
     });
 
     // setting up screen
@@ -815,6 +853,7 @@ $(document).ready(function() {
     $(".PreK-8").css("color", "#F54900");
     $(".6-8").css("color", "#87CCE2");
     $(".9-12").css("color", "#414141");
+
     
     $("#map-choices-form").submit();
 
@@ -822,12 +861,11 @@ $(document).ready(function() {
     $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
 
     // modal window set up
-    $("#print-btn").on("click", function() { 
-        $("#modal").printElement(); 
-        setRankOnSchoolComparison();
-    });
-
-    $("#show-favorites-btn").on("click", function() {$("#empty-modal").modal('show');});
     var pageWidth = $("#page-content-wrapper").width();
     $(".modal-dialog").width(pageWidth * .75);
+    $("#print-btn").on("click", function() { 
+        printElement(document.getElementById("printThis"));
+    });
+    $("#show-favorites-btn").on("click", function() {$("#empty-modal").modal('show');});
+    
 });

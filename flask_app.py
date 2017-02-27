@@ -39,7 +39,7 @@ def ctip1_area_xy_coordinates():
 @app.route("/map-checked.json")
 def map_checked():
 	form_data = request.values.items(multi=True)
-
+	print "form data is ", form_data
 	neighborhood = []
 	grades_served = []
 	before_school_program = []
@@ -64,6 +64,7 @@ def map_checked():
 		elif data[0] == "a-s-p-o":
 			after_school_program_offerings.append(data[1])
 
+	print " the potential neighborhood to match on are ", neighborhood
 	inputs = {"neighborhood": neighborhood,
 	    		  "grades_served": grades_served,
 	    		  "before_school_program": before_school_program,
