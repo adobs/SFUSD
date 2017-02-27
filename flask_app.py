@@ -4,6 +4,7 @@ import json
 from hardcoded_data_source.inputs import get_checkbox_headers
 from data_transformation.parse_csv import read_csv, get_unqiue_row_data_from_specified_headers, get_matching_schools, get_sf_googlemapspolygon_coordinates, write_to_sf_csv
 from data_transformation.parse_xml import get_xml_information
+from data_transformation.parse_ctip import get_ctip1_information
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -17,7 +18,7 @@ def map():
     """ Map page. """
     
     checkbox_labels = get_unqiue_row_data_from_specified_headers(read_csv())
-
+ 
     return render_template("map3.html", checkbox_labels=checkbox_labels)
 
 
@@ -28,6 +29,12 @@ def attendance_area_coordinates():
 	attendance_area = get_xml_information()
 	return json.dumps(attendance_area)
 
+@app.route("/ctip1-area-xy-coordinates.json")
+def ctip1_area_xy_coordinates():
+
+	ctip1 = get_ctip1_information()
+	# print "ctip1 is ", type(ctip1)
+	return jsonify(result=ctip1)
 
 @app.route("/map-checked.json")
 def map_checked():

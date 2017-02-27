@@ -3,11 +3,13 @@
 {% block title %}SFUSD{% endblock %}
 
 {% block head %}
+<link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css">
+<script src="https://js.arcgis.com/3.19/"></script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
  
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Q8s8XrW3FwGSp_D8vQUtZxBDjc3RnDs&libraries=places"></script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Q8s8XrW3FwGSp_D8vQUtZxBDjc3RnDs&libraries=places,directions"></script> 
 
     <!-- Custom Markers  -->
     <script src="/static/js/map-icons.min.js"></script>
@@ -28,6 +30,9 @@
     <!-- custom CSS -->
     <link rel="stylesheet" href="/static/css/map3.css">
 
+    <!-- favicon -->
+    <link rel="icon" type="image/png"  href="/static/img/favicon.ico">
+    
 {% endblock %}
 
 {% block content %}
@@ -202,7 +207,11 @@
         </div>
         <!-- End After School Program Section -->
 
-      <input id="form-submit" type="submit" value="Submit"> 
+        <div class="flex-box-child">
+          <button id="show-favorites-btn">Show My Favorite Schools</button>
+        </div>
+        
+        <input id="form-submit" type="submit" value="Submit"> 
       </div> <!-- close flexbox contents -->
       </div> <!-- close div class -->
       
@@ -231,9 +240,68 @@
         </div>
       <div class="col-xs-12" id="map"> 
       </div> <!-- close map -->
+      <div class="col-xs-0" id="directions-panel">
+      </div> <!-- close directions panel -->
       </div> <!-- close row -->
   </div> <!-- close container -->
   </div> <!-- close page-content-wrapper -->
+
+  <!-- School Comparison Modal -->
+  <div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4>
+        </div>
+        <div class="modal-body">
+          <table id="favorites-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Rank</th>
+                <th>School</th>
+                <th>Have I booked a school tour?</th>
+                <th>Have I applied?</th>
+                <th>Comments</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="favorites-table-body">
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6">
+                  <input type="textarea" class="comments" placeholder="Notes">
+                </td> 
+              <tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" id="print-btn" class="btn btn-default">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- School Comparison Modal -->
+  <div class="modal" id="empty-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4>
+        </div>
+        <div class="modal-body">
+          No schools have been added to favorites
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div> <!-- close wrapper -->
 
 
