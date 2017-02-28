@@ -23,6 +23,7 @@
 // figure out why getting console error occasionally about rowIndex of undefined for moving arrow down/up
 // add in google analytics to the page?
 // come up with a testing plan
+// make map moveable/draggable -> is it the polygons?
 
 ///// to discuss with others
 // photoshop for the images -> must fix
@@ -472,14 +473,27 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 }
 
 function onDeleteRow(e){
+    console.log("onDeleteRow:: e ", e);
     var $button = $(e.target);
     var $td = $($button[0].parentElement);
     var $row = $($td[0].parentElement);
+    console.log("onDeleteRow:: $row is ", $row);
+    var id = $row.attr('id');
+
+    for (var i=0; i<starMarkers.length; ++i) {
+        if (starMarkers[i].name === id) {
+            starMarkers[i].setMap(null);
+            starMarkers = starMarkers.slice(0, i).concat(starMarkers.slice(i+1));
+            break;
+        }
+    }
+
     $row.remove();
     setRankOnSchoolComparison();
 }
 
 function onArrowUp(e) {
+    console.log("onArrowUp e ",e);
     var $button = $(e.currentTarget);
     var $td = $($button[0].parentElement);
     var $row = $($td[0].parentElement);    
@@ -488,15 +502,15 @@ function onArrowUp(e) {
     console.log("onArrowUp::currRowIndex ", currRowIndex);
 
     // can't move the first row up
-    if (currRowIndex === 1) {
+    if (currRowIndex === 0) {
         return;
     }
 
     var newRowIndex = currRowIndex - 1;
 
     var children = $("tbody").children();
-    var $currRow =  $(children[currRowIndex - 1]);
-    var $newRow = $(children[newRowIndex - 1]);
+    var $currRow =  $(children[currRowIndex]);
+    var $newRow = $(children[newRowIndex]);
 
     var currRowHtml = $currRow.html();
     var newRowHtml = $newRow.html();
@@ -507,11 +521,13 @@ function onArrowUp(e) {
     // add back click events on buttons
     $(".arrow-up").on("click", onArrowUp);
     $(".arrow-down").on("click", onArrowDown);
-    
+    $(".delete-row").on("click", onDeleteRow);
+
     setRankOnSchoolComparison();
 }
 
 function onArrowDown(e) {
+    console.log("onArrowDown e", e);
     var $button = $(e.currentTarget);
     var $td = $($button[0].parentElement);
     var $row = $($td[0].parentElement);    
@@ -519,16 +535,18 @@ function onArrowDown(e) {
     
     var numRows = document.getElementById("favorites-table-body").rows.length;
 
+    console.log("onArrowDown::currRowIndex ", currRowIndex);
+    console.log("onArrowDown::numRows ", numRows);
     // can't move the last row down
-    if (currRowIndex === numRows) {
+    if (currRowIndex === numRows - 1) {
         return;
     }
 
     var newRowIndex = currRowIndex + 1;
 
     var children = $("tbody").children();
-    var $currRow =  $(children[currRowIndex - 1]);
-    var $newRow = $(children[newRowIndex - 1]);
+    var $currRow =  $(children[currRowIndex]);
+    var $newRow = $(children[newRowIndex]);
 
     var currRowHtml = $currRow.html();
     var newRowHtml = $newRow.html();
@@ -539,6 +557,7 @@ function onArrowDown(e) {
     // add back click events on buttons
     $(".arrow-up").on("click", onArrowUp);
     $(".arrow-down").on("click", onArrowDown);
+    $(".delete-row").on("click", onDeleteRow);
 
     setRankOnSchoolComparison();
 }
@@ -613,7 +632,7 @@ function createMarker(lat, lng, name, gradesServed) {
 }
 
 function removeAllMarkers() {
-    for (var i = 0; i < markers.length; i++) {
+    for (var i = 0; i < markers.length; ++i) {
         var marker = markers[i];
         marker.setMap(null);
     }
@@ -621,7 +640,7 @@ function removeAllMarkers() {
 
 
 function showStarMarkers() {
-    for (var i = 0; i < starMarkers.length; i++) {
+    for (var i = 0; i < starMarkers.length; ++i) {
         var starMarker = starMarkers[i];
         starMarker.setMap(map);
     } 
