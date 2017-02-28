@@ -1,9 +1,8 @@
 // TODO
 
 /// current list
-// window on change events?
 // make map dynamically 100% height
-// fix directions directions so its not cut off
+// when closing info window when in attendance area viewing mode - opening it should say reset
 
 //// mobile specific fixes
 // hide directions buttons in mobile
@@ -47,18 +46,17 @@ var destinationLat, destinationLng;
 var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
-var center;
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
-        center: sanFrancisco
+        center: sanFrancisco,
+        draggable: true
     });
-    center = sanFrancisco;
-
-    map.addListener('bounds_changed', function(){
-        map.setCenter(center);
-    });
+    
+    // map.addListener('bounds_changed', function(){
+    //     map.setCenter(center);
+    // });
     initAutocomplete();
 
     return map;
@@ -160,7 +158,7 @@ function initAutocomplete() {
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
-            center = place.geometry.location;
+
         });
     
     });
@@ -457,8 +455,8 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
                 '<b>Principal: </b>'+ principal + '<br>' +
                 '<span id="address"><b>Address: </b>'+ address + '</span><br>' +
                 '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
-                '<p><b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
-                '<b>Website: </b>'+ '<a href="' + website + '">' + website + '</a><br>' +
+                '<b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
+                '<b>Website: </b><span id="website-span"><a id="website">' + website + '</a></span><br>' +
             '</div>' +
             '<div id="instructions">' +
                 '<button id="directions-from-here" onclick="onDirectionsFromHere()">Directions from here </button>' +
@@ -467,7 +465,6 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
             '</div>' +
         '</div>';
     
-   
     return html;
 
 }
@@ -594,7 +591,7 @@ function setRankOnSchoolComparison() {
     }
 }
 
-function createMarker(lat, lng, name, gradesServed) {
+function createMarker(lat, lng, name, gradesServed, website) {
     var position = {lat: lat, lng: lng};
 
     var fillColor;
@@ -615,6 +612,7 @@ function createMarker(lat, lng, name, gradesServed) {
     }
 
     var marker = new Marker({
+        name: website,
         map: map,
         position: position,
         icon: {
@@ -628,6 +626,7 @@ function createMarker(lat, lng, name, gradesServed) {
         zIndex: -1,
         map_icon_label: '<span class="map-icon map-icon-school"><span class="marker-label"><br>' + grade + '</span></span>'
     });
+
     return marker;
 }
 
@@ -647,11 +646,10 @@ function showStarMarkers() {
 }
 
 function bindInfoWindow(marker, map, html) {
-    google.maps.event.addListener(marker, 'click', function () {
+    google.maps.event.addListener(marker, 'click', function (event) {
         infoWindow.close();
         infoWindow.setContent(html);
         infoWindow.open(map, marker);
-        center = marker.getPosition();
     });
     google.maps.event.addListener(infoWindow,'closeclick',function(){
        directionsDisplay.setMap(null);
@@ -693,9 +691,7 @@ function addMarkers(data){
 
         bindInfoWindow(marker, map, html);
 
-
     }
-
 }
 
 
@@ -708,7 +704,6 @@ $('#map-choices-form').on('submit', function (e) {
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
-
 });
 
 
@@ -943,6 +938,9 @@ $(document).ready(function() {
     });
     $("#show-favorites-btn").on("click", function() {$("#modal").modal('show');});
     
-
+    $('body').on('click', '#website', function (e) { 
+        var innerHtml = e.currentTarget.innerHTML;
+        window.open(innerHtml);
+    });
 
 });
