@@ -52,9 +52,9 @@
         <div id="n-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
-              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#n-collapse" aria-expanded="false" aria-controls="n-collapse"></a>
-      
-              <label for="n" class="checkbox-label">&nbsp; Neighborhood</label>
+              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#n-collapse" aria-expanded="false" aria-controls="n-collapse">
+                <label for="n" class="checkbox-label">Neighborhood</label>
+              </a>
               <span class="count badge" id="n-count"></span>
             </li>
           </ul>
@@ -85,8 +85,8 @@
           <ul class="list-group">
             <li class="list-group-item">
               <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#g-s-collapse" aria-expanded="false" aria-controls="g-s-collapse"> 
+                <label for="g-s" class="checkbox-label">Grades Served</label>
               </a>
-              <label for="g-s" class="checkbox-label">&nbsp; Grades Served</label>
               <span class="count badge" id="g-s-count"></span>
             </li>
           </ul>
@@ -118,8 +118,8 @@
         <ul class="list-group">
           <li class="list-group-item">
             <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#m-p-collapse" aria-expanded="false" aria-controls="m-p-collapse">
+              <label for="m-p" class="checkbox-label">Multilingual Pathways</label>
             </a>
-            <label for="m-p" class="checkbox-label">&nbsp; Multilingual Pathways</label>
             <span class="count badge" id="m-p-count"></span>
           </li>
         </ul>
@@ -150,8 +150,8 @@
         <ul class="list-group">
           <li class="list-group-item">
             <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#b-s-p-collapse" aria-expanded="false" aria-controls="b-s-p-collapse">
+              <label for="b-s-p" class="checkbox-label">Before School Program</label>
             </a>
-            <label for="b-s-p" class="checkbox-label">&nbsp; Before School Program</label>
             <span class="count badge" id="b-s-p-count"></span>
           </li>
         </ul>
@@ -182,8 +182,8 @@
         <ul class="list-group">
           <li class="list-group-item">
             <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#a-s-p-collapse" aria-expanded="false" aria-controls="a-s-p-collapse">
-            </a>
-            <label for="a-s-p" class="checkbox-label">&nbsp; Afterschool Programs</label>
+              <label for="a-s-p" class="checkbox-label">Afterschool Programs</label>
+            </a>  
             <span class="count badge" id="a-s-p-count"></span>
           </li>
         </ul>
@@ -208,7 +208,7 @@
         <!-- End After School Program Section -->
 
         <div class="flex-box-child">
-          <button id="show-favorites-btn">Show My Favorite Schools</button>
+          <button id="show-favorites-btn">Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
         </div>
         
         <input id="form-submit" type="submit" value="Submit"> 
@@ -252,10 +252,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4>
-        </div>
-        <div class="modal-body" id="printThis">
-          <table id="favorites-table">
+          <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4><br>
+          <table>
             <thead>
               <tr>
                 <th></th>
@@ -267,6 +265,10 @@
                 <th></th>
               </tr>
             </thead>
+          </table>
+        </div>
+        <div class="modal-body" id="printThis">
+          <table id="favorites-table">
             <tbody id="favorites-table-body">
             </tbody>
             <tfoot>
@@ -281,21 +283,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" id="print-btn" class="btn btn-default">Print</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- School Comparison Modal -->
-  <div class="modal" id="empty-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4>
-        </div>
-        <div class="modal-body">
-          No schools have been added to favorites
         </div>
       </div>
     </div>

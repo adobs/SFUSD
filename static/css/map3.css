@@ -288,6 +288,9 @@
 	justify-content: center;
 	align-items: flex-start;
 }
+.map-icon{
+	z-index: 1;
+}
 
 #page-content-wrapper:after, #whole-page:after {
 	/*background-image: linear-gradient(#000, #000), */
@@ -342,30 +345,30 @@ body {
 }
 
 
-td:nth-child(1) {
+tr td:nth-child(1), th:nth-child(1) {
 	width: 5%;
 }
-td:nth-child(2) {
+tr td:nth-child(2), th:nth-child(2) {
 	width: 5%;
 }
 
-td:nth-child(3) {
+tr td:nth-child(3), th:nth-child(3) {
 	width: 40%;
 }
 
-td:nth-child(4) {
+tr td:nth-child(4), th:nth-child(4) {
 	width: 10%;
 }
 
-td:nth-child(5) {
+tr td:nth-child(5), th:nth-child(5) {
 	width: 10%;
 }
 
-td:nth-child(6) {
+tr td:nth-child(6), th:nth-child(6) {
 	width: 20%;
 }
 
-td:nth-child(7) {
+tr td:nth-child(7), th:nth-child(7) {
 	width: 10%;
 }
 .comments {
@@ -392,4 +395,28 @@ td:nth-child(7) {
 	float: left;
 	margin-left: 20px;
 	background-color: white;
+}
+
+#star-img {
+	zoom: 40%;
+}
+
+.reverse-btn {
+	position: relative;
+	float: right;
+}
+.instructions-reverse {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    overflow-y: auto;
+}
+tbody, table {
+	width: 100%;
 }

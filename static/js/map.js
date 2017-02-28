@@ -1,33 +1,35 @@
 // TODO
 
 /// current list
-// fix how directions show / hide in the directions-panel
-// make whole criteria label clickable
-// make attendance areas show up
-// fix the reverse
-// clean all the data, perfect the addresses for all the schools using googlemaps
+// window on change events?
+// make map dynamically 100% height
+// fix directions directions so its not cut off
 
 //// mobile specific fixes
 // hide directions buttons in mobile
 // click submit - hides the window on mobile
-// link the address in mobile
+// link the address in mobile so that user can click using the q= thing
 // better home mobile experience (entering home address)
 // ->fix the mobile experience - not have polygons maybe?
 // hide the favorite star buttons on the info window and the show my favorite schools button
 
 //// longer term considerations
+// add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
+// clean all the data, perfect the addresses for all the schools using googlemaps
 // general / massive formatting
 // fix overlapping icons
 // add all relevant commenting to code
 // add in remaining elementary school
 // figure out why getting console error occasionally about rowIndex of undefined for moving arrow down/up
+// add in google analytics to the page?
+// come up with a testing plan
 
 ///// to discuss with others
 // photoshop for the images -> must fix
 // send out my excels -> to add the SARC performance reports and the tours 
 // messaging to expalin attendance area
 // rate limiting
-// get school tour information
+
 
 
 var map;
@@ -35,24 +37,27 @@ var infoWindow = new google.maps.InfoWindow({
   width: 150
 });
 var gtMdWidth;
-var attendanceArea;
+var aarea, aaname;
 var markers = [];
 var homeMarkers = [];
+var starMarkers = [];
 var infoWindowLat, infoWindowLng, infoWindowName;
-var originLat, originLng;
 var destinationLat, destinationLng;
 var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
-
+var center;
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
         center: sanFrancisco
     });
+    center = sanFrancisco;
 
-    
+    map.addListener('bounds_changed', function(){
+        map.setCenter(center);
+    });
     initAutocomplete();
 
     return map;
@@ -132,12 +137,14 @@ function initAutocomplete() {
             });
             
             homeMarkers.push(homeMarker);
-            var aaname;
+            // var aaname;
+            // var aarea;
             var ctip = false;
             google.maps.event.addListener(homeMarker, "click", function(event) { 
                 attendanceAreaPolygonArray.forEach(function(element, index, array) {
                     if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
                         aaname = element.name; 
+                        aarea = element;
                     }
                 });
 
@@ -147,12 +154,12 @@ function initAutocomplete() {
                         console.log("TURESS");
                     } 
                 });
-                addHomeMarkerInfoWindow(homeMarker, { aaname: aaname, ctip: ctip })
+                addHomeMarkerInfoWindow(homeMarker, { ctip: ctip })
             }); 
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
-    
+            center = place.geometry.location;
         });
     
     });
@@ -160,13 +167,14 @@ function initAutocomplete() {
 
 
 function addHomeMarkerInfoWindow (homeMarker, data) {
-    attendanceArea = data.aaname;
+    // attendanceArea = data.aaname;
     var ctipBool = data.ctip ? "Yes" : "No";
+    // aarea = data.aarea;
 
     var html = '<div id="home-info-window-content">' +
-            '<b>Attendance Area: </b>'+ attendanceArea + '<br>' +
+            '<b>Attendance Area: </b>'+ aaname + '<br>' +
             '<b>Tie-breaker Area: </b>'+ ctipBool + '<br>' +
-            '<button id="show-attendance-area" onclick="onShowAttendanceArea()">Show only ' + attendanceArea.toUpperCase() + ' schools</button>' +
+            '<button id="show-attendance-area" onclick="onShowAttendanceArea()">Show only ' + aaname.toUpperCase() + ' schools</button>' +
         '</div>';
     
     bindInfoWindow(homeMarker, map, html);
@@ -176,46 +184,56 @@ function addHomeMarkerInfoWindow (homeMarker, data) {
 function onShowAttendanceArea() {
     
     if ($("#show-attendance-area").hasClass("toggled")) {
-        $("#show-attendance-area").text("Show only " + attendanceArea.toUpperCase() + " schools")
+        $("#show-attendance-area").text("Show only " + aaname.toUpperCase() + " schools")
         $("#map-choices-form").submit();
+        showStarMarkers();
+        aarea.setOptions({
+            fillColor: "#000",
+            fillOpacity: 0
+        });
     } else {
         $("#show-attendance-area").text("Reset");
         attendanceAreaPolygonArray.forEach(function(element) {
             markers.forEach(function(marker) {
-                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== attendanceArea) {
+                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== aaname) {
                     marker.setMap(null);
                 }  
-            })
+            });
+            starMarkers.forEach(function(marker) {
+                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== aaname) {
+                    marker.setMap(null);
+                }  
+            });
         });
-        
+        aarea.setOptions({
+            fillColor: "#fad355",
+            fillOpacity: 1
+        });
     }
     
     $("#show-attendance-area").toggleClass("toggled");
 }
 
 function getDirections(origin, destination, travelMode) {
+    var center = map.getCenter();
     // hide the left side nav
     $("#hide-side-nav").click();
-
-    directionsDisplay.setMap(map);
     // $("#directions-panel").removeClass("col-xs-0").addClass("col-xs-2");
     // $("#map").removeClass("col-xs-12").addClass("col-xs-0");
     var pageWidth = $("#page-content-wrapper").width() + 220;
     var mapWidth = 0.75 * pageWidth - 30;
     var directionsWidth = 0.25 * pageWidth - 50;
-    console.log("pageWidth ", pageWidth);
-    console.log("mapWidth ", mapWidth);
-    console.log("directionsWidth ",directionsWidth);
-
+    
     $("#map").width(mapWidth);
     $("#directions-panel").width(directionsWidth);
+    map.setCenter(center);
 
     var request = {
         origin: origin, 
         destination: destination,
         travelMode: google.maps.DirectionsTravelMode[travelMode]
     };
-
+    directionsDisplay.setMap(map);
     directionsService.route(request, function(response, status) {
         directionsDisplay.setPanel(document.getElementById("directions-panel"));
         directionsDisplay.setDirections(response); 
@@ -232,9 +250,6 @@ function getDirections(origin, destination, travelMode) {
 
 function onToHere (travelMode) {
     var el = document.querySelector('#info-window-content');
-
-
-    // var origin = new google.maps.LatLng(originLat, originLng);
     var destination = new google.maps.LatLng(infoWindowLat, infoWindowLng);
     if (!originAddress) {
         return;
@@ -255,35 +270,48 @@ function onFromHere (travelMode) {
 }
 
 function onReverseFromHere() {
-    setOnDirectionsToHere();
+    console.log("address-input ", $("#address-input")[0].value);
+    var address = $("#address-input")[0].value;
+    setOnDirectionsToHere(address);
 }
 
 
 function onReverseToHere() {
-    setOnDirectionsFromHere();
+    var address = $("#address-input")[0].value;
+    setOnDirectionsFromHere(address);
 }
 
 
-function setOnDirectionsToHere() {
-    var html = '<div id="instructions">' +
-            '<label for="address-input">Start:&nbsp;</label> <input id="address-input"><br>' +
-            '<label>End:&nbsp;</label><span>' + infoWindowName + '</span><br>' +
-            '<button id="reverse-to-here">Reverse</button><br>' +
-            '<button id="driving-directions-to-here">Get driving directions</button><button id="public-directions-to-here">Get public transit directions</button><br>' +    
-        '</div>';
+function setOnDirectionsToHere(address) {
+    var html = 
+        '<div id="instructions">' +
+            '<div class="instructions-reverse">' +
+               '<label for="address-input">Start:&nbsp;</label><input id="address-input"><br>' +
+               '<button id="reverse-to-here" class="reverse-btn"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></button><br>' +
+            '</div>' +           
+           '<label>End:&nbsp;</label><span id="end">' + infoWindowName + '</span><br>' +
+           '<button id="driving-directions-to-here">Get driving directions</button><button id="public-directions-to-here">Get public transit directions</button><br>' +    
+       '</div>';
+
     infoWindow.setContent(html)
 
-    $("#address-input").width(300);
     var input = document.getElementById('address-input');
+    
+    if (address) {
+        $("#address-input")[0].value = address;
+        originAddress = address;
+    }
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
         originAddress = place.formatted_address;
-        originLat = place.geometry.location.lat();
-        originLng = place.geometry.location.lng();
         return;
     });
     
+    
+    $("#address-input").width(250);
+    $("#end").width(250);
+
     $("#reverse-to-here").on("click", onReverseToHere);
     $("#driving-directions-to-here").on("click", onToHere.bind(this, "DRIVING"));
     $("#public-directions-to-here").on("click", onToHere.bind(this, "TRANSIT"));
@@ -300,29 +328,35 @@ function onDirectionsToHere() {
 }
 
 
-function setOnDirectionsFromHere () {
-    var html = '<div id="instructions">' +
-            '<label>Start:&nbsp;</label><span>' + infoWindowName + '</span><br>' + 
+function setOnDirectionsFromHere (address) {
+    var html = 
+        '<div id="instructions">' +
+            '<div class="instructions-reverse">' +
+                '<label>Start:&nbsp;</label><span id="start">' + infoWindowName + '</span><br>' + 
+                '<button id="reverse-from-here" class="reverse-btn"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></button><br>' +
+            '</div>' +
             '<label for="input">End:&nbsp;</label> <input id="address-input"><br>' +
-            '<button id="reverse-from-here">Reverse</button><br>' +
             '<button id="driving-directions-from-here">Get driving directions</button><button id="public-directions-from-here">Get public transit directions</button><br>' +
         '</div>';
+    
     infoWindow.setContent(html)
-
-    $("#address-input").width(300);
+    
     var input = document.getElementById('address-input');
+    
+    if (address) {
+        $("#address-input")[0].value = address;
+        destinationAddress = address;
+    }
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
-        
         var place = autocomplete.getPlace();
-  
         destinationAddress = place.formatted_address;
-        
-        // destinationLat = place.geometry.location.lat();
-        // destinationLng = place.geometry.location.lng();
         return;
     });
 
+
+    $("#address-input").width(250);
+    $("#start").width(250);
     $("#reverse-from-here").on("click", onReverseFromHere);
     $("#driving-directions-from-here").on("click", onFromHere.bind(this, "DRIVING"));
     $("#public-directions-from-here").on("click", onFromHere.bind(this, "TRANSIT"));
@@ -340,19 +374,66 @@ function onDirectionsFromHere() {
 
 function onFavoriteStarClick() {
     var el = document.querySelector('#content'); 
-       
-   // set up toggle for star
-    $("#favorite-star").toggleClass("glyphicon-star-empty");
-    $("#favorite-star").toggleClass("glyphicon-star");
+    var elInfoWindow = document.querySelector("#info-window-content");
+
+    // // set up toggle for star
+    $("#favorite-star").toggleClass("toggledStar");
     
     var name = el.dataset.name;
     var address = el.dataset.address;
     var phone = el.dataset.phone;
     var email = el.dataset.email;
     var website = el.dataset.website;
+    var lat = parseFloat(elInfoWindow.dataset.lat);
+    var lng = parseFloat(elInfoWindow.dataset.lng);
+    var numRows = document.getElementById("favorites-table-body").rows.length;
+    var row = 
+        '<tr id="' + name +'">' +
+            '<td>' + 
+                '<button class="arrow-up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button><br>' +
+                '<button class="arrow-down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>' +
+            '</td>' + 
+            '<td class="rank">' +
+                (numRows + 1) +
+            '</td>' +
+            '<td>' +
+                '<b>' + name + '</b><br>' +
+                address + '<br>' +
+                phone + '<br>' +
+                email + '<br>' +
+                website + '<br>' + 
+            '</td>' +
+            '<td>' +
+                '<input type="checkbox">' +
+            '</td>' + 
+            '<td>' + 
+                '<input type="checkbox">' +
+            '</td>' +
+            '<td>' +
+                '<input class="comments" type="textarea">' +
+            '</td>' +
+            '<td>' +
+                '<button class="delete-row">Delete</button>'
+            '</td>' + 
+        '</tr>';
 
-    if ( $("#favorite-star").hasClass("glyphicon-star") ) {
-        addSchoolToComparison(name, address, phone, email, website);
+    if ( $("#favorite-star").hasClass("toggledStar") ) {
+
+        addSchoolToComparison(row);
+
+        var starMarker = new Marker({
+            name: name,
+            position: {lat: lat, lng: lng},
+            icon: "static/img/star.png",
+            map: map,
+            optimized: false,
+            zIndex: 1000,
+  
+        });
+        starMarkers.push(starMarker);
+
+        var html = elInfoWindow.outerHTML;
+        bindInfoWindow(starMarker, map, html);
     } else {
         removeSchoolFromComparison(name);
     }
@@ -375,8 +456,7 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
                 '<b>Principal: </b>'+ principal + '<br>' +
                 '<span id="address"><b>Address: </b>'+ address + '</span><br>' +
                 '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
-                '<b>Fax: </b>'+ fax + '<br>' +
-                '<p><b>Email: </b>'+ email + '<br>' +
+                '<p><b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
                 '<b>Website: </b>'+ '<a href="' + website + '">' + website + '</a><br>' +
             '</div>' +
             '<div id="instructions">' +
@@ -463,57 +543,26 @@ function onArrowDown(e) {
     setRankOnSchoolComparison();
 }
 
-function addSchoolToComparison(name, address, phone, email, website) {
-    var numRows = document.getElementById("favorites-table-body").rows.length;
-    var row = 
-        '<tr>' +
-            '<td>' + 
-                '<button class="arrow-up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button><br>' +
-                '<button class="arrow-down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>' +
-            '</td>' + 
-            '<td class="rank">' +
-                (numRows + 1) +
-            '</td>' +
-            '<td>' +
-                '<b>' + name + '</b><br>' +
-                address + '<br>' +
-                phone + '<br>' +
-                email + '<br>' +
-                website + '<br>' + 
-            '</td>' +
-            '<td>' +
-                '<input type="checkbox">' +
-            '</td>' + 
-            '<td>' + 
-                '<input type="checkbox">' +
-            '</td>' +
-            '<td>' +
-                '<input class="comments" type="textarea">' +
-            '</td>' +
-            '<td>' +
-                '<button class="delete-row">Delete</button>'
-            '</td>' + 
-        '</tr>';
-
+function addSchoolToComparison(row) {
     $("tbody").append(row);
 
     $(".delete-row").on("click", onDeleteRow);
     $(".arrow-up").on("click", onArrowUp);
     $(".arrow-down").on("click", onArrowDown);
 
-    $("#show-favorites-btn").on("click", function() {$("#modal").modal('show');});
-    $("#show-favorites-btn").on("click", function() {$("#empty-modal").modal('hide');});
 }
  
-function removeSchoolFromComparison() {
-    var numRows = document.getElementById("favorites-table-body").rows.length;
-    document.getElementById("favorites-table-body").deleteRow(numRows-1);
+function removeSchoolFromComparison(name) {
+    var row = document.getElementById(name);
+    var $row = $(row);
+    $row.remove();
 
-    var updatedNumRows = document.getElementById("favorites-table-body").rows.length;
-    if (updatedNumRows === 0) {
-        $("#show-favorites-btn").on("click", function() {$("#empty-modal").modal('show');});
-        $("#show-favorites-btn").on("click", function() {$("#modal").modal('hide');});
-   
+    for (var i=0; i<starMarkers.length; ++i) {
+        if (starMarkers[i].name === name) {
+            starMarkers[i].setMap(null);
+            starMarkers = starMarkers.slice(0, i).concat(starMarkers.slice(i+1));
+            break;
+        }
     }
 }
        
@@ -554,8 +603,10 @@ function createMarker(lat, lng, name, gradesServed) {
             fillColor: fillColor,
             fillOpacity: 1,
             strokeColor: '#fff',
-            strokeWeight: 1
+            strokeWeight: 0
         },
+        optimized: false,
+        zIndex: -1,
         map_icon_label: '<span class="map-icon map-icon-school"><span class="marker-label"><br>' + grade + '</span></span>'
     });
     return marker;
@@ -569,17 +620,23 @@ function removeAllMarkers() {
 }
 
 
+function showStarMarkers() {
+    for (var i = 0; i < starMarkers.length; i++) {
+        var starMarker = starMarkers[i];
+        starMarker.setMap(map);
+    } 
+}
+
 function bindInfoWindow(marker, map, html) {
     google.maps.event.addListener(marker, 'click', function () {
         infoWindow.close();
         infoWindow.setContent(html);
         infoWindow.open(map, marker);
+        center = marker.getPosition();
     });
     google.maps.event.addListener(infoWindow,'closeclick',function(){
        directionsDisplay.setMap(null);
-       directionsDisplay.setPanel(null)
-       $("#directions-panel").removeClass("col-xs-2").addClass("col-xs-0");
-       $("#map").removeClass("col-xs-10").addClass("col-xs-12");
+       directionsDisplay.setPanel(null);
 
     });
 }
@@ -627,9 +684,7 @@ $('#map-choices-form').on('submit', function (e) {
     e.preventDefault();
 
     directionsDisplay.setMap(null);
-    directionsDisplay.setPanel(null)
-    $("#directions-panel").removeClass("col-xs-2").addClass("col-xs-0");
-    $("#map").removeClass("col-xs-10").addClass("col-xs-12");
+    directionsDisplay.setPanel(null);
 
     var inputs = $("#map-choices-form").serializeArray();
 
@@ -744,16 +799,11 @@ function populateCtip1Polygon(data) {
             
             var ctip1Polygon = new google.maps.Polygon({
                 paths: paths,
-                // strokeColor: '#FF0000',
-                // strokeOpacity: 0.0,
-                // strokeWeight: 2,
-                // fillColor: '#0000FF',
-                // fillOpacity: 0.0
                 strokeColor: '#fff',
-                strokeOpacity: 0.5,
+                strokeOpacity: 0,
                 strokeWeight: 2,
                 fillColor: '#fff',
-                fillOpacity: 0.9
+                fillOpacity: 0
             });
 
             ctip1Polygon.setMap(map);
@@ -782,6 +832,7 @@ function printElement(elem) {
 }
 
 $(document).ready(function() {
+
     var windowWidth = $(window).width();
     var MD_WIDTH = 992;
 
@@ -797,8 +848,10 @@ $(document).ready(function() {
         }
         $("#wrapper").toggleClass("toggled");
         $("#hide-side-nav").hide();
+
         // fix this
         $("#directions-panel").show();
+        
     });
 
     
@@ -826,6 +879,8 @@ $(document).ready(function() {
     }
 
     var headerHeight = $("#header").height();
+    var mapHeight = $("#map").height();
+    $("#map").height(mapHeight - headerHeight - 60);
     $("#header-row").height(headerHeight);
     console.log("heder row height", 0.7 * $("#header-row").height());
     console.log("heaer height ", headerHeight);
@@ -863,9 +918,12 @@ $(document).ready(function() {
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
     $(".modal-dialog").width(pageWidth * .75);
+    $(".modal-body").height($("#map").height() * .75);
     $("#print-btn").on("click", function() { 
         printElement(document.getElementById("printThis"));
     });
-    $("#show-favorites-btn").on("click", function() {$("#empty-modal").modal('show');});
+    $("#show-favorites-btn").on("click", function() {$("#modal").modal('show');});
     
+
+
 });
