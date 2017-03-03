@@ -11,7 +11,7 @@ body, h2, p {
 
 h1, h4{
   font-family: 'PT Mono', ;
-  text-align: right;
+  /*text-align: right;*/
 }
 
 html, body {

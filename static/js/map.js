@@ -1,8 +1,9 @@
 // TODO
 
 /// current list
-// make map dynamically 100% height
 // when closing info window when in attendance area viewing mode - opening it should say reset
+// why click twice on home info windwo??!
+// change get to post so that people are prompted when resubmitting form submission or whatever
 
 //// mobile specific fixes
 // hide directions buttons in mobile
@@ -12,27 +13,33 @@
 // ->fix the mobile experience - not have polygons maybe?
 // hide the favorite star buttons on the info window and the show my favorite schools button
 
-//// longer term considerations
-// add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
+//// longer term considerations -- need to do
 // clean all the data, perfect the addresses for all the schools using googlemaps
+// fix clicking on the website from the info window -> check if having correct http:// fixes it
 // general / massive formatting
-// fix overlapping icons
 // add all relevant commenting to code
 // add in remaining elementary school
-// figure out why getting console error occasionally about rowIndex of undefined for moving arrow down/up
-// add in google analytics to the page?
-// come up with a testing plan
 // make map moveable/draggable -> is it the polygons?
+// make map dynamically 100% height
+
+//// longer term condiersations -- nice to have
+// add in google analytics to the page?
+// fix overlapping icons
+// add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
+// ranking the favorites
 
 ///// to discuss with others
 // photoshop for the images -> must fix
 // send out my excels -> to add the SARC performance reports and the tours 
-// messaging to expalin attendance area
+// messaging to expalin attendance area - and how to use google maps w/ two fingers
 // rate limiting
 
 
 
 var map;
+var markerListener;
+var toggled = true;
+var firstTime = true;
 var infoWindow = new google.maps.InfoWindow({
   width: 150
 });
@@ -69,6 +76,7 @@ function initAutocomplete() {
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
     console.log("this._gtMdWidth is ", gtMdWidth);
+    var windowWidth = $(window).width();
     if (gtMdWidth) {
         var toggleButton = document.getElementById('toggle-search-div');
         var inputDiv = document.createElement('div');
@@ -77,12 +85,21 @@ function initAutocomplete() {
         inputDiv.appendChild(input);
 
         inputDiv.index = 1;
-        map.controls[google.maps.ControlPosition.LEFT_TOP].push(inputDiv);
+
+        var homeSearch = document.getElementById("home-search");
+        homeSearch.appendChild(inputDiv);
+        var div = document.createElement('div');
+        div.innerHTML = '<a class="tool-tip" data-toggle="tooltip" data-placement="left" title="Tooltip here">' +
+                            '<i id="info-sign" class="glyphicon glyphicon-info-sign"></i>' +
+                        '</a>';
+        var infoSign = div.firstChild;
+        homeSearch.appendChild(infoSign);
+
+        // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(inputDiv);
     } else {
         // set right size of the hamburger option
         var menuWidth = $("#menu-toggle").width();
-        var windowWidth = $(window).width();
-
+        
         var searchBarWidth = windowWidth - menuWidth - 30;
         $(".pac-card").width(searchBarWidth);
         $("#pac-input").width(searchBarWidth);
@@ -139,7 +156,9 @@ function initAutocomplete() {
             // var aaname;
             // var aarea;
             var ctip = false;
+            
             google.maps.event.addListener(homeMarker, "click", function(event) { 
+
                 attendanceAreaPolygonArray.forEach(function(element, index, array) {
                     if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
                         aaname = element.name; 
@@ -153,8 +172,26 @@ function initAutocomplete() {
                         console.log("TURESS");
                     } 
                 });
-                addHomeMarkerInfoWindow(homeMarker, { ctip: ctip })
-            }); 
+                html = getHomeMarkerHtml(homeMarker, { ctip: ctip });
+
+                infoWindow.close();
+                infoWindow.setContent(html);
+                // $("#show-attendance-area").toggleClass("toggled");
+                // if ($("#show-attendance-area").hasClass("toggled")) {
+                if (toggled) {
+                        resetContent = infoWindow.content.replace(/Reset/, 'Show only ' + aaname.toUpperCase() + ' schools');
+                        infoWindow.setContent(resetContent);
+                } 
+                else {
+                        resetContent = infoWindow.content.replace(/Show only .* schools/, 'Reset');
+                        infoWindow.setContent(resetContent);
+                        $("#show-attendance-area").addClass("toggle");
+                }
+
+                infoWindow.open(map, homeMarker);
+
+                $("#show-attendance-area").on("click", onShowAttendanceArea);
+            });
             
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
@@ -165,7 +202,7 @@ function initAutocomplete() {
 }
 
 
-function addHomeMarkerInfoWindow (homeMarker, data) {
+function getHomeMarkerHtml (homeMarker, data) {
     // attendanceArea = data.aaname;
     var ctipBool = data.ctip ? "Yes" : "No";
     // aarea = data.aarea;
@@ -173,25 +210,44 @@ function addHomeMarkerInfoWindow (homeMarker, data) {
     var html = '<div id="home-info-window-content">' +
             '<b>Attendance Area: </b>'+ aaname + '<br>' +
             '<b>Tie-breaker Area: </b>'+ ctipBool + '<br>' +
-            '<button id="show-attendance-area" onclick="onShowAttendanceArea()">Show only ' + aaname.toUpperCase() + ' schools</button>' +
+            '<button id="show-attendance-area">Show only ' + aaname.toUpperCase() + ' schools</button>' +
         '</div>';
     
-    bindInfoWindow(homeMarker, map, html);
+    return html;
 }
 
 
 function onShowAttendanceArea() {
-    
+    var resetContent;
     if ($("#show-attendance-area").hasClass("toggled")) {
+        toggled = true;
         $("#show-attendance-area").text("Show only " + aaname.toUpperCase() + " schools")
+        resetContent = infoWindow.content.replace(/Reset/, 'Show only ' + aaname.toUpperCase() + ' schools');
+        infoWindow.setContent(resetContent);
+        // homeMarkers.forEach(function(homeMarker) {
+        //     infoWindow.open(map, homeMarker);
+        // });
+
+
         $("#map-choices-form").submit();
         showStarMarkers();
         aarea.setOptions({
             fillColor: "#000",
             fillOpacity: 0
         });
+
     } else {
         $("#show-attendance-area").text("Reset");
+        toggled = false;
+        // console.log("reser contnt ", infoWindow.content);
+        resetContent = infoWindow.content.replace(/Show only .* schools/, 'Reset');
+        // // markerListener.remove();
+        // // bindInfoWindow(homeMarker, map, resetContent);
+        infoWindow.setContent(resetContent);
+        // // homeMarkers.forEach(function(homeMarker) {
+            // infoWindow.open(map, homeMarker);
+        // });
+
         attendanceAreaPolygonArray.forEach(function(element) {
             markers.forEach(function(marker) {
                 if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== aaname) {
@@ -210,15 +266,14 @@ function onShowAttendanceArea() {
         });
     }
     
-    $("#show-attendance-area").toggleClass("toggled");
+
 }
 
 function getDirections(origin, destination, travelMode) {
     var center = map.getCenter();
     // hide the left side nav
     $("#hide-side-nav").click();
-    // $("#directions-panel").removeClass("col-xs-0").addClass("col-xs-2");
-    // $("#map").removeClass("col-xs-12").addClass("col-xs-0");
+
     var pageWidth = $("#page-content-wrapper").width() + 220;
     var mapWidth = 0.75 * pageWidth - 30;
     var directionsWidth = 0.25 * pageWidth - 50;
@@ -238,12 +293,14 @@ function getDirections(origin, destination, travelMode) {
         directionsDisplay.setDirections(response); 
     });
 
-    // hide markers and home marker
+    // hide markers and home marker and starMarkers
     removeAllMarkers();
     homeMarkers.forEach(function(marker) {
        marker.setMap(null);
     });
-    
+    starMarkers.forEach(function(marker) {
+        marker.setMap(null);
+    });
     
 }
 
@@ -470,11 +527,9 @@ function getHtml(name, startTime, endTime, middleSchoolFeeder,
 }
 
 function onDeleteRow(e){
-    console.log("onDeleteRow:: e ", e);
     var $button = $(e.target);
     var $td = $($button[0].parentElement);
     var $row = $($td[0].parentElement);
-    console.log("onDeleteRow:: $row is ", $row);
     var id = $row.attr('id');
 
     for (var i=0; i<starMarkers.length; ++i) {
@@ -645,6 +700,14 @@ function showStarMarkers() {
     } 
 }
 
+// function bindHomeInfoWindow (marker, map, html) {
+//     google.maps.event.addListener(marker, 'click', function (event) {
+//         infoWindow.close();
+//         infoWindow.setContent(html);
+//         onShowAttendanceArea();
+//     });
+// }
+
 function bindInfoWindow(marker, map, html) {
     google.maps.event.addListener(marker, 'click', function (event) {
         infoWindow.close();
@@ -704,7 +767,13 @@ $('#map-choices-form').on('submit', function (e) {
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
-});
+    starMarkers.forEach(function(marker) {
+        marker.setMap(map);
+    });
+    homeMarkers.forEach(function(marker) {
+        marker.setMap(map);
+    });
+})
 
 
 //check all checkboxes
@@ -940,7 +1009,8 @@ $(document).ready(function() {
     
     $('body').on('click', '#website', function (e) { 
         var innerHtml = e.currentTarget.innerHTML;
-        window.open(innerHtml);
+        console.log("innerHtml is ", innerHtml);
+        window.open(innerHtml, "_blank");
     });
 
 });

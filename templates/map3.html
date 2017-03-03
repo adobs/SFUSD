@@ -47,38 +47,9 @@
             <a id="hide-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-backward" aria-hidden="true">&nbsp;Hide</span></a>
           </div>
 
-
-        <!-- Neighborhood Section = n --> 
-        <div id="n-form" class="flex-box-child">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#n-collapse" aria-expanded="false" aria-controls="n-collapse">
-                <label for="n" class="checkbox-label">Neighborhood</label>
-              </a>
-              <span class="count badge" id="n-count"></span>
-            </li>
-          </ul>
-        {% for key, value in checkbox_labels.iteritems() %}  
-          {% if key == "neighborhood" %}
-          <div class="collapse" id="n-collapse">
-            <div class="card card-block">
-            <ul>
-              <li class="checkbox-li">
-                <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked>
-                <label for="check-all-n"> &nbsp; Deselect All</label>
-              </li>
-              {% for neighborhood in value %}
-              <li class="checkbox-li">
-                <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
-              </li>
-              {% endfor %}
-            </ul>
-            </div> <!-- close div card card-block -->
-          </div> <!-- close collapseExample -->
-          {% endif %}
-        {% endfor %}
-        </div> <!-- close div form -->
-        <!-- End of Neighborhood Section -->
+        <div id="show-results-for">
+          <h4>Show results for &gt;</h4>
+        </div>
 
         <!-- Grades Served Section = g-s --> 
         <div id="g-s-form" class="flex-box-child">
@@ -112,6 +83,38 @@
         {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
+
+        <!-- Neighborhood Section = n --> 
+        <div id="n-form" class="flex-box-child">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#n-collapse" aria-expanded="false" aria-controls="n-collapse">
+                <label for="n" class="checkbox-label">Neighborhood</label>
+              </a>
+              <span class="count badge" id="n-count"></span>
+            </li>
+          </ul>
+        {% for key, value in checkbox_labels.iteritems() %}  
+          {% if key == "neighborhood" %}
+          <div class="collapse" id="n-collapse">
+            <div class="card card-block">
+            <ul>
+              <li class="checkbox-li">
+                <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked>
+                <label for="check-all-n"> &nbsp; Deselect All</label>
+              </li>
+              {% for neighborhood in value %}
+              <li class="checkbox-li">
+                <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
+              </li>
+              {% endfor %}
+            </ul>
+            </div> <!-- close div card card-block -->
+          </div> <!-- close collapseExample -->
+          {% endif %}
+        {% endfor %}
+        </div> <!-- close div form -->
+        <!-- End of Neighborhood Section -->
 
          <!-- Multilingual Pathways Section = m-p --> 
         <div id="m-p-form" class="flex-box-child">
@@ -232,6 +235,8 @@
         </div> <!-- close header -->
       </div>
       <div class="row" id="page-content-wrapper">
+      <div id="home-search"> 
+      </div>
         <div id="toggle-search-div">
           <div id="toggle-button">
             <a href="#menu-toggle" type="button" class="controls menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>

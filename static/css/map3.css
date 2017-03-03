@@ -181,10 +181,11 @@
 			font-family: Roboto;
 			font-size: 15px;
 			font-weight: 300;
-			margin-left: 12px;
+			/*margin-left: 200px;*/
 			padding: 0 11px 0 13px;
 			text-overflow: ellipsis;
 			width: 400px;
+			margin-top: -240px;
 		  }
 
 		  #pac-input:focus {
@@ -419,4 +420,24 @@ tr td:nth-child(7), th:nth-child(7) {
 }
 tbody, table {
 	width: 100%;
+}
+#show-results-for {
+	background-color: #414141;
+	color: #fff;
+	float: left;
+	tex-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	width: 100%;
+}
+#home-search {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+#info-sign {
+	padding-left: 15px;
 }
