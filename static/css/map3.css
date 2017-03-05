@@ -34,7 +34,7 @@
 	  width: 100%;
 	  border: solid  #fad355 15px;
 	  margin-right: -20px;
-	  margin-top: 25px;
+	  /*margin-top: 25px;*/
 	}
 
 	#page{
@@ -239,9 +239,9 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
-	margin-bottom: 10px;
+	/*margin-bottom: 10px;*/
 }
 
 #n-form{
@@ -274,7 +274,18 @@
     background-repeat: no-repeat;
     width: 90%;
     /*height: 200%;*/
-    height: 200%;
+    height: 200%;/*
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;*/
+}
+
+#header-flex {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
 }
 
 .container, #whole-page, #header, body, #header-row {
@@ -285,9 +296,9 @@
 }
 
 #header-row {
-	display: flex;
+	/*display: flex;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: flex-top;*/
 }
 .map-icon{
 	z-index: 1;
@@ -421,7 +432,7 @@ tr td:nth-child(7), th:nth-child(7) {
 tbody, table {
 	width: 100%;
 }
-#show-results-for {
+.heading {
 	background-color: #414141;
 	color: #fff;
 	float: left;
@@ -431,13 +442,46 @@ tbody, table {
 	padding-left: 15px;
 	width: 100%;
 }
-#home-search {
+#home-search-div {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding-left: 100px;
+	padding-top: 15px;
+	padding-bottom: 0px;
 }
 #info-sign {
 	padding-left: 15px;
+}
+
+.tie-breaker-btn, #tie-breaker-info{
+	font-size: 10px;
+}
+
+#tie-breaker-btn-div {
+	position:relative;
+	float: right;
+}
+
+#tie-breaker-flex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+#contact-epc {
+	text-align: center;
+}
+#compare-schools {
+	margin-top: 20px;
+}
+#directions-to-here {
+	background-color: #fad355;
+}
+#return-btn {
+	background-color: #fad355;
+	color: #414141;
 }

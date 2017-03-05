@@ -16,8 +16,8 @@ class School:
     	self.grades_served = self.inputs["Grades served"].split(", ")
     	self.id_number = self.inputs["School ID number"]
     	self.address = self.inputs["School address"]
-        self.lat = float(self.inputs["Lat"])
-        self.long = float(self.inputs["Long"])
+        self.lat = self.inputs["Lat"]
+        self.long = self.inputs["Long"]
     	self.start_time = self.inputs["School start time"]
     	self.end_time = self.inputs["School end time"]
     	self.phone_number = self.inputs["School phone number"]
@@ -35,6 +35,7 @@ class School:
     	self.special_education = self.inputs["Special education classes"]
     	self.student_support_programs = self.inputs["Student support programs"]
     	self.middle_school_feeder = self.inputs["Middle school feeder"]
+        self.city_school = self.inputs["City School"].split(",")
 
 
     def __repr__(self):

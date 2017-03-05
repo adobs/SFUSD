@@ -44,11 +44,11 @@
       <div class='form-group' id="flex-box-parent">
         <div id="flex-box-contents">
           <div class="flex-box-child" id="hide-sive-nav-div" style="padding:0px">
-            <a id="hide-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-backward" aria-hidden="true">&nbsp;Hide</span></a>
+            <!-- <a id="hide-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-backward" aria-hidden="true">&nbsp;Hide</span></a> -->
           </div>
 
-        <div id="show-results-for">
-          <h4>Show results for &gt;</h4>
+        <div class="heading">
+          <h4>Filter Schools</h4>
         </div>
 
         <!-- Grades Served Section = g-s --> 
@@ -84,28 +84,28 @@
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
 
-        <!-- Neighborhood Section = n --> 
-        <div id="n-form" class="flex-box-child">
+          <!-- City School Section = c-s --> 
+        <div id="c-s-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
-              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#n-collapse" aria-expanded="false" aria-controls="n-collapse">
-                <label for="n" class="checkbox-label">Neighborhood</label>
+              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#c-s-collapse" aria-expanded="false" aria-controls="c-s-collapse"> 
+                <label for="c-s" class="checkbox-label">City School</label>
               </a>
-              <span class="count badge" id="n-count"></span>
+              <span class="count badge" id="c-s-count"></span>
             </li>
           </ul>
-        {% for key, value in checkbox_labels.iteritems() %}  
-          {% if key == "neighborhood" %}
-          <div class="collapse" id="n-collapse">
+         {% for key, value in checkbox_labels.iteritems() %}  
+          {% if key == "city_school" %}
+          <div class="collapse" id="c-s-collapse">
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-n" class="check-all" name="check-all-n" value="select-all" checked>
-                <label for="check-all-n"> &nbsp; Deselect All</label>
+                <input type="checkbox" id="check-all-c-s" class="check-all" name="check-all-c-s" value="select-all" checked>
+                <label for="check-all-c-s"> &nbsp; Deselect All</label>
               </li>
-              {% for neighborhood in value %}
+              {% for cityschool in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="n" class="check" value="{{ neighborhood }}" checked> &nbsp; {{ neighborhood }}
+                <input type="checkbox" name="c-s" class="check" value="{{ cityschool }}" checked>&nbsp; {{ cityschool }}
               </li>
               {% endfor %}
             </ul>
@@ -114,7 +114,7 @@
           {% endif %}
         {% endfor %}
         </div> <!-- close div form -->
-        <!-- End of Neighborhood Section -->
+        <!-- End of City School Section -->
 
          <!-- Multilingual Pathways Section = m-p --> 
         <div id="m-p-form" class="flex-box-child">
@@ -210,15 +210,19 @@
         </div>
         <!-- End After School Program Section -->
 
+        <input id="form-submit" type="submit" value="Submit"> 
+    </div> <!-- close flexbox contents -->
+    </div> <!-- close div class -->
+    
+  </form>      
+        <div class="heading" id="compare-schools">
+          <h4>Compare Schools</h4>
+        </div>
+
         <div class="flex-box-child">
           <button id="show-favorites-btn">Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
         </div>
-        
-        <input id="form-submit" type="submit" value="Submit"> 
-      </div> <!-- close flexbox contents -->
-      </div> <!-- close div class -->
-      
-    </form>
+  
   </div><!-- /#sidebar-wrapper -->
 <!-- End of SideBar -->
 
@@ -229,23 +233,57 @@
       </div> <!-- close row -->
       <div class="row" id="header-row">
         <div id="header">
-          <a href="#" onclick="window.open('http://www.sfusd.edu/')">
-            <img class="push1col" id="header-img" title="San Francisco Unified School District" src="/static/img/san-francisco-unified-school-district.png" alt="San Francisco Unified School District logo" width="262" height="55">
-          </a>
-        </div> <!-- close header -->
-      </div>
-      <div class="row" id="page-content-wrapper">
-      <div id="home-search"> 
-      </div>
-        <div id="toggle-search-div">
-          <div id="toggle-button">
-            <a href="#menu-toggle" type="button" class="controls menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
+            <a href="#" onclick="window.open('http://www.sfusd.edu/')">
+              <img class="push1col" id="header-img" title="San Francisco Unified School District" src="/static/img/san-francisco-unified-school-district.png" alt="San Francisco Unified School District logo" width="262" height="55">
+            </a>
+            
+            <div id="header-flex">
+              <div id="home-search-div">
+                <div id="enter-address-intro">Enter home address to learn more about tie-breakers
+                </div>
+                <div id="home-search"> 
+                  <input id="pac-input" class="controls" type="text" placeholder="Enter home address">
+                </div>
+             </div> <!-- close home-search-div -->
+          <div id="toggle-search-div">
+            <div id="toggle-button">
+              <a href="#menu-toggle" type="button" class="controls menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
+            </div>
           </div>
-          <input id="pac-input" class="controls" type="text" placeholder="Enter home address">
-        </div>
+          <div id="tie-breaker-btn-div">
+                <div id="tie-breaker-flex">
+                <ul>
+                  <li>  
+                    Tie-breaker Hierarchies
+                  </li>
+                  <li>
+                    <button class="tie-breaker-btn" id="elem-tie-btn"><span class="map-icon map-icon-school K-5 icon-legend">&nbsp;Elementary Schools</span></button>
+                  </li>
+                  <li>
+                    <button class="tie-breaker-btn" id="middle-tie-btn"><span class="map-icon map-icon-school 6-8 icon-legend">&nbsp;Middle Schools</span></button>
+                  </li>
+                  <li>
+                    <button class="tie-breaker-btn" id="high-tie-btn"><span class="map-icon map-icon-school 9-12 icon-legend">&nbsp;High Schools</span></button>
+                   </li>
+                </ul>
+                  <div id="tie-breaker-info">
+                  </div>
+                </div> <!-- close tie-breaker-flex -->
+              </div> <!-- close tie-breaker-btn-div -->
+           </div> <!-- close header-flex -->
+        </div> <!-- close header -->
+      </div> <!-- close row -->
+      <div class="row" id="page-content-wrapper"> 
+
+    
+       
         <div class="col-xs-12" id="map"> 
         </div> <!-- close map -->
         <div class="col-xs-0" id="directions-panel">
+          <div class="heading">
+            <button id="return-btn" onclick="onReturn()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Return</button>
+          <h4>Directions</h4>
+          </div>
         </div> <!-- close directions panel -->
       </div> <!-- close row -->
     </div> <!-- close container -->
@@ -254,7 +292,7 @@
   <!-- School Comparison Modal -->
   <div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content" id="printThis">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">My Favorite Schools</h4><br>
@@ -265,23 +303,33 @@
                 <th>Rank</th>
                 <th>School</th>
                 <th>Have I booked a school tour?</th>
-                <th>Have I applied?</th>
-                <th>Comments</th>
+                <th>Notes</th>
                 <th></th>
               </tr>
             </thead>
           </table>
         </div>
-        <div class="modal-body" id="printThis">
+        <div class="modal-body" >
           <table id="favorites-table">
             <tbody id="favorites-table-body">
             </tbody>
             <tfoot>
               <tr>
                 <td colspan="6">
-                  <input type="textarea" class="comments" placeholder="Notes">
+                  <input type="textarea" class="comments" placeholder="General notes">
                 </td> 
+              </tr>
               <tr>
+                <td colspan="6" id="contact-epc">
+                  Questions? <br>
+                  Contact the Educational Placement Center<br>
+                  555 Franklin Street, Room 100<br>
+                  San Francisco, CA 94102<br>
+                  Phone: (415) 241-6085<br>
+                  Hours: 8:00 am to 4:30 pm, Monday
+                  to Friday
+                </td>
+              </tr>
             </tfoot>
           </table>
         </div>
