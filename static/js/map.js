@@ -75,7 +75,7 @@ function initialize() {
     if (navigator) {
         console.log("navigation is ", navigator.geolocation.__proto__);
     }
-    if (navigator.geolocation.__proto__) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log("print positions ", position);
             // pos = {
