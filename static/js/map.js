@@ -16,16 +16,24 @@
 // general / massive formatting
 // add all relevant commenting to code
 // add in remaining elementary school
-// make map moveable/draggable -> is it the polygons?
 // make map dynamically 100% height
 // for the directions - have the destination not be latlong, but be the school address (once correctly formatted)
 
 //// data clean
+// compare number of schools in excel vs some other source
 // add websites; confirm all websites are correct
 // correctly label all city schools
 // add in all emails
 // fix instances of multiple addresses
 // make addresses conform to google maps
+// add in SARC url
+
+//// formatting
+// is the high school the right color?
+// now that the teachers thing is gone, should yellow be the accent color?  if not, then what?
+// remove space above "Filter Schools"?
+// the whole notebook page fix
+// fonts
 
 
 //// longer term condiersations -- nice to have
@@ -46,21 +54,38 @@ var map;
 var infoWindow = new google.maps.InfoWindow({
   width: 150
 });
+var homeInfoWindow = new google.maps.InfoWindow({
+  width: 150
+});
 var gtMdWidth, originalMapWidth;
 var aarea, aaname;
 var markers = [];
-var homeMarkers = [];
+var homeMarker;
 // var starMarkers = [];
 var infoWindowLat, infoWindowLng, infoWindowName;
 var destinationLat, destinationLng;
 var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
+
 function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
+
+    var pos = undefined;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+        });
+        var print = pos || "unsupporte";
+        console.log("position is ", print);
+    }
+
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: sanFrancisco,
+        zoom: 14,
+        center: pos || sanFrancisco,
         draggable: true
     });
     
@@ -84,24 +109,15 @@ function initAutocomplete() {
     
     var windowWidth = $(window).width();
     if (gtMdWidth) {
-        // var toggleButton = document.getElementById('toggle-search-div');
         var inputDiv = document.createElement('div');
     
-        // inputDiv.appendChild(toggleButton);
         inputDiv.appendChild(input);
 
         inputDiv.index = 1;
 
         var homeSearch = document.getElementById("home-search");
         homeSearch.appendChild(inputDiv);
-        // var div = document.createElement('div');
-        // div.innerHTML = '<a class="tool-tip" data-toggle="tooltip" data-placement="left" title="Tooltip here">' +
-        //                     '<i id="info-sign" class="glyphicon glyphicon-info-sign"></i>' +
-        //                 '</a>';
-        // var infoSign = div.firstChild;
-        // homeSearch.appendChild(infoSign);
-
-        // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(inputDiv);
+        
     } else {
         // set right size of the hamburger option
         var menuWidth = $("#menu-toggle").width();
@@ -125,10 +141,16 @@ function initAutocomplete() {
         }
 
         // Clear out the old markers.
-        homeMarkers.forEach(function(marker) {
-           marker.setMap(null);
-        });
+        if (homeMarker) {
+            homeMarker.setMap(null);
+        }
+        homeMarker = null;
 
+        resetAttendanceArea();
+        if (homeInfoWindow.content) {
+            homeInfoWindow.content = undefined;
+        }
+        
         // For each place, get the icon, name and location.
         places.forEach(function(place) {
             if (!place.geometry) {
@@ -145,7 +167,7 @@ function initAutocomplete() {
             );
 
             // Create a marker for each place.
-            var homeMarker = new Marker({
+            homeMarker = new Marker({
                 map: map,
                 position: place.geometry.location,
                 icon: {
@@ -158,41 +180,7 @@ function initAutocomplete() {
                 map_icon_label: '<span class="map-icon map-icon-map-pin"><span class="marker-label"><br>HOME</span></span>'
             });
             
-            homeMarkers.push(homeMarker);
-            // var aaname;
-            // var aarea;
-            var ctip = false;
-            
-            google.maps.event.addListener(homeMarker, "click", function(event) { 
-
-                attendanceAreaPolygonArray.forEach(function(element, index, array) {
-                    if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
-                        aaname = element.name; 
-                        aarea = element;
-                    }
-                });
-
-                ctip1PolygonArray.forEach(function(element, index, array) {
-                    if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
-                        ctip = true;
-                    } 
-                });
-                html = getHomeMarkerHtml(homeMarker, { ctip: ctip });
-
-                infoWindow.close();
-                if (infoWindow.content === undefined || infoWindow.content === html) {
-                    infoWindow.setContent(html);
-                        
-                } else {
-                    var resetContent = html.replace(/Show only .* schools/, 'Reset');
-                    infoWindow.setContent(resetContent);
-                }
-
-                infoWindow.open(map, homeMarker);
-
-                $("#show-attendance-area").on("click", onShowAttendanceArea);
-            });
-            
+            bindInfoWindowHomeMarker(homeMarker, map);
             // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
 
@@ -216,32 +204,87 @@ function getHomeMarkerHtml (homeMarker, data) {
     return html;
 }
 
+function resetAttendanceArea() {
+    if (homeInfoWindow.content) {
+        $("#show-attendance-area").html("Show only " + aaname.toUpperCase() + " schools");
+        var resetContent = homeInfoWindow.content.replace(/Reset/, "Show only " + aaname.toUpperCase() + " schools");
+        homeInfoWindow.setContent(resetContent);
+    }
 
-function onShowAttendanceArea() {
-                   
-    var resetContent;
-    // if ($("#show-attendance-area").hasClass("toggled")) {
-    if (infoWindow.content.indexOf("Reset") !== -1) {
-        resetContent = infoWindow.content.replace(/Reset/, 'Show only ' + aaname.toUpperCase() + ' schools');
-        infoWindow.setContent(resetContent);
-
-        $("#map-choices-form").submit();
-        // showStarMarkers();
+    $("#map-choices-form").submit();
+    if (aarea) {
         aarea.setOptions({
             fillColor: "#000",
             fillOpacity: 0
         });
+    }
+}
+
+function onShowAttendanceArea() {
+    var color = "#000";
+                   
+    if (homeInfoWindow.content.indexOf("Reset") !== -1) {
+        resetAttendanceArea();
 
     } else {
-        resetContent = infoWindow.content.replace(/Show only .* schools/, 'Reset');
-        infoWindow.setContent(resetContent);
+        var resetContent = homeInfoWindow.content.replace(/Show only .* schools/, 'Reset');
+        homeInfoWindow.setContent(resetContent);
        
-        attendanceAreaPolygonArray.forEach(function(element) {
-            markers.forEach(function(marker) { 
-                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== aaname || marker.customInfo.citySchool === "Yes") {
+        markers.forEach(function(marker, index, array) { 
+            attendanceAreaPolygonArray.forEach(function(element) {
+        
+                if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name !== aaname) {
                     marker.setMap(null);
                     marker.customInfo.starMarker.setMap(null);
-                }  
+                
+                } else if (google.maps.geometry.poly.containsLocation(marker.position, element) && element.name == aaname && marker.customInfo.citySchool === "Yes") {
+                    var name = marker.name;
+                    var starred = marker.customInfo.starred;
+                    var address = marker.customInfo.address;
+                    var phone = marker.customInfo.phone;
+                    var lat = marker.customInfo.lat;
+                    var lng = marker.customInfo.lng;
+                    var position = marker.position;
+                    
+                    //high
+                    if (array[index].icon.fillColor === "#414141") {
+                        var fillColor = "#8c8c8c";
+                        color = "#414141";
+                    //middle
+                    } else if (array[index].icon.fillColor === "#87CCE2") {
+                        fillColor = "#b5dfed";
+                        color = "#87CCE2";
+                    // elem
+                    } else if (array[index].icon.fillColor === "#F54900") {
+                        fillColor = "#ff9f75";
+                        color = "#F54900";
+                    }
+                    
+                    var map_icon_label = marker.map_icon_label;
+                    var starMarker = marker.customInfo.starMarker;
+                    var html = marker.customInfo.html.replace(/id="city-wide"/, 'id="city-wide" style="color:' + color +'"');
+                    
+                    markers[index] = new Marker({
+                                    name: name,
+                                    customInfo: {html: html, starMarker: starMarker, starred: starred, type: "marker", citySchool: "Yes", name: name, address: address, phone: phone, lat: lat, lng: lng},
+                                    map: map,
+                                    position: position,
+                                    icon: {
+                                        path: SQUARE_PIN,
+                                        fillColor: fillColor,
+                                        fillOpacity: 2,
+                                        strokeColor: '#fff',
+                                        strokeWeight: 0
+                                    },
+                                    optimized: false,
+                                    zIndex: -1,
+                                    map_icon_label: map_icon_label
+                                });
+
+                    bindInfoWindow(markers[index], map, html);
+                    bindInfoWindowFavoriteStar(starMarker, map, html);
+                }
+                
             });
 
         });
@@ -251,8 +294,6 @@ function onShowAttendanceArea() {
         });
     }
     $("#show-attendance-area").on("click", onShowAttendanceArea);
-    
-
 }
 
 function onReturn() {
@@ -278,8 +319,7 @@ function getDirections(origin, destination, travelMode) {
     var directionsWidth = 0.25 * pageWidth - 50;
     
     $("#map").width(mapWidth);
-    $("#directions-panel").show();
-    $("#directions-panel").width(directionsWidth);
+
     map.setCenter(center);
 
     var request = {
@@ -291,14 +331,14 @@ function getDirections(origin, destination, travelMode) {
     directionsService.route(request, function(response, status) {
         directionsDisplay.setPanel(document.getElementById("directions-panel"));
         directionsDisplay.setDirections(response); 
+        $("#directions-panel").width(directionsWidth);
+        $("#directions-panel").show();
+   
     });
-
+    
     // hide markers and home marker and starMarkers
     removeAllMarkers();
-    homeMarkers.forEach(function(marker) {
-       marker.setMap(null);
-    });
-   
+    homeMarker.setMap(null)
     
 }
 
@@ -432,15 +472,6 @@ function onDirectionsFromHere() {
 
 function onFavoriteStarClick(marker, e) {
     
-    // if (marker.customInfo.type === "starMarker") {
-    //     var starMarker = marker;
-    //     for (var i=0; i<markers.length; ++i) {
-    //         if (markers[i].customInfo.starMarker === starMarker) {
-    //             marker = markers[i];
-    //             break;
-    //         }
-    //     }
-    // } else {
     var starMarker = marker.customInfo.starMarker;
     
     var name = marker.customInfo.name;
@@ -450,16 +481,6 @@ function onFavoriteStarClick(marker, e) {
     var lat = marker.customInfo.lat;
     var lng = marker.customInfo.lng;
 
-    // var el = document.querySelector('#content'); 
-    // var elInfoWindow = document.querySelector("#info-window-content");
-
-    // var name = name || el.dataset.name;
-    // var address = address || el.dataset.address;
-    // var phone = phone || el.dataset.phone;
-    // var citySchool = citySchool || el.dataset.citySchool;
-    
-    // var lat = lat || parseFloat(elInfoWindow.dataset.lat);
-    // var lng = lng || parseFloat(elInfoWindow.dataset.lng);
     var numRows = document.getElementById("favorites-table-body").rows.length;
     var row = 
         '<tr id="' + name +'">' +
@@ -534,7 +555,7 @@ function getHtml(name, startTime, endTime,
                 '<b>End Time: </b>'+ endTime + '<br>' +
                 '<b>Principal: </b>'+ principal + '<br>' +
                 '<span id="address"><b>Address: </b>'+ address + '</span><br>' +
-                '<b>City School: </b>' + citySchool + '<br>' +
+                '<span id="city-wide"><b>City-Wide School: </b>' + citySchool + '</span><br>' +
                 '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
                 '<b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
                 '<b>Website: </b><span id="website-span"><a id="website">' + website + '</a></span><br>' +
@@ -690,7 +711,7 @@ function createMarker(lat, lng, name, address, phone, gradesServed, citySchool) 
 
     var marker = new Marker({
         name: name,
-        customInfo: {starred: "unstarred", type: "marker", citySchool: citySchool, name: name, address: address, phone: phone, citySchool, lat: lat, lng: lng},
+        customInfo: {starred: "unstarred", type: "marker", citySchool: citySchool, name: name, address: address, phone: phone, lat: lat, lng: lng},
         map: map,
         position: position,
         icon: {
@@ -716,30 +737,54 @@ function removeAllMarkers() {
     }
 }
 
+function bindInfoWindowHomeMarker (homeMarker, map) {
+    var ctip = false;
+    
+    google.maps.event.addListener(homeMarker, "click", function(event) { 
+        attendanceAreaPolygonArray.forEach(function(element, index, array) {
+            if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
+                aaname = element.name; 
+                aarea = element;
+            }
+        });
 
-// function showStarMarkers() {
-//     for (var i = 0; i < starMarkers.length; ++i) {
-//         var starMarker = starMarkers[i];
-//         starMarker.setMap(map);
-//     } 
-// }
+        ctip1PolygonArray.forEach(function(element, index, array) {
+            if (google.maps.geometry.poly.containsLocation(event.latLng, element)) {
+                ctip = true;
+            } 
+        });
+        html = getHomeMarkerHtml(homeMarker, { ctip: ctip });
+        
+        homeInfoWindow.close();
+        if (homeInfoWindow.content === undefined || homeInfoWindow.content === html) {
+            homeInfoWindow.setContent(html);
+           
+        } else {
+            var resetContent = html.replace(/Show only .* schools/, 'Reset');
+            homeInfoWindow.setContent(resetContent);
+        }
 
-// function bindHomeInfoWindow (marker, map, html) {
-//     google.maps.event.addListener(marker, 'click', function (event) {
-//         infoWindow.close();
-//         infoWindow.setContent(html);
-//         onShowAttendanceArea();
-//     });
-// }
+        homeInfoWindow.open(map, homeMarker);
+
+        $("#show-attendance-area").on("click", onShowAttendanceArea);
+    });
+
+    google.maps.event.addListener(homeInfoWindow,'closeclick',function(){
+       directionsDisplay.setMap(null);
+       directionsDisplay.setPanel(null);
+    });
+    
+}
 
 function bindInfoWindow(marker, map, html) {
+    
     google.maps.event.addListener(infoWindow,'closeclick',function(){
        directionsDisplay.setMap(null);
        directionsDisplay.setPanel(null);
-
     });
 
     google.maps.event.addListener(marker, 'click', function (event) {
+       
         infoWindow.close();        
         if (marker.customInfo.starred === "unstarred") {
             marker.customInfo.starMarker.setMap(null);
@@ -846,12 +891,10 @@ $('#map-choices-form').on('submit', function (e) {
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
-    // starMarkers.forEach(function(marker) {
-    //     marker.setMap(map);
-    // });
-    homeMarkers.forEach(function(marker) {
-        marker.setMap(map);
-    });
+    if (homeMarker) {
+        homeMarker.setMap(map);
+    }
+
     $("#form-submit").val("Submit");
 })
 
@@ -1015,9 +1058,6 @@ $(document).ready(function() {
         $("#wrapper").toggleClass("toggled");
         $("#hide-side-nav").hide();
 
-        // fix this
-        $("#directions-panel").show();
-        
     });
 
     
@@ -1098,7 +1138,7 @@ $(document).ready(function() {
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
                       "2. Test score area<br>" +
-                      "3. Applicant lives in the attendance area of the school <br>&nbsp;&nbsp;&nbsp;(does NOT apply for city schools)<br>" +
+                      "3. Applicant lives in the attendance area of the school <br>&nbsp;&nbsp;&nbsp;(does NOT apply for city-wide schools)<br>" +
                       "4. No-tiebreaker";
     $("#elem-tie-btn").on("click", function() {
         $("#elem-tie-btn").toggleClass("toggle");

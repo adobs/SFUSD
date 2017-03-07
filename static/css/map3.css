@@ -485,3 +485,6 @@ tbody, table {
 	background-color: #fad355;
 	color: #414141;
 }
+#show-favorites-btn {
+	font-size: 12px;
+}
