@@ -73,7 +73,7 @@ function initialize() {
 
     var pos = undefined;
     if (navigator) {
-        console.log("navigation is ", navigator.geolocation.__proto__);
+        console.log("navigation is ", navigator);
     }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
