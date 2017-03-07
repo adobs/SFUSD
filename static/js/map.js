@@ -72,15 +72,19 @@ function initialize() {
     var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
 
     var pos = undefined;
-    if (navigator.geolocation) {
+    if (navigator) {
+        console.log("navigation is ", navigator.geolocation.__proto__);
+    }
+    if (navigator.geolocation.__proto__) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+            console.log("print positions ", position);
+            // pos = {
+            //   lat: position.coords.latitude,
+            //   lng: position.coords.longitude
+            // };
+        }, function(error) {
+            console.log("error is ", error);
         });
-        var print = pos || "unsupporte";
-        console.log("position is ", print);
     }
 
     map = new google.maps.Map(document.getElementById('map'), {
