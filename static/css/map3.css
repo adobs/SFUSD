@@ -445,8 +445,8 @@ tr td:nth-child(7), th:nth-child(7) {
 /* on a mobile device */
 @media(max-width:991px) {
 	.pac-card {
-		box-sizing: unset;
-		-moz-box-sizing: unset;
+		/*box-sizing: unset;*/
+		/*-moz-box-sizing: unset;*/
 	}
 	#pac-input {
 		margin-left: 0px;
