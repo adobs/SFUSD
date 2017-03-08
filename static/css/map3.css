@@ -434,8 +434,7 @@ tr td:nth-child(7), th:nth-child(7) {
 	#map-row {
 		padding-right: 0px;
 	}
-
-	#mobile-show-filters {
+	.mobile-filter-btn {
 		background-color: #fad355;
 		visibility: visible;
 		margin-left: 6px;
@@ -462,6 +461,13 @@ tr td:nth-child(7), th:nth-child(7) {
 	}
 	#map {
 		height: 100%;
+	}
+	#filter-schools-heading {
+		display: inline-block;
+	}
+	#mobile-hide-filters {
+		position: relative;
+		float: right;
 	}
 
 }

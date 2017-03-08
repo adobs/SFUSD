@@ -2,15 +2,13 @@
 
 //// current list
 // add the link to the SARC report?
-// GET THE STAR BACK WHEN HIT RESET
-// is the city-wide school thing confusing??
+// get a better way of getting IP addresses so its from HTTPS and is more accurates 
 
 //// mobile specific fixes
 // hide directions buttons in mobile
 // click submit - hides the window on mobile
 // link the address in mobile so that user can click using the q= thing
 // better home mobile experience (entering home address)
-// ->fix the mobile experience - not have polygons maybe?
 // hide the favorite star buttons on the info window and the show my favorite schools button
 
 //// longer term considerations -- need to do
@@ -1014,6 +1012,10 @@ function populateCtip1Polygon(data) {
         }
 
     });
+}
+
+function onShowFilters() {
+    $('#wrapper').toggleClass("toggled");
 }
 
 function printElement(elem) {

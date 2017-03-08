@@ -45,7 +45,9 @@
         <div id="flex-box-contents">
 
         <div class="heading">
-          <h4>Filter Schools</h4>
+          <h4 id="filter-schools-heading">Filter Schools</h4>
+          <button id="mobile-hide-filters" onclick="onHideFilters()" class="btn mobile-filter-btn" aria-hidden="true"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Hide Filters</button> 
+
         </div>
 
         <!-- Grades Served Section = g-s --> 
@@ -232,7 +234,7 @@
     <div class="container-fluid" id="whole-page">
       <div class="row" id="header-row">
         <div id="header">
-          <button id="mobile-show-filters" class="btn" aria-hidden="true">Show Filters</button> 
+          <button id="mobile-show-filters" onclick="onShowFilters()" class="btn mobile-filter-btn" aria-hidden="true">Show Filters&nbsp;<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> 
             <div id="header-flex">
               <div id="home-search-div">
                 <div id="enter-address-intro">Welcome! Enter your home address
