@@ -1071,10 +1071,6 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
-        $("#show-side-nav").hide();
-        $("#hide-side-nav").click();
-        $("#sidebar-wrapper").hide();
-        $("#hide-side-nav-div").hide();
     }
 
     var headerHeight = $("#header").height();
