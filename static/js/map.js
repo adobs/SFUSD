@@ -111,9 +111,8 @@ function initAutocomplete() {
         
     } else {
         // set right size of the hamburger option
-        var menuWidth = $("#menu-toggle").width();
         
-        var searchBarWidth = windowWidth - menuWidth - 30;
+        var searchBarWidth = windowWidth - 80;
         $(".pac-card").width(searchBarWidth);
         $("#pac-input").width(searchBarWidth);
         $("#pac-input").css("flex-shrink", "1");
@@ -323,6 +322,7 @@ function getDirections(origin, destination, travelMode) {
         directionsDisplay.setPanel(document.getElementById("directions-panel"));
         directionsDisplay.setDirections(response); 
         $("#directions-panel").width(directionsWidth);
+        $("#directions-panel").css("visibility", "visible");
         $("#directions-panel").show();
    
     });
@@ -1060,9 +1060,10 @@ $(document).ready(function() {
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
         // $("#show-side-nav").hide();
-        $("#wrapper").toggleClass("toggled");
+        // $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
     } else {
+        $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
     }
 
