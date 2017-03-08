@@ -34,7 +34,7 @@ body {
 
 #header-row {
 	background: url(/static/img/fullbackground2.png);
-	background-size: contain;
+	background-size: cover;
 	background-position: center-top;
 }
 tbody, table {

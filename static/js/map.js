@@ -283,6 +283,10 @@ function onShowAttendanceArea() {
     $("#show-attendance-area").on("click", onShowAttendanceArea);
 }
 
+function submitForm () {
+     $("#map-choices-form").submit();
+}
+
 function onReturn() {
     $("#wrapper").toggleClass("toggled");
     $("#directions-panel").hide();
