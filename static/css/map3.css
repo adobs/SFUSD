@@ -276,6 +276,7 @@
 	justify-content: center;
 	align-items: flex-start;
 	padding-left: 35%;
+	padding-top: 10px;
 }
 
 .container, #whole-page, #header, body, #header-row {
@@ -448,7 +449,7 @@ tbody, table {
 	justify-content: flex-start;
 	align-items: center;
 	/*padding-left: 100px;*/
-	/*padding-top: 15px;*/
+	/*padding-top: 20px;*/
 	padding-bottom: 0px;
 	padding-top: 10px;
 }
@@ -538,4 +539,8 @@ border:1px solid #000;*/
 }
 #info-window-content, #home-info-window-content, #instructions{
 	font-family: Arial, 'Open Sans Condensed', sans-serif;
+}
+#enter-address-intro {
+	color: #F54900;
+	font-size: 18px;
 }

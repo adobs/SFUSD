@@ -1064,7 +1064,6 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
-        return;
     }
 
     var headerHeight = $("#header").height();
@@ -1072,9 +1071,6 @@ $(document).ready(function() {
     $("#map").height(mapHeight - headerHeight - 30);
     $("#header-row").height(headerHeight);
     
-    
-
-
     
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
