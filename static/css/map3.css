@@ -3,20 +3,39 @@
 #whole-page, #page, body, html {
 	height: 100%;
 }
-.page-content {
-	background: url(/static/img/fullbackground2.png);
-	/*background-size: cover;*/
-	background-size: contain;
+#whole-page {
+/*	background: url(/static/img/fullbackground2.png);
+	background-size: cover;
+	padding-left: 0px !important;
+*/	/*margin-left: -15px;*/
+	/*padding-right: 0px;*/
+	/*background-size: content: ntain;*/
+	/*background-size: auto 100%;*/
+	/*background-repeat: no-repeat;*/
+
 }
 
+#wrapper{
+	background: url(/static/img/fullbackground3.png);
+	background-size: cover;
+}
+#page-content-wrapper {	
+	margin-left: -5px;
+	padding-right: 0px;
+}	
 body {
 	font-family: Arial !important;
 }
 .container, #whole-page, #header, body, #header-row {
-	background-clip: content-box;
+	/*background-clip: content-box;*/
 	margin-bottom: 0px;
 }
 
+
+#header-row {
+	background: url(/static/img/fullbackground2.png);
+	background-size: cover;
+}
 tbody, table {
 	width: 100%;
 }
@@ -256,7 +275,7 @@ li{
 
 #map-row{
 	height: 100%;
-	padding-right: 15px;;
+	padding-right: 15px;
 }
 
 
@@ -430,14 +449,16 @@ tr td:nth-child(7), th:nth-child(7) {
 	#header-flex {
 		align-items: flex-end;
 		padding-left: 0px;
+		padding-right: 0px;
 		padding-top: 0px;
-		display: inline-block;
 	}
 	#map {
 		border: 5px solid #fad355;
 	}
 	#map-row {
+		margin-right: -20px;
 		padding-right: 0px;
+		padding-left: 5px;
 	}
 	.mobile-filter-btn {
 		background-color: #fad355;
@@ -452,7 +473,7 @@ tr td:nth-child(7), th:nth-child(7) {
 		visibility: visible;
 	}
 	#home-search-div {
-		align-items: flex-end;
+		align-items: center;
 		padding-top: 0px;
 	}
 	#enter-address-intro, #pac-input {
@@ -468,18 +489,14 @@ tr td:nth-child(7), th:nth-child(7) {
 	.tie-breaker-flex, #tie-breaker-info-div {
 		padding-bottom: 0px;
 	}
-	#map {
-		height: 100%;
-	}
-	
 	#mobile-hide-filters {
 		position: relative;
 		float: right;
 		visibility: visible;
 		margin-right: 6px;
 	}
-	.page-content {
-		background-size: auto 10%;
+	#whole-page {
+		background-size: cover;
+		min-width: 100%;
 	}
-
 }
