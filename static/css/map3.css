@@ -6,6 +6,7 @@
 .page-content {
 	background: url(/static/img/fullbackground2.png);
 	/*background-size: cover;*/
+	background-size: contain;
 }
 
 body {
