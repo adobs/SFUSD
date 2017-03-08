@@ -478,7 +478,7 @@ tr td:nth-child(7), th:nth-child(7) {
 		margin-right: 6px;
 	}
 	.page-content {
-		background-size: auto 100%;
+		background-size: auto 50%;
 	}
 
 }
