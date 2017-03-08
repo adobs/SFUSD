@@ -1179,8 +1179,9 @@ $(document).ready(function() {
     });
 
     // geolocate user by IP address
-    $.get("http://ip-api.com/json", function(data) {
-        initialize(data.lat, data.lon);
+    $.get("https://freegeoip.net/json/github.com", function(data) {
+        console.log("data si ",data);
+        initialize(data.latitude, data.longitude);
         // instantiate map and populate counts on criteria
         var countArr = $(".count");
         
