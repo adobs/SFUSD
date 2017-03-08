@@ -2,6 +2,8 @@
 
 //// current list
 // add the link to the SARC report?
+// GET THE STAR BACK WHEN HIT RESET
+// is the city-wide school thing confusing??
 
 //// mobile specific fixes
 // hide directions buttons in mobile
@@ -30,7 +32,6 @@
 
 //// formatting
 // is the high school the right color?
-// now that the teachers thing is gone, should yellow be the accent color?  if not, then what?
 // remove space above "Filter Schools"?
 // the whole notebook page fix
 // fonts
@@ -68,31 +69,17 @@ var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
 
-function initialize() {
-    var sanFrancisco = { lat: 37.760099, lng: -122.434633 };
+function initialize(latitude, longitude) {
 
-    var pos = undefined;
-    if (navigator) {
-        console.log("navigation is ", navigator);
-    }
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log("print positions ", position);
-            // pos = {
-            //   lat: position.coords.latitude,
-            //   lng: position.coords.longitude
-            // };
-        }, function(error) {
-            console.log("error is ", error);
-        });
-    }
-
+    var lat = latitude || 37.760099;
+    var lng = longitude || -122.434633;
+    var center = { lat: lat, lng: lng };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
-        center: pos || sanFrancisco,
+        center: center,
         draggable: true
     });
-    
+    console.log("center is ",center);
     // map.addListener('bounds_changed', function(){
     //     map.setCenter(center);
     // });
@@ -388,7 +375,7 @@ function setOnDirectionsToHere(address) {
                '<button id="reverse-to-here" class="reverse-btn"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></button><br>' +
             '</div>' +           
            '<label>End:&nbsp;</label><span id="end">' + infoWindowName + '</span><br>' +
-           '<button id="driving-directions-to-here">Get driving directions</button><button id="public-directions-to-here">Get public transit directions</button><br>' +    
+           '<button id="driving-directions-to-here" class="btn">Get driving directions</button>&nbsp;<button class="btn" id="public-directions-to-here">Get public transit directions</button><br>' +    
        '</div>';
 
     infoWindow.setContent(html)
@@ -565,7 +552,7 @@ function getHtml(name, startTime, endTime,
                 '<b>Website: </b><span id="website-span"><a id="website">' + website + '</a></span><br>' +
             '</div>' +
             '<div id="instructions">' +
-                '<button id="directions-to-here" onclick="onDirectionsToHere()">Directions</button><br>' +
+                '<button id="directions-to-here" class="btn" onclick="onDirectionsToHere()">Directions</button><br>' +
               
             '</div>' +
         '</div>';
@@ -727,7 +714,7 @@ function createMarker(lat, lng, name, address, phone, gradesServed, citySchool) 
         },
         optimized: false,
         zIndex: -1,
-        map_icon_label: '<span class="map-icon map-icon-school"><span class="marker-label"><br>' + grade + '</span></span>'
+        map_icon_label: '<div class="map-icon-label-div">'+ grade +  '<br><span class="map-icon map-icon-school"><span class="marker-label"></span></span><br>&nbsp;</div>'
     });
 
     return marker;
@@ -943,11 +930,12 @@ function countCheckboxes(name) {
 // change the arrow direction when toggling to collapse / show checkboxes
 $(".arrow-collapse-link").on("click", function(e) {
     $(this).toggleClass("isExpanded")
+    console.log("$this ", $(this));
     var isExpanded = $(this).hasClass("isExpanded");
     if (isExpanded) {
-        $(this).removeClass("glyphicon-chevron-right").addClass("glyphicon glyphicon-chevron-down");         
+        $($(this)[0].children[0]).removeClass("glyphicon-chevron-right").addClass("glyphicon glyphicon-chevron-down");         
     } else {
-        $(this).removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-right");
+        $($(this)[0].children[0]).removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-right");
     }
     
 });
@@ -1098,33 +1086,22 @@ $(document).ready(function() {
     $("#header-img").width(headerImgWidth);
     $("#header-img").height(headerImgHeight);
 
-    // instantiate map and populate counts on criteria
-    var chart = initialize();
-    var countArr = $(".count");
-  
-    for (var i=0; i < countArr.length; ++i) {
-        var element = countArr[i];
-        var name = ($(element).attr('id')).slice(0, -6);
-        var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
-        $(element).html(numChecked);            
-    };
-    
+    // if user clicks back button during session
+    if (window.history && window.history.pushState) {
 
-    $(".K-5").css("color", "#F54900");
-    $(".K-8").css("color", "#F54900");
-    $(".PreK-5").css("color", "#F54900");
-    $(".PreK-8").css("color", "#F54900");
-    $(".6-8").css("color", "#87CCE2");
-    $(".9-12").css("color", "#414141");
+      window.history.pushState('', null, '');
+
+      $(window).on('popstate', function() {
+        alert("Are you sure you want to leave?  \nYou'll lose any information saved in 'Compare Schools'");
+      });
+
+    }
+    $(window).on("beforeunload", function() {
+        return "bye";
+    });
+
 
     
-    $("#map-choices-form").submit();
-
-    $("#directions-panel").hide();
-
-    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
-    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
-
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
     $(".modal-dialog").width(pageWidth * .75);
@@ -1153,11 +1130,16 @@ $(document).ready(function() {
             $("#high-tie-btn").css("background-color", "");
 
             $("#elem-tie-btn").css("background-color", "#fad355");
-            $("#tie-breaker-info").html(elemTieHtml);
-            $("#tie-breaker-info").show();
+            $("#elem-tie-breaker-info").html(elemTieHtml);
+            $("#middle-tie-breaker-info").hide();
+            $("#high-tie-breaker-info").hide();
+            $("#elem-tie-breaker-info").show();
+
+            $("#map").css("margin-top",$("#elem-tie-breaker-info").height());
         } else {
-            $("#tie-breaker-info").hide();
-            $("#elem-tie-btn").css("background-color", "");
+            $("#elem-tie-breaker-info").hide();            $("#elem-tie-btn").css("background-color", "");
+
+            $("#map").css("margin-top",0);
         }
     });
 
@@ -1175,11 +1157,18 @@ $(document).ready(function() {
             $("#elem-tie-btn").css("background-color", "");
             $("#high-tie-btn").css("background-color", "");
 
-            $("#tie-breaker-info").html(middleTieHtml);
-            $("#tie-breaker-info").show();
+            $("#middle-tie-breaker-info").html(middleTieHtml);
+            $("#elem-tie-breaker-info").hide();
+            $("#high-tie-breaker-info").hide();
+            $("#middle-tie-breaker-info").show();
+
+            $("#map").css("margin-top",$("#middle-tie-breaker-info").height());
         } else {
-            $("#tie-breaker-info").hide();
+            $("#middle-tie-breaker-info").hide();
             $("#middle-tie-btn").css("background-color", "");
+
+
+            $("#map").css("margin-top",0);
         }
     });
 
@@ -1196,26 +1185,52 @@ $(document).ready(function() {
             $("#elem-tie-btn").css("background-color", "");
             $("#middle-tie-btn").css("background-color", "");
 
-            $("#tie-breaker-info").html(highTieHtml);
-            $("#tie-breaker-info").show();
+            $("#high-tie-breaker-info").html(highTieHtml);
+            $("#elem-tie-breaker-info").hide();
+            $("#middle-tie-breaker-info").hide();
+            $("#high-tie-breaker-info").show();
+
+            console.log("highs is ", $("#high-tie-breaker-info").height());
+            $("#map").css("margin-top",$("#high-tie-breaker-info").height());
         } else {
-            $("#tie-breaker-info").hide();
+            $("#high-tie-breaker-info").hide();
             $("#high-tie-btn").css("background-color", "");
+
+            $("#map").css("margin-top",0);
         }
     });
 
-    // if user clicks back button during session
-    if (window.history && window.history.pushState) {
+    
+    $.get("http://ip-api.com/json", function(data) {
+        console.log("data ",data);
+        initialize(data.lat, data.lon);
+        // instantiate map and populate counts on criteria
+        var countArr = $(".count");
+        
+        for (var i=0; i < countArr.length; ++i) {
+            var element = countArr[i];
+            var name = ($(element).attr('id')).slice(0, -6);
+            var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
+            $(element).html(numChecked);            
+        };
+        
 
-      window.history.pushState('', null, '');
+        $(".K-5").css("color", "#F54900");
+        $(".K-8").css("color", "#F54900");
+        $(".PreK-5").css("color", "#F54900");
+        $(".PreK-8").css("color", "#F54900");
+        $(".6-8").css("color", "#87CCE2");
+        $(".9-12").css("color", "#414141");
 
-      $(window).on('popstate', function() {
-        alert("Are you sure you want to leave?  \nYou'll lose any information saved in 'Compare Schools'");
-      });
+        
+        $("#map-choices-form").submit();
 
-    }
-    $(window).on("beforeunload", function() {
-        return "bye";
+        $("#directions-panel").hide();
+
+        $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
+        $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
+
+       
     });
 
 });

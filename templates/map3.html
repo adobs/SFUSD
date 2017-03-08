@@ -55,7 +55,8 @@
         <div id="g-s-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
-              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#g-s-collapse" aria-expanded="false" aria-controls="g-s-collapse"> 
+              <a class="arrow-collapse-link" data-toggle="collapse" href="#g-s-collapse" aria-expanded="false" aria-controls="g-s-collapse">  
+                <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
                 <label for="g-s" class="checkbox-label">Grades Served</label>
               </a>
               <span class="count badge" id="g-s-count"></span>
@@ -88,7 +89,8 @@
         <div id="c-s-form" class="flex-box-child">
           <ul class="list-group">
             <li class="list-group-item">
-              <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#c-s-collapse" aria-expanded="false" aria-controls="c-s-collapse"> 
+              <a class="arrow-collapse-link" data-toggle="collapse" href="#c-s-collapse" aria-expanded="false" aria-controls="c-s-collapse"> 
+                <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
                 <label for="c-s" class="checkbox-label">City-Wide School <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Attendance area does not apply for city-wide schools"></span></label>
               </a>
               <span class="count badge" id="c-s-count"></span>
@@ -120,7 +122,8 @@
         <div id="m-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
-            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#m-p-collapse" aria-expanded="false" aria-controls="m-p-collapse">
+            <a class="arrow-collapse-link" data-toggle="collapse" href="#m-p-collapse" aria-expanded="false" aria-controls="m-p-collapse">
+              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
               <label for="m-p" class="checkbox-label">Multilingual Pathways</label>
             </a>
             <span class="count badge" id="m-p-count"></span>
@@ -152,8 +155,9 @@
         <div id="b-s-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
-            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#b-s-p-collapse" aria-expanded="false" aria-controls="b-s-p-collapse">
-              <label for="b-s-p" class="checkbox-label">Before School Program</label>
+            <a class="arrow-collapse-link" data-toggle="collapse" href="#b-s-p-collapse" aria-expanded="false" aria-controls="b-s-p-collapse">
+              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
+              <label for="b-s-p" class="checkbox-label">Before School Programs</label>
             </a>
             <span class="count badge" id="b-s-p-count"></span>
           </li>
@@ -184,7 +188,8 @@
         <div id="a-s-p-form" class="flex-box-child">
         <ul class="list-group">
           <li class="list-group-item">
-            <a class="arrow-collapse-link glyphicon glyphicon-chevron-right" data-toggle="collapse" href="#a-s-p-collapse" aria-expanded="false" aria-controls="a-s-p-collapse">
+            <a class="arrow-collapse-link" data-toggle="collapse" href="#a-s-p-collapse" aria-expanded="false" aria-controls="a-s-p-collapse">
+              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
               <label for="a-s-p" class="checkbox-label">Afterschool Programs</label>
             </a>  
             <span class="count badge" id="a-s-p-count"></span>
@@ -210,7 +215,7 @@
         </div>
         <!-- End After School Program Section -->
 
-        <input id="form-submit" type="submit" value="Submit"> 
+        <input type="button" class='btn btn-default' id="form-submit" type="submit" value="Submit"> 
     </div> <!-- close flexbox contents -->
     </div> <!-- close div class -->
     
@@ -220,22 +225,22 @@
         </div>
 
         <div class="flex-box-child">
-          <button id="show-favorites-btn">Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
+          <button id="show-favorites-btn" class='btn btn-default'>Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
         </div>
   
   </div><!-- /#sidebar-wrapper -->
 <!-- End of SideBar -->
 
-  <div id="page-content-wrapper">
+  <div id="page-content-wrapper" class="page-content">
     <div class="container-fluid" id="whole-page">
       <div class="row flex-box-child" id="show-side-nav-div" style="padding:0px">
            <a id="show-side-nav" class="menu-toggle"><span class="glyphicon glyphicon-forward" aria-hidden="true">&nbsp;Show</span></a>
       </div> <!-- close row -->
       <div class="row" id="header-row">
         <div id="header">
-            <a href="#" onclick="window.open('http://www.sfusd.edu/')">
+            <!-- <a href="#" onclick="window.open('http://www.sfusd.edu/')">
               <img class="push1col" id="header-img" title="San Francisco Unified School District" src="/static/img/san-francisco-unified-school-district.png" alt="San Francisco Unified School District logo" width="262" height="55">
-            </a>
+            </a> -->
             
             <div id="header-flex">
               <div id="home-search-div">
@@ -250,30 +255,35 @@
               <a href="#menu-toggle" type="button" class="controls menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
             </div>
           </div>
+      
+          </div> <!-- close header-flex -->
           <div id="tie-breaker-btn-div">
-                <div id="tie-breaker-flex">
-                <ul>
-                  <li>  
-                    Tie-breaker Hierarchies
-                  </li>
-                  <li>
-                    <button class="tie-breaker-btn" id="elem-tie-btn"><span class="map-icon map-icon-school K-5 icon-legend">&nbsp;Elementary Schools</span></button>
-                  </li>
-                  <li>
-                    <button class="tie-breaker-btn" id="middle-tie-btn"><span class="map-icon map-icon-school 6-8 icon-legend">&nbsp;Middle Schools</span></button>
-                  </li>
-                  <li>
-                    <button class="tie-breaker-btn" id="high-tie-btn"><span class="map-icon map-icon-school 9-12 icon-legend">&nbsp;High Schools</span></button>
-                   </li>
-                </ul>
-                  <div id="tie-breaker-info">
-                  </div>
-                </div> <!-- close tie-breaker-flex -->
-              </div> <!-- close tie-breaker-btn-div -->
-           </div> <!-- close header-flex -->
+            <div id="tie-breaker-title" class="tie-breaker-flex">
+              Tie-breaker Hierarchies
+            </div>
+            <div class="tie-breaker-flex">
+                <button class="tie-breaker-btn btn" id="elem-tie-btn" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Elementary Schools
+                  </button>&nbsp;
+                <button class="tie-breaker-btn btn" id="middle-tie-btn">
+                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Middle Schools
+                </button>&nbsp;
+                <button class="tie-breaker-btn btn" id="high-tie-btn">
+                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;High Schools
+                </button>
+            </div> <!-- close tie-breaker-flex -->
+          <div id="tie-breaker-info-div" class="tie-breaker-flex">      
+              <div id="elem-tie-breaker-info" class="tie-breaker-info">
+              </div>
+              <div id="middle-tie-breaker-info" class="tie-breaker-info">
+              </div>
+              <div id="high-tie-breaker-info" class="tie-breaker-info"> 
+              </div>
+              </div>
+          </div> <!-- close tie-breaker-btn-div -->
         </div> <!-- close header -->
       </div> <!-- close row -->
-      <div class="row" id="page-content-wrapper"> 
+      <div class="row" id="map-row"> 
 
     
        
