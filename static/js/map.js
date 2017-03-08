@@ -96,7 +96,7 @@ function initAutocomplete() {
     var searchBox = new google.maps.places.SearchBox(input);
     
     var windowWidth = $(window).width();
-    if (gtMdWidth) {
+    // if (gtMdWidth) {
         var inputDiv = document.createElement('div');
     
         inputDiv.appendChild(input);
@@ -106,16 +106,16 @@ function initAutocomplete() {
         var homeSearch = document.getElementById("home-search");
         homeSearch.appendChild(inputDiv);
         
-    } else {
+    // } else {
         // set right size of the hamburger option
         
-        var searchBarWidth = windowWidth - 80;
-        $(".pac-card").width(searchBarWidth);
-        $("#pac-input").width(searchBarWidth);
-        $("#pac-input").css("flex-shrink", "1");
-        $(".pac-card").css("flex-shrink", "1");
-
-    }
+        // var searchBarWidth = windowWidth - 80;
+        // $(".pac-card").width(searchBarWidth);
+        // $("#pac-input").width(searchBarWidth);
+        // $("#pac-input").css("flex-shrink", "1");
+        // $(".pac-card").css("flex-shrink", "1");
+// 
+    // }
 
     
     // Listen for the event fired when the user selects a prediction and retrieve
