@@ -465,6 +465,9 @@ tr td:nth-child(7), th:nth-child(7) {
 		padding-right: 0px;
 		padding-left: 5px;
 	}
+	#header-row {
+		background-position: center top;
+	}
 	.mobile-filter-btn {
 		background-color: #fad355;
 		
