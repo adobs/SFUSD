@@ -1015,13 +1015,17 @@ function populateCtip1Polygon(data) {
 
 function onShowFilters() {
     $('#wrapper').toggleClass("toggled");
+    $("#mobile-show-filters").hide();
     $("#mobile-show-filters").css("visibility", "hidden");
     $("#mobile-hide-filters").css("visibility", 'visible');
+    $("#mobile-hide-filters").show();
 }
 function onHideFilters() {
     $('#wrapper').toggleClass("toggled");
+    $("#mobile-hide-filters").hide();
     $("#mobile-hide-filters").css("visibility", "hidden");
     $("#mobile-show-filters").css('visibility', 'visible');
+    $("#mobile-show-filters").show();
 }
 function printElement(elem) {
     var domClone = elem.cloneNode(true);
@@ -1072,6 +1076,7 @@ $(document).ready(function() {
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
+        $("#mobile-show-filters").show();
     }
 
     var headerHeight = $("#header").height();
