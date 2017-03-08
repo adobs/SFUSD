@@ -1042,50 +1042,46 @@ $(document).ready(function() {
       $("#wrapper").toggleClass("toggled");
     });
 
-    $("#hide-side-nav").click(function(e) {
-        e.preventDefault();
-        if (windowWidth >= MD_WIDTH) { 
-            $("#show-side-nav").show();
-        }
-        $("#wrapper").toggleClass("toggled");
-        $("#hide-side-nav").hide();
+    // $("#hide-side-nav").click(function(e) {
+    //     e.preventDefault();
+    //     if (windowWidth >= MD_WIDTH) { 
+    //         $("#show-side-nav").show();
+    //     }
+    //     $("#wrapper").toggleClass("toggled");
+    //     $("#hide-side-nav").hide();
 
-    });
+    // });
 
     
-    $("#show-side-nav").click(function(e) {
-        e.preventDefault();
-        $("#hide-side-nav").show();
-        $("#wrapper").toggleClass("toggled");
-        $("#show-side-nav").hide();
-        $("#directions-panel").hide();
-        document.getElementById('map').style.width = '100%';
+    // $("#show-side-nav").click(function(e) {
+    //     e.preventDefault();
+    //     $("#hide-side-nav").show();
+    //     $("#wrapper").toggleClass("toggled");
+    //     $("#show-side-nav").hide();
+    //     $("#directions-panel").hide();
+    //     document.getElementById('map').style.width = '100%';
 
-    });
+    // });
 
     // setting up screen
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
-        $("#show-side-nav").hide();
+        // $("#show-side-nav").hide();
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
         $("#show-side-nav").hide();
         $("#hide-side-nav").click();
+        $("#sidebar-wrapper").hide();
         $("#hide-side-nav-div").hide();
     }
 
     var headerHeight = $("#header").height();
     var mapHeight = $("#map").height();
-    $("#map").height(mapHeight - headerHeight - 60);
+    $("#map").height(mapHeight - headerHeight - 30);
     $("#header-row").height(headerHeight);
     
-    var headerImgWidth = 0.7 * $("#header-img").width();
-    var headerImgHeight = 0.7 * $("#header-img").height();
-    $("#header-img").width(headerImgWidth);
-    $("#header-img").height(headerImgHeight);
-
     // if user clicks back button during session
     if (window.history && window.history.pushState) {
 
@@ -1136,10 +1132,13 @@ $(document).ready(function() {
             $("#elem-tie-breaker-info").show();
 
             $("#map").css("margin-top",$("#elem-tie-breaker-info").height());
+            $("#directions-panel").css("margin-top", $("#elem-tie-breaker-info").height());
         } else {
-            $("#elem-tie-breaker-info").hide();            $("#elem-tie-btn").css("background-color", "");
-
+            $("#elem-tie-breaker-info").hide();            
+            $("#elem-tie-btn").css("background-color", "");
+     
             $("#map").css("margin-top",0);
+            $("#directions-panel").css("margin-top", 0);
         }
     });
 
@@ -1163,12 +1162,14 @@ $(document).ready(function() {
             $("#middle-tie-breaker-info").show();
 
             $("#map").css("margin-top",$("#middle-tie-breaker-info").height());
+            $("#directions-panel").css("margin-top", $("#middle-tie-breaker-info").height());
+            
         } else {
             $("#middle-tie-breaker-info").hide();
             $("#middle-tie-btn").css("background-color", "");
 
-
             $("#map").css("margin-top",0);
+            $("#directions-panel").css("margin-top", 0);
         }
     });
 
@@ -1190,13 +1191,15 @@ $(document).ready(function() {
             $("#middle-tie-breaker-info").hide();
             $("#high-tie-breaker-info").show();
 
-            console.log("highs is ", $("#high-tie-breaker-info").height());
             $("#map").css("margin-top",$("#high-tie-breaker-info").height());
+            $("#directions-panel").css("margin-top", $("#high-tie-breaker-info").height());
+    
         } else {
             $("#high-tie-breaker-info").hide();
             $("#high-tie-btn").css("background-color", "");
 
             $("#map").css("margin-top",0);
+            $("#directions-panel").css("margin-top", 0);
         }
     });
 

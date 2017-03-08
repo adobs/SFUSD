@@ -404,7 +404,7 @@ tr td:nth-child(7), th:nth-child(7) {
 #directions-panel {
 	position: relative;
 	float: left;
-	margin-left: 20px;
+	/*margin-left: 20px;*/
 	background-color: white;
 }
 
@@ -525,15 +525,15 @@ padding:3px;
 border:1px solid #000;*/
 }
 #elem-tie-btn {
-	background-color: #F54900 !important;
+	background-color: #F54900;
 	color: #fff;
 }
 #middle-tie-btn {
-	background-color: #87CCE2 !important;
+	background-color: #87CCE2;
 	color: #fff;
 }
 #high-tie-btn {
-	background-color: #414141 !important;
+	background-color: #414141;
 	color: #fff;
 }
 #info-window-content, #home-info-window-content, #instructions{
