@@ -9,7 +9,7 @@
 // click submit - hides the window on mobile
 // link the address in mobile so that user can click using the q= thing
 // better home mobile experience (entering home address)
-// hide the favorite star buttons on the info window and the show my favorite schools button
+// hide the favorite star buttons on the info window and hide the show my favorite schools button
 
 //// longer term considerations -- need to do
 // clean all the data, perfect the addresses for all the schools using googlemaps
@@ -30,7 +30,6 @@
 
 //// formatting
 // is the high school the right color?
-// remove space above "Filter Schools"?
 // the whole notebook page fix
 // fonts
 
@@ -1114,13 +1113,15 @@ $(document).ready(function() {
             $("#high-tie-breaker-info").hide();
             $("#elem-tie-breaker-info").show();
 
-            $("#map").css("margin-top",$("#elem-tie-breaker-info").height());
-            $("#directions-panel").css("margin-top", $("#elem-tie-breaker-info").height());
+            var elemTieHeight = $("#elem-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() + elemTieHeight);
+            $("#directions-panel").css("margin-top", elemTieHeight);
         } else {
             $("#elem-tie-breaker-info").hide();            
             $("#elem-tie-btn").css("background-color", "");
-     
-            $("#map").css("margin-top",0);
+
+            elemTieHeight = $("#elem-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() - elemTieHeight);
             $("#directions-panel").css("margin-top", 0);
         }
     });
@@ -1144,14 +1145,16 @@ $(document).ready(function() {
             $("#high-tie-breaker-info").hide();
             $("#middle-tie-breaker-info").show();
 
-            $("#map").css("margin-top",$("#middle-tie-breaker-info").height());
+            var middleTieHeight = $("#middle-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() + middleTieHeight);
             $("#directions-panel").css("margin-top", $("#middle-tie-breaker-info").height());
             
         } else {
             $("#middle-tie-breaker-info").hide();
             $("#middle-tie-btn").css("background-color", "");
 
-            $("#map").css("margin-top",0);
+            middleTieHeight = $("#middle-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() - middleTieHeight);
             $("#directions-panel").css("margin-top", 0);
         }
     });
@@ -1174,14 +1177,16 @@ $(document).ready(function() {
             $("#middle-tie-breaker-info").hide();
             $("#high-tie-breaker-info").show();
 
-            $("#map").css("margin-top",$("#high-tie-breaker-info").height());
-            $("#directions-panel").css("margin-top", $("#high-tie-breaker-info").height());
+            var highTieHeight = $("#high-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() + highTieHeight);
+            $("#directions-panel").css("margin-top", highTieHeight);
     
         } else {
             $("#high-tie-breaker-info").hide();
             $("#high-tie-btn").css("background-color", "");
 
-            $("#map").css("margin-top",0);
+            highTieHeight = $("#high-tie-breaker-info").height();
+            $("#header-row").height($("#header-row").height() - highTieHeight);
             $("#directions-panel").css("margin-top", 0);
         }
     });

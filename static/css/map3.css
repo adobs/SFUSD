@@ -504,4 +504,10 @@ tr td:nth-child(7), th:nth-child(7) {
 		background-size: cover;
 		min-width: 100%;
 	}
+	#compare-schools-div {
+		visibility: hidden;
+	}
+	#favorite-star-div {
+		visibility: hidden;
+	}
 }
