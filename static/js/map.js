@@ -1200,10 +1200,9 @@ $(document).ready(function() {
     });
 
     
-    // $.get("http://ip-api.com/json", function(data) {
+    $.get("http://ip-api.com/json", function(data) {
         console.log("data ",data);
-        // initialize(data.lat, data.lon);
-        initialize();
+        initialize(data.lat, data.lon);
         // instantiate map and populate counts on criteria
         var countArr = $(".count");
         
@@ -1231,6 +1230,6 @@ $(document).ready(function() {
         $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
 
        
-    // });
+    });
 
 });
