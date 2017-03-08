@@ -1180,7 +1180,6 @@ $(document).ready(function() {
 
     // geolocate user by IP address
     $.get("https://freegeoip.net/json/github.com", function(data) {
-        console.log("data si ",data);
         initialize(data.latitude, data.longitude);
         // instantiate map and populate counts on criteria
         var countArr = $(".count");
