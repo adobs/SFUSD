@@ -1068,6 +1068,7 @@ $(document).ready(function() {
         gtMdWidth = true;
         // $("#show-side-nav").hide();
         $("#wrapper").toggleClass("toggled");
+        $("#sidebar-wrapper").prop("hidden", false);
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
