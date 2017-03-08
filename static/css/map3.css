@@ -5,7 +5,7 @@
 }
 .page-content {
 	background: url(/static/img/fullbackground2.png);
-	background-size: cover;
+	/*background-size: cover;*/
 }
 
 body {
@@ -478,7 +478,7 @@ tr td:nth-child(7), th:nth-child(7) {
 		margin-right: 6px;
 	}
 	.page-content {
-		background-size: auto contain;
+		background-size: auto 100%;
 	}
 
 }
