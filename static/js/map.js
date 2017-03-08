@@ -109,11 +109,11 @@ function initAutocomplete() {
     } else {
         // set right size of the hamburger option
         
-        // var searchBarWidth = windowWidth - 80;
-        // $(".pac-card").width(searchBarWidth);
-        // $("#pac-input").width(searchBarWidth);
-        // $("#pac-input").css("flex-shrink", "1");
-        // $(".pac-card").css("flex-shrink", "1");
+        var searchBarWidth = windowWidth - 80;
+        $(".pac-card").width(searchBarWidth);
+        $("#pac-input").width(searchBarWidth);
+        $("#pac-input").css("flex-shrink", "1");
+        $(".pac-card").css("flex-shrink", "1");
 
     }
 
