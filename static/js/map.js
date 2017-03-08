@@ -1016,8 +1016,14 @@ function populateCtip1Polygon(data) {
 
 function onShowFilters() {
     $('#wrapper').toggleClass("toggled");
+    $("#mobile-show-filters").css("visibility", "hidden");
+    $("#mobile-hide-filters").css("visibility", 'visible');
 }
-
+function onHideFilters() {
+    $('#wrapper').toggleClass("toggled");
+    $("#mobile-hide-filters").css("visibility", "hidden");
+    $("#mobile-show-filters").css('visibility', 'visible');
+}
 function printElement(elem) {
     var domClone = elem.cloneNode(true);
 
