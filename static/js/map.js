@@ -1107,27 +1107,33 @@ $(document).ready(function() {
     $("#elem-tie-btn").on("click", function() {
         $("#elem-tie-btn").toggleClass("toggle");
         if ($("#elem-tie-btn").hasClass("toggle")) {
-            $("#middle-tie-btn").removeClass("toggle");
-            $("#high-tie-btn").removeClass("toggle");
+          
             $("#middle-tie-btn").css("background-color", "");
             $("#high-tie-btn").css("background-color", "");
 
             $("#elem-tie-btn").css("background-color", "#fad355");
-            $("#elem-tie-breaker-info").html(elemTieHtml);
-            $("#middle-tie-breaker-info").hide();
-            $("#high-tie-breaker-info").hide();
-            $("#elem-tie-breaker-info").show();
+            $("#tie-breaker-info").hide();
+            $("#tie-breaker-info").html(elemTieHtml);
+            $("#tie-breaker-info").show();
 
-            var elemTieHeight = $("#elem-tie-breaker-info").height();
-            $("#header-row").height($("#header-row").height() + elemTieHeight);
+            var elemTieHeight = $("#tie-breaker-info").height();
+            if($("#high-tie-btn").hasClass("toggle") || $("#middle-tie-btn").hasClass("toggle") ){
+                $("#header-row").height($("#header-row").height());
+            } else {
+                $("#header-row").height($("#header-row").height() + elemTieHeight);
+            }
             $("#directions-panel").css("margin-top", elemTieHeight);
+            $("#middle-tie-btn").removeClass("toggle");
+            $("#high-tie-btn").removeClass("toggle");
+         
         } else {
-            $("#elem-tie-breaker-info").hide();            
+              
             $("#elem-tie-btn").css("background-color", "");
 
-            elemTieHeight = $("#elem-tie-breaker-info").height();
+            elemTieHeight = $("#tie-breaker-info").height();
             $("#header-row").height($("#header-row").height() - elemTieHeight);
             $("#directions-panel").css("margin-top", 0);
+            $("#tie-breaker-info").hide();        
         }
     });
 
@@ -1139,28 +1145,36 @@ $(document).ready(function() {
      $("#middle-tie-btn").on("click", function() {
         $("#middle-tie-btn").toggleClass("toggle");
         if ($("#middle-tie-btn").hasClass("toggle")) {
-            $("#elem-tie-btn").removeClass("toggle");
-            $("#high-tie-btn").removeClass("toggle");
             $("#middle-tie-btn").css("background-color", "#fad355");
             $("#elem-tie-btn").css("background-color", "");
             $("#high-tie-btn").css("background-color", "");
 
-            $("#middle-tie-breaker-info").html(middleTieHtml);
-            $("#elem-tie-breaker-info").hide();
-            $("#high-tie-breaker-info").hide();
-            $("#middle-tie-breaker-info").show();
+            $("#tie-breaker-info").html(middleTieHtml);
+            $("#tie-breaker-info").show();
 
-            var middleTieHeight = $("#middle-tie-breaker-info").height();
-            $("#header-row").height($("#header-row").height() + middleTieHeight);
-            $("#directions-panel").css("margin-top", $("#middle-tie-breaker-info").height());
+            var middleTieHeight = $("#tie-breaker-info").height();
+            if($("#high-tie-btn").hasClass("toggle") || $("#elem-tie-btn").hasClass("toggle") ){
+                $("#header-row").height($("#header-row").height());
+            } else {
+                $("#header-row").height($("#header-row").height() + middleTieHeight);
+            }
+            
+            console.log("initial header height before middle ,", $("#header-row").height());
+            console.log("in if, middle height is ", middleTieHeight);
+            $("#directions-panel").css("margin-top", $("#tie-breaker-info").height());
+            $("#elem-tie-btn").removeClass("toggle");
+            $("#high-tie-btn").removeClass("toggle");
+            
             
         } else {
-            $("#middle-tie-breaker-info").hide();
+            
             $("#middle-tie-btn").css("background-color", "");
 
-            middleTieHeight = $("#middle-tie-breaker-info").height();
+            middleTieHeight = $("#tie-breaker-info").height();
+            console.log("middleTieHeight ", middleTieHeight);
             $("#header-row").height($("#header-row").height() - middleTieHeight);
             $("#directions-panel").css("margin-top", 0);
+            $("#tie-breaker-info").hide();
         }
     });
 
@@ -1171,28 +1185,32 @@ $(document).ready(function() {
     $("#high-tie-btn").on("click", function() {
         $("#high-tie-btn").toggleClass("toggle");
         if ($("#high-tie-btn").hasClass("toggle")) {
-            $("#elem-tie-btn").removeClass("toggle");
-            $("#middle-tie-btn").removeClass("toggle");
             $("#high-tie-btn").css("background-color", "#fad355");
             $("#elem-tie-btn").css("background-color", "");
             $("#middle-tie-btn").css("background-color", "");
 
-            $("#high-tie-breaker-info").html(highTieHtml);
-            $("#elem-tie-breaker-info").hide();
-            $("#middle-tie-breaker-info").hide();
-            $("#high-tie-breaker-info").show();
+            $("#tie-breaker-info").html(highTieHtml);
+            $("#tie-breaker-info").show();
 
-            var highTieHeight = $("#high-tie-breaker-info").height();
-            $("#header-row").height($("#header-row").height() + highTieHeight);
+            var highTieHeight = $("#tie-breaker-info").height();
+            if($("#elem-tie-btn").hasClass("toggle") || $("#middle-tie-btn").hasClass("toggle") ){
+                $("#header-row").height($("#header-row").height());
+            } else {
+                $("#header-row").height($("#header-row").height() + highTieHeight);
+            }
+            $("#elem-tie-btn").removeClass("toggle");
+            $("#middle-tie-btn").removeClass("toggle");
+            
             $("#directions-panel").css("margin-top", highTieHeight);
     
         } else {
-            $("#high-tie-breaker-info").hide();
             $("#high-tie-btn").css("background-color", "");
 
-            highTieHeight = $("#high-tie-breaker-info").height();
+            highTieHeight = $("#tie-breaker-info").height();
             $("#header-row").height($("#header-row").height() - highTieHeight);
             $("#directions-panel").css("margin-top", 0);
+             $("#tie-breaker-info").hide();
+           
         }
     });
 
