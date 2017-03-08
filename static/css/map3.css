@@ -475,7 +475,7 @@ tr td:nth-child(7), th:nth-child(7) {
 	#mobile-show-filters {
 		margin-left: 6px;
 		margin-top: 5px;
-		visibility: visible;
+		visibility: visible !important;
 	}
 	#home-search-div {
 		align-items: center;
@@ -497,7 +497,7 @@ tr td:nth-child(7), th:nth-child(7) {
 	#mobile-hide-filters {
 		position: relative;
 		float: right;
-		visibility: visible;
+		visibility: visible !important;
 		margin-right: 6px;
 	}
 	#whole-page {
