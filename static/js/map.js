@@ -1071,7 +1071,6 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
-        $("#wrapper").toggleClass("toggled");
     }
 
     var headerHeight = $("#header").height();
