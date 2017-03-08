@@ -1033,51 +1033,6 @@ function printElement(elem) {
 }
 
 $(document).ready(function() {
-
-    var windowWidth = $(window).width();
-    var MD_WIDTH = 992;
-
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-
-    // $("#hide-side-nav").click(function(e) {
-    //     e.preventDefault();
-    //     if (windowWidth >= MD_WIDTH) { 
-    //         $("#show-side-nav").show();
-    //     }
-    //     $("#wrapper").toggleClass("toggled");
-    //     $("#hide-side-nav").hide();
-
-    // });
-
-    
-    // $("#show-side-nav").click(function(e) {
-    //     e.preventDefault();
-    //     $("#hide-side-nav").show();
-    //     $("#wrapper").toggleClass("toggled");
-    //     $("#show-side-nav").hide();
-    //     $("#directions-panel").hide();
-    //     document.getElementById('map').style.width = '100%';
-
-    // });
-
-    // setting up screen
-    if (windowWidth >= MD_WIDTH) {
-        gtMdWidth = true;
-        // $("#show-side-nav").hide();
-        $("#wrapper").toggleClass("toggled");
-        $("#menu-toggle").hide();
-    } else {
-        gtMdWidth = false;
-    }
-
-    var headerHeight = $("#header").height();
-    var mapHeight = $("#map").height();
-    $("#map").height(mapHeight - headerHeight - 30);
-    $("#header-row").height(headerHeight);
-    
     // if user clicks back button during session
     if (window.history && window.history.pushState) {
 
@@ -1093,6 +1048,33 @@ $(document).ready(function() {
     });
 
 
+    var windowWidth = $(window).width();
+    var MD_WIDTH = 992;
+
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+    // setting up screen
+    if (windowWidth >= MD_WIDTH) {
+        gtMdWidth = true;
+        // $("#show-side-nav").hide();
+        $("#wrapper").toggleClass("toggled");
+        $("#menu-toggle").hide();
+    } else {
+        gtMdWidth = false;
+        return;
+    }
+
+    var headerHeight = $("#header").height();
+    var mapHeight = $("#map").height();
+    $("#map").height(mapHeight - headerHeight - 30);
+    $("#header-row").height(headerHeight);
+    
+    
+
+
     
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
@@ -1102,7 +1084,7 @@ $(document).ready(function() {
         printElement(document.getElementById("printThis"));
     });
    
-    
+    // enable all websites in future info windows to open correclty
     $('body').on('click', '#website', function (e) { 
         var innerHtml = e.currentTarget.innerHTML;
         window.open(innerHtml, "_blank");
@@ -1199,9 +1181,8 @@ $(document).ready(function() {
         }
     });
 
-    
+    // geolocate user by IP address
     $.get("http://ip-api.com/json", function(data) {
-        console.log("data ",data);
         initialize(data.lat, data.lon);
         // instantiate map and populate counts on criteria
         var countArr = $(".count");
