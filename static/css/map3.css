@@ -146,9 +146,14 @@ li{
 	display: block;
 }
 #filter-schools-heading {
-		display: inline-block;
-	}
-#mobile-show-filters, #mobile-hide-filters {
+	display: inline-block;
+}
+
+#mobile-show-filters {
+	visibility: hidden;
+} 
+
+#mobile-hide-filters {
 	visibility: hidden;
 }
 
