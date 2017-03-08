@@ -1081,9 +1081,10 @@ $(document).ready(function() {
 
     var headerHeight = $("#header").height();
     var mapHeight = $("#map").height();
-    $("#map").height(mapHeight - headerHeight);
-    $("#header-row").height(headerHeight);
-    
+    $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
+    console.log("now map height ", $("#map").height());
+    // $("#header-row").height(headerHeight);
+    console.log("setting up w/ headerHeight");
     
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
@@ -1104,116 +1105,36 @@ $(document).ready(function() {
                       "2. Test score area<br>" +
                       "3. Applicant lives in the attendance area of the school <br>&nbsp;&nbsp;&nbsp;(does NOT apply for city-wide schools)<br>" +
                       "4. No-tiebreaker";
-    $("#elem-tie-btn").on("click", function() {
-        $("#elem-tie-btn").toggleClass("toggle");
-        if ($("#elem-tie-btn").hasClass("toggle")) {
-          
-            $("#middle-tie-btn").css("background-color", "");
-            $("#high-tie-btn").css("background-color", "");
-
-            $("#elem-tie-btn").css("background-color", "#fad355");
-            $("#tie-breaker-info").hide();
-            $("#tie-breaker-info").html(elemTieHtml);
-            $("#tie-breaker-info").show();
-
-            var elemTieHeight = $("#tie-breaker-info").height();
-            if($("#high-tie-btn").hasClass("toggle") || $("#middle-tie-btn").hasClass("toggle") ){
-                $("#header-row").height($("#header-row").height());
-            } else {
-                $("#header-row").height($("#header-row").height() + elemTieHeight);
-            }
-            $("#directions-panel").css("margin-top", elemTieHeight);
-            $("#middle-tie-btn").removeClass("toggle");
-            $("#high-tie-btn").removeClass("toggle");
-         
-        } else {
-              
-            $("#elem-tie-btn").css("background-color", "");
-
-            elemTieHeight = $("#tie-breaker-info").height();
-            $("#header-row").height($("#header-row").height() - elemTieHeight);
-            $("#directions-panel").css("margin-top", 0);
-            $("#tie-breaker-info").hide();        
-        }
-    });
-
     var middleTieHtml = "1. Applicant has an older sibling enrolled the school<br>" +
                         "2. Applicants enrolled in the elementary school that feeds into the middle school<br>" +
                         "3. Applicants living in the 94124 zipcode and applying for Willie Brown Middle School<br>" +
                         "4. Test score area<br>" +
-                        "5. No tie-breakers"
-     $("#middle-tie-btn").on("click", function() {
-        $("#middle-tie-btn").toggleClass("toggle");
-        if ($("#middle-tie-btn").hasClass("toggle")) {
-            $("#middle-tie-btn").css("background-color", "#fad355");
-            $("#elem-tie-btn").css("background-color", "");
-            $("#high-tie-btn").css("background-color", "");
-
-            $("#tie-breaker-info").html(middleTieHtml);
-            $("#tie-breaker-info").show();
-
-            var middleTieHeight = $("#tie-breaker-info").height();
-            if($("#high-tie-btn").hasClass("toggle") || $("#elem-tie-btn").hasClass("toggle") ){
-                $("#header-row").height($("#header-row").height());
-            } else {
-                $("#header-row").height($("#header-row").height() + middleTieHeight);
-            }
-            
-            console.log("initial header height before middle ,", $("#header-row").height());
-            console.log("in if, middle height is ", middleTieHeight);
-            $("#directions-panel").css("margin-top", $("#tie-breaker-info").height());
-            $("#elem-tie-btn").removeClass("toggle");
-            $("#high-tie-btn").removeClass("toggle");
-            
-            
-        } else {
-            
-            $("#middle-tie-btn").css("background-color", "");
-
-            middleTieHeight = $("#tie-breaker-info").height();
-            console.log("middleTieHeight ", middleTieHeight);
-            $("#header-row").height($("#header-row").height() - middleTieHeight);
-            $("#directions-panel").css("margin-top", 0);
-            $("#tie-breaker-info").hide();
-        }
-    });
-
+                        "5. No tie-breakers";
     var highTieHtml = "1. Applicant has an older sibling enrolled in and will be attending the school<br>" +
                       "2. Applicants who completed grades 6-8 at Willie Brown Middle School<br>" +
                       "3. Test score area<br>" +
-                      "4. No tie-breakers" 
-    $("#high-tie-btn").on("click", function() {
-        $("#high-tie-btn").toggleClass("toggle");
-        if ($("#high-tie-btn").hasClass("toggle")) {
-            $("#high-tie-btn").css("background-color", "#fad355");
-            $("#elem-tie-btn").css("background-color", "");
-            $("#middle-tie-btn").css("background-color", "");
+                      "4. No tie-breakers";
 
-            $("#tie-breaker-info").html(highTieHtml);
-            $("#tie-breaker-info").show();
-
-            var highTieHeight = $("#tie-breaker-info").height();
-            if($("#elem-tie-btn").hasClass("toggle") || $("#middle-tie-btn").hasClass("toggle") ){
-                $("#header-row").height($("#header-row").height());
-            } else {
-                $("#header-row").height($("#header-row").height() + highTieHeight);
-            }
-            $("#elem-tie-btn").removeClass("toggle");
-            $("#middle-tie-btn").removeClass("toggle");
-            
-            $("#directions-panel").css("margin-top", highTieHeight);
+    var tieBreakerHtml = [elemTieHtml, middleTieHtml, highTieHtml]
     
+    $(".tie-breaker-btn").on("click", function(e) {
+        var currentHtml = $("#tie-breaker-info").html();
+        var htmlIndex = $(this)[0].dataset.htmlindex; 
+        var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
+        if (currentHtml === newHtml) {
+            $("#tie-breaker-info").html("");     
+            $(this).css("background-color", "");
         } else {
-            $("#high-tie-btn").css("background-color", "");
+            $("#tie-breaker-info").html(newHtml);
+            $(".tie-breaker-btn").css("background-color", "");
+            $(this).css("background-color", "#fad355");
 
-            highTieHeight = $("#tie-breaker-info").height();
-            $("#header-row").height($("#header-row").height() - highTieHeight);
-            $("#directions-panel").css("margin-top", 0);
-             $("#tie-breaker-info").hide();
-           
         }
     });
+   
 
+    
+     
     // geolocate user by IP address
     $.get("https://freegeoip.net/json/github.com", function(data) {
         initialize(data.latitude, data.longitude);
