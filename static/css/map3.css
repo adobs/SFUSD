@@ -125,7 +125,9 @@ li{
 	width: 100%;
 	display: block;
 }
-
+#filter-schools-heading {
+		display: inline-block;
+	}
 #mobile-show-filters, #mobile-hide-filters {
 	visibility: hidden;
 }
@@ -133,8 +135,9 @@ li{
 #header-flex {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: flex-end;
 	align-items: flex-end;
+	padding-right: 20%;
 	padding-top: 10px;
 }
 
@@ -466,14 +469,15 @@ tr td:nth-child(7), th:nth-child(7) {
 	#map {
 		height: 100%;
 	}
-	#filter-schools-heading {
-		display: inline-block;
-	}
+	
 	#mobile-hide-filters {
 		position: relative;
 		float: right;
 		visibility: visible;
 		margin-right: 6px;
+	}
+	.page-content {
+		background-size: contain;
 	}
 
 }

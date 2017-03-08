@@ -1077,7 +1077,7 @@ $(document).ready(function() {
 
     var headerHeight = $("#header").height();
     var mapHeight = $("#map").height();
-    $("#map").height(mapHeight - headerHeight - 30);
+    $("#map").height(mapHeight - headerHeight);
     $("#header-row").height(headerHeight);
     
     
