@@ -1068,7 +1068,6 @@ $(document).ready(function() {
         gtMdWidth = true;
         // $("#show-side-nav").hide();
         $("#wrapper").toggleClass("toggled");
-        $("#sidebar-wrapper").prop("hidden", false);
         $("#menu-toggle").hide();
     } else {
         gtMdWidth = false;
@@ -1201,9 +1200,10 @@ $(document).ready(function() {
     });
 
     
-    $.get("http://ip-api.com/json", function(data) {
+    // $.get("http://ip-api.com/json", function(data) {
         console.log("data ",data);
-        initialize(data.lat, data.lon);
+        // initialize(data.lat, data.lon);
+        initialize();
         // instantiate map and populate counts on criteria
         var countArr = $(".count");
         
@@ -1231,6 +1231,6 @@ $(document).ready(function() {
         $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
 
        
-    });
+    // });
 
 });
