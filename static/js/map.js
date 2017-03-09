@@ -111,16 +111,6 @@ function initAutocomplete() {
         $(".pac-card").width(searchBarWidth);
         $("#pac-input").width(searchBarWidth);     
     }
-    // } else {
-        // set right size of the hamburger option
-        
-        // var searchBarWidth = windowWidth - 80;
-        // $(".pac-card").width(searchBarWidth);
-        // $("#pac-input").width(searchBarWidth);
-        // $("#pac-input").css("flex-shrink", "1");
-        // $(".pac-card").css("flex-shrink", "1");
-// 
-    // }
 
     
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -288,8 +278,11 @@ function onShowAttendanceArea() {
     $("#show-attendance-area").on("click", onShowAttendanceArea);
 }
 
-function submitForm () {
+function onSubmitForm () {
      $("#map-choices-form").submit();
+     if (!gtMdWidth) {
+        onHideFilters();
+     }
 }
 
 function onReturn() {
