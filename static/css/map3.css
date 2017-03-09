@@ -450,6 +450,12 @@ tr td:nth-child(7), th:nth-child(7) {
 /*********************************************/
 /* on a mobile device */
 @media(max-width:991px) {
+	#desktop-tie-breaker {
+		visibility: hidden;
+	}
+	#mobile-tie-breaker {
+		visibility: visible;
+	}
 #mobile-tie-breaker-heading{
 	display: inline-block;
 }
@@ -547,10 +553,5 @@ tr td:nth-child(7), th:nth-child(7) {
 	#favorite-star-div {
 		visibility: hidden;
 	}
-	#desktop-tie-breaker {
-		visibility: hidden;
-	}
-	#mobile-tie-breaker {
-		visibility: visible;
-	}
+	
 }
