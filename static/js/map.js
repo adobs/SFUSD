@@ -106,6 +106,11 @@ function initAutocomplete() {
         var homeSearch = document.getElementById("home-search");
         homeSearch.appendChild(inputDiv);
         
+    if (!gtMdWidth) {
+        var searchBarWidth = $(window).width() - 150;
+        $(".pac-card").width(searchBarWidth);
+        $("#pac-input").width(searchBarWidth);     
+    }
     // } else {
         // set right size of the hamburger option
         
