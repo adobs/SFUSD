@@ -1078,12 +1078,12 @@ $(document).ready(function() {
         // $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
         $(".mobile-tie-breaker").hide();
-        $("#desktop-tie-breaker").show();
+        $(".desktop-tie-breaker").show();
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
         $("#mobile-show-filters").show();
-        $("#desktop-tie-breaker").hide();
+        $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
     }
 

@@ -137,7 +137,7 @@ li{
 	zoom: 40%;
 }
 
-#mobile-tie-breaker {
+.mobile-tie-breaker {
 	visibility: hidden;
 }
 /*********************************************/
@@ -228,7 +228,7 @@ li{
 
 /*********************************/
 /* hierarchy tie breaker buttons */
-#desktop-tie-breaker {
+.desktop-tie-breaker {
 	visibility: visible;
 }
 #elem-tie-btn {
@@ -450,10 +450,10 @@ tr td:nth-child(7), th:nth-child(7) {
 /*********************************************/
 /* on a mobile device */
 @media(max-width:991px) {
-	#desktop-tie-breaker {
+	.desktop-tie-breaker {
 		visibility: hidden;
 	}
-	#mobile-tie-breaker {
+	.mobile-tie-breaker {
 		visibility: visible;
 	}
 #mobile-tie-breaker-heading{
