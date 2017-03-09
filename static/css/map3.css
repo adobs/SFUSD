@@ -488,7 +488,9 @@ tr td:nth-child(7), th:nth-child(7) {
 		margin-right: 0px;
 	}
 	#header-flex {
+		justify-content: center;
 		align-items: center;
+		padding-bottom: 4px;
 		padding-left: 0px;
 		padding-right: 0px;
 		padding-top: 0px;
