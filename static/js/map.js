@@ -1077,14 +1077,14 @@ $(document).ready(function() {
         // $("#show-side-nav").hide();
         // $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
-        $("#mobile-tie-breaker").hide();
+        $(".mobile-tie-breaker").hide();
         $("#desktop-tie-breaker").show();
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
         $("#mobile-show-filters").show();
         $("#desktop-tie-breaker").hide();
-        $("#mobile-tie-breaker").show();
+        $(".mobile-tie-breaker").show();
     }
 
     var headerHeight = $("#header").height();
@@ -1141,20 +1141,20 @@ $(document).ready(function() {
             }
         });
     } else {
-        $(".tie-breaker-btn").on('click', function(e) {
-            var $elem = $("#tie-breaker-info-elem");
-            var $middle = $("#tie-breaker-info-middle");
-            var $high = $("#tie-breaker-info-high");
+        $(".mobile-tie-breaker .tie-breaker-btn").on('click', function(e) {
+            var $elem = $(".mobile-tie-breaker #tie-breaker-info-elem");
+            var $middle = $(".mobile-tie-breaker #tie-breaker-info-middle");
+            var $high = $(".mobile-tie-breaker #tie-breaker-info-high");
             var tieBreakerHtmlHolder = [$elem, $middle, $high];
 
             currentHtml = $elem.html() || $middle.html() || $high.html();
             htmlIndex = parseInt($(this)[0].dataset.htmlindex);
             newHtml = tieBreakerHtml[htmlIndex];
             if (currentHtml === newHtml) {
-                $(".tie-breaker-info").html("");
+                $(".mobile-tie-breaker .tie-breaker-info").html("");
                 $(this).css("background-color", "");
             } else {
-                $(".tie-breaker-btn").css("background-color","");
+                $(".mobile-tie-breaker .tie-breaker-btn").css("background-color","");
                 for (var i=0; i<tieBreakerHtmlHolder.length; ++i) {
                     if (i === htmlIndex) {
                         tieBreakerHtmlHolder[i].html(newHtml);
