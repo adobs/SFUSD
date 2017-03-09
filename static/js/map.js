@@ -1123,23 +1123,26 @@ $(document).ready(function() {
 
     var tieBreakerHtml = [elemTieHtml, middleTieHtml, highTieHtml]
     
-    if (gtMdWidth >= MD_WIDTH) {
-        $(".tie-breaker-btn").on("click", function(e) {
-            var currentHtml = $("#tie-breaker-info").html();
+    // if (gtMdWidth >= MD_WIDTH) {
+        $(".desktop-tie-breaker-btn").on("click", function(e) {
+          
+            var currentHtml = $(".desktop-tie-breaker #tie-breaker-info").html();
             var htmlIndex = $(this)[0].dataset.htmlindex; 
             var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
+            console.log("currentHtml ", currentHtml);
+            console.log("newhtml ", newHtml);
             if (currentHtml === newHtml) {
-                $("#tie-breaker-info").html("");     
+                $(".desktop-tie-breaker #tie-breaker-info").html("");     
                 $(this).css("background-color", "");
             } else {
-                $("#tie-breaker-info").html(newHtml);
-                $(".tie-breaker-btn").css("background-color", "");
+                $(".desktop-tie-breaker #tie-breaker-info").html(newHtml);
+                $(".desktop-tie-breaker-btn").css("background-color", "");
                 $(this).css("background-color", "#fad355");
 
             }
         });
-    } else {
-        $(".mobile-tie-breaker .tie-breaker-btn").on('click', function(e) {
+    
+        $(".mobile-tie-breaker").on('click', function(e) {
             var $elem = $(".mobile-tie-breaker #tie-breaker-info-elem");
             var $middle = $(".mobile-tie-breaker #tie-breaker-info-middle");
             var $high = $(".mobile-tie-breaker #tie-breaker-info-high");
@@ -1164,7 +1167,7 @@ $(document).ready(function() {
             }
 
         });
-    }
+    // }
        
 
     
