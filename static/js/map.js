@@ -1077,10 +1077,12 @@ $(document).ready(function() {
         // $("#show-side-nav").hide();
         // $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
+        $("#mobile-tie-breaker").hide();
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
         $("#mobile-show-filters").show();
+        $("#desktop-tie-breaker").hide();
     }
 
     var headerHeight = $("#header").height();
@@ -1121,21 +1123,49 @@ $(document).ready(function() {
 
     var tieBreakerHtml = [elemTieHtml, middleTieHtml, highTieHtml]
     
-    $(".tie-breaker-btn").on("click", function(e) {
-        var currentHtml = $("#tie-breaker-info").html();
-        var htmlIndex = $(this)[0].dataset.htmlindex; 
-        var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
-        if (currentHtml === newHtml) {
-            $("#tie-breaker-info").html("");     
-            $(this).css("background-color", "");
-        } else {
-            $("#tie-breaker-info").html(newHtml);
-            $(".tie-breaker-btn").css("background-color", "");
-            $(this).css("background-color", "#fad355");
+    if (gtMdWidth >= MD_WIDTH) {
+        $(".tie-breaker-btn").on("click", function(e) {
+            var currentHtml = $("#tie-breaker-info").html();
+            var htmlIndex = $(this)[0].dataset.htmlindex; 
+            var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
+            if (currentHtml === newHtml) {
+                $("#tie-breaker-info").html("");     
+                $(this).css("background-color", "");
+            } else {
+                $("#tie-breaker-info").html(newHtml);
+                $(".tie-breaker-btn").css("background-color", "");
+                $(this).css("background-color", "#fad355");
 
-        }
-    });
-   
+            }
+        });
+    } else {
+        $(".tie-breaker-btn").on('click', function(e) {
+            var $elem = $("#tie-breaker-info-elem");
+            var $middle = $("#tie-breaker-info-middle");
+            var $high = $("#tie-breaker-info-high");
+            var tieBreakerHtmlHolder = [$elem, $middle, $high];
+
+            currentHtml = $elem.html() || $middle.html() || $high.html();
+            htmlIndex = parseInt($(this)[0].dataset.htmlindex);
+            newHtml = tieBreakerHtml[htmlIndex];
+            if (currentHtml === newHtml) {
+                $(".tie-breaker-info").html("");
+                $(this).css("background-color", "");
+            } else {
+                $(".tie-breaker-btn").css("background-color","");
+                for (var i=0; i<tieBreakerHtmlHolder.length; ++i) {
+                    if (i === htmlIndex) {
+                        tieBreakerHtmlHolder[i].html(newHtml);
+                        $(this).css("background-color", "#fad355");
+                    } else {
+                        tieBreakerHtmlHolder[i].html("");
+                    }
+                }
+            }
+
+        });
+    }
+       
 
     
      

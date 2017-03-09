@@ -137,6 +137,9 @@ li{
 	zoom: 40%;
 }
 
+#mobile-tie-breaker {
+	visibility: hidden;
+}
 /*********************************************/
 /* right side of webpage */
 
@@ -225,6 +228,9 @@ li{
 
 /*********************************/
 /* hierarchy tie breaker buttons */
+#desktop-tie-breaker {
+	visibility: visible;
+}
 #elem-tie-btn {
 	background-color: #F54900;
 	color: #fff;
@@ -444,6 +450,29 @@ tr td:nth-child(7), th:nth-child(7) {
 /*********************************************/
 /* on a mobile device */
 @media(max-width:991px) {
+#mobile-tie-breaker-heading{
+	display: inline-block;
+}
+#tie-breaker-info-mobile-div {
+	float: right;
+	position: relative;
+}
+#tie-breaker-mobile-row-flex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+
+.tie-breaker-mobile-flex {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding-bottom: 5px;
+}
 	.pac-card {
 		/*box-sizing: unset;*/
 		/*-moz-box-sizing: unset;*/
@@ -518,5 +547,10 @@ tr td:nth-child(7), th:nth-child(7) {
 	#favorite-star-div {
 		visibility: hidden;
 	}
-	
+	#desktop-tie-breaker {
+		visibility: hidden;
+	}
+	#mobile-tie-breaker {
+		visibility: visible;
+	}
 }

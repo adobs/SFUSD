@@ -219,16 +219,54 @@
     </div> <!-- close div class -->
     
   </form>    
-    <div id="compare-schools-div">  
-        <div class="heading" id="compare-schools">
-          <h4>Compare Schools</h4>
+  
+
+    <div id="mobile-tie-breaker">  
+      <div class="tie-breaker-mobile-flex">
+        <div class="heading" id="mobile-tie-breaker-heading">
+          <h4>Tie-breaker Hierarchies</h4>
         </div>
 
-        <div class="flex-box-child">
-          <button id="show-favorites-btn" class='btn btn-default'>Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
+        <button class="tie-breaker-btn btn" id="elem-tie-btn" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" data-htmlindex="0">
+          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Elementary Schools
+          </button>&nbsp;
+             <div class="tie-breaker-flex">      
+          <div id="tie-breaker-info-elem" class="tie-breaker-info">
+          </div>
         </div>
-        </div> <!-- compare schools div -->
-  
+
+        <button class="tie-breaker-btn btn" id="middle-tie-btn" data-htmlindex="1">
+          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Middle Schools
+        </button>&nbsp;
+        <div class="tie-breaker-flex">      
+          <div id="tie-breaker-info-middle" class="tie-breaker-info">
+          </div>
+        </div>
+
+
+
+        <button class="tie-breaker-btn btn" id="high-tie-btn" data-htmlindex="2">
+          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;High Schools
+        </button>
+           <div class="tie-breaker-flex">      
+          <div id="tie-breaker-info-high" class="tie-breaker-info">
+          </div>
+        </div>
+      </div> <!-- close tie-breaker-flex -->
+        
+     
+    </div> <!-- mobile-tie-breaker div -->
+
+
+  <div id="compare-schools-div">  
+      <div class="heading" id="compare-schools">
+        <h4>Compare Schools</h4>
+      </div>
+
+      <div class="flex-box-child">
+        <button id="show-favorites-btn" class='btn btn-default'>Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
+      </div>
+  </div> <!-- compare schools div -->
   </div><!-- /#sidebar-wrapper -->
 <!-- End of SideBar -->
 
@@ -247,7 +285,10 @@
              </div> <!-- close home-search-div -->
       
           </div> <!-- close header-flex -->
-          <div id="tie-breaker-btn-div">
+          
+
+
+          <div id="desktop-tie-breaker">
             <div id="tie-breaker-title" class="tie-breaker-flex">
               Tie-breaker Hierarchies
             </div>
@@ -267,7 +308,9 @@
               </div>
   
               </div>
-          </div> <!-- close tie-breaker-btn-div -->
+          </div> <!-- close desktop tie-breaker -->
+
+
         </div> <!-- close header -->
       </div> <!-- close row -->
       <div class="row" id="map-row"> 
