@@ -105,9 +105,9 @@ function initAutocomplete() {
 
         var homeSearch = document.getElementById("home-search");
         homeSearch.appendChild(inputDiv);
-        
+
     if (!gtMdWidth) {
-        var searchBarWidth = $(window).width() - 150;
+        var searchBarWidth = $(window).width() - 100;
         $(".pac-card").width(searchBarWidth);
         $("#pac-input").width(searchBarWidth);     
     }
