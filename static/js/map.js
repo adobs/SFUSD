@@ -1058,6 +1058,17 @@ function onTabClick() {
     if ($("#tab-btn-plus").hasClass("toggled")) {
         $("#tab-btn-plus").html("-");
         $("#tab-btn-plus").css("margin-left", "-15px");
+        $('#wrapper').toggleClass("toggled");
+        $("#mobile-show-filters").hide();
+        $("#mobile-show-filters").css("visibility", "hidden");
+        $("#mobile-hide-filters").css("visibility", 'visible');
+        $("#mobile-hide-filters").show();
+        $('#wrapper').toggleClass("toggled");
+    $("#mobile-hide-filters").hide();
+    $("#mobile-hide-filters").css("visibility", "hidden");
+    $("#mobile-show-filters").css('visibility', 'visible');
+    $("#mobile-show-filters").show();
+
     } else {
         $("#tab-btn-plus").html("+");
         $("#tab-btn-plus").css("margin-left", "5px");
