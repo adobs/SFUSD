@@ -1113,6 +1113,8 @@ $(document).ready(function() {
     $(window).on("resize", function() {
         $("#tab-btn-plus").css("top", tabTop);
         $("#tab-btn-minus").css("top", tabTop);
+        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
+
     });
 
 
