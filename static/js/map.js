@@ -1022,20 +1022,7 @@ function populateCtip1Polygon(data) {
     });
 }
 
-function onShowFilters() {
-    $('#wrapper').toggleClass("toggled");
-    $("#mobile-show-filters").hide();
-    $("#mobile-show-filters").css("visibility", "hidden");
-    $("#mobile-hide-filters").css("visibility", 'visible');
-    $("#mobile-hide-filters").show();
-}
-function onHideFilters() {
-    $('#wrapper').toggleClass("toggled");
-    $("#mobile-hide-filters").hide();
-    $("#mobile-hide-filters").css("visibility", "hidden");
-    $("#mobile-show-filters").css('visibility', 'visible');
-    $("#mobile-show-filters").show();
-}
+
 function printElement(elem) {
     var domClone = elem.cloneNode(true);
 
@@ -1053,25 +1040,17 @@ function printElement(elem) {
 }
 
 function onTabClick() {
-    $("#tab-btn-plus").toggleClass("toggled");
+    $("#tab-btn").toggleClass("toggled");
 
-    if ($("#tab-btn-plus").hasClass("toggled")) {
-        $("#tab-btn-plus").html("-");
-        $("#tab-btn-plus").css("margin-left", "-15px");
+    if ($("#tab-btn").hasClass("toggled")) {
+        $("#tab-btn").html("-");
+        $("#tab-btn").css("margin-left", "-15px");
         $('#wrapper').toggleClass("toggled");
-        $("#mobile-show-filters").hide();
-        $("#mobile-show-filters").css("visibility", "hidden");
-        $("#mobile-hide-filters").css("visibility", 'visible');
-        $("#mobile-hide-filters").show();
-        $('#wrapper').toggleClass("toggled");
-    $("#mobile-hide-filters").hide();
-    $("#mobile-hide-filters").css("visibility", "hidden");
-    $("#mobile-show-filters").css('visibility', 'visible');
-    $("#mobile-show-filters").show();
 
     } else {
-        $("#tab-btn-plus").html("+");
-        $("#tab-btn-plus").css("margin-left", "5px");
+        $("#tab-btn").html("+");
+        $("#tab-btn").css("margin-left", "5px");
+        $('#wrapper').toggleClass("toggled");
     }
 
 }
@@ -1106,7 +1085,6 @@ $(document).ready(function() {
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
-        $("#mobile-show-filters").show();
         $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
     }

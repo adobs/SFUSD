@@ -153,14 +153,6 @@ li{
 	display: inline-block;
 }
 
-#mobile-show-filters {
-	visibility: hidden;
-} 
-
-#mobile-hide-filters {
-	visibility: hidden;
-}
-
 #header-flex {
 	display: flex;
 	flex-direction: row;
@@ -280,7 +272,7 @@ li{
 
 /************************************/
 /* tab */
-#tab-btn-plus, #tab-btn-minus {
+#tab-btn {
 	background-color: #fad355;
 	margin: 5px;
 	z-index: 1000;
@@ -525,11 +517,6 @@ tr td:nth-child(7), th:nth-child(7) {
 		font-size: 8px;
 		color: #414141;
 	}
-	#mobile-show-filters {
-		margin-left: 6px;
-		margin-top: 5px;
-		visibility: visible !important;
-	}
 	#home-search-div {
 		align-items: center;
 		padding-top: 0px;
@@ -549,12 +536,6 @@ tr td:nth-child(7), th:nth-child(7) {
 	}
 	#tie-breaker-info {
 		font-size: 8px;
-	}
-	#mobile-hide-filters {
-		position: relative;
-		float: right;
-		visibility: visible !important;
-		margin-right: 6px;
 	}
 	#whole-page {
 		background-size: cover;
