@@ -1053,14 +1053,15 @@ function printElement(elem) {
 }
 
 function onTabClick() {
+    $("#tab-btn-plus").toggleClass("toggled");
+
     if ($("#tab-btn-plus").hasClass("toggled")) {
-        $("#tab-btn-plus").html("+");
+        $("#tab-btn-plus").html("-");
         $("#tab-btn-plus").css("margin-left", "-15px");
     } else {
-        $("#tab-btn-plus").html("-");
-        $("#tab-btn-plus").css("margin-left", "0px");
+        $("#tab-btn-plus").html("+");
+        $("#tab-btn-plus").css("margin-left", "5px");
     }
-    $("#tab-btn-plus").toggleClass("toggled");
 
 }
 
