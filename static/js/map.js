@@ -10,6 +10,7 @@
 // add line between schools on compare list
 // notes full size of row
 // change show filters to a tab with a plus sign +
+// set background of body to be neutrla color
 
 //// mobile specific fixes
 // hide directions buttons in mobile
@@ -1108,15 +1109,15 @@ $(document).ready(function() {
     var tabLeft = $("#sidebar-wrapper").width();
     $("#tab-btn-plus").css("top", tabTop);
     $("#tab-btn-minus").css("top", tabTop);
-    $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
+    $("#tab-btn-minus").css("left", 250-$("#tab-btn-minus").width()-15);
 
     $(window).on("resize", function() {
         $("#tab-btn-plus").css("top", tabTop);
         $("#tab-btn-minus").css("top", tabTop);
-        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
-    });
-    $("#tab-btn-minus").on("resize", function() {
-        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
+        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width());
+        $("#tab-btn-minus").css("left", 250-$("#tab-btn-minus").width()-15);
+        console.log("tableft", $("#tab-btn-minus").css("left"));
+
     });
 
     // Tie breaker heirarchy buttons
