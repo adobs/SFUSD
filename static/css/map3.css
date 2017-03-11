@@ -519,7 +519,6 @@ tr td:nth-child(7), th:nth-child(7) {
 	}
 	#home-search-div {
 		align-items: center;
-		padding-top: 0px;
 	}
 	#enter-address-intro, #pac-input {
 		font-size: 12px;
