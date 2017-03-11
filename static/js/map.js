@@ -1051,6 +1051,19 @@ function printElement(elem) {
     $printSection.appendChild(domClone);
     window.print();
 }
+
+function onTabClick() {
+    if ($("#tab-btn-plus").hasClass("toggled")) {
+        $("#tab-btn-plus").html("+");
+        $("tab-btn-plus").css("margin-left", "-15px");
+    } else {
+        $("#tab-btn-plus").html("-");
+        $("tab-btn-plus").css("margin-left", "0px");
+    }
+    $("#tab-btn-plus").toggleClass("toggled");
+
+}
+
 $(document).ready(function() {
     // if user clicks back button during session
     if (window.history && window.history.pushState) {
