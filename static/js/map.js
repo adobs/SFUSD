@@ -1110,16 +1110,10 @@ $(document).ready(function() {
     // set the tab btn (on mobile) 
     var tabTop = 0.5*$("#map").height() + headerHeight;
     var tabLeft = $("#sidebar-wrapper").width();
-    $("#tab-btn-plus").css("top", tabTop);
-    $("#tab-btn-minus").css("top", tabTop);
-    // $("#tab-btn-minus").css("left", "15px");
-    // $("#tab-btn-minus").css("left", 250-$("#tab-btn-minus").width()-15);
+    $("#tab-btn").css("top", tabTop);
 
     $(window).on("resize", function() {
-        $("#tab-btn-plus").css("top", tabTop);
-        $("#tab-btn-minus").css("top", tabTop);
-        console.log("tableft", $("#tab-btn-minus").css("left"));
-
+        $("#tab-btn").css("top", tabTop);
     });
 
     // Tie breaker heirarchy buttons
