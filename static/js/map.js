@@ -1079,7 +1079,7 @@ $(document).ready(function() {
         $(".mobile-tie-breaker").hide();
         $(".desktop-tie-breaker").show();
     } else {
-        $("#wrapper").removeClass("toggled");
+        // $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
         $("#mobile-show-filters").show();
         $(".desktop-tie-breaker").hide();
