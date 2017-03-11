@@ -475,14 +475,14 @@ tr td:nth-child(7), th:nth-child(7) {
 	align-items: flex-start;
 }
 
-.tie-breaker-mobile-flex {
+/*.tie-breaker-mobile-flex {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: flex-start;
 	padding-bottom: 5px;
-}
+}*/
 	.pac-card {
 		/*box-sizing: unset;*/
 		/*-moz-box-sizing: unset;*/
@@ -527,14 +527,18 @@ tr td:nth-child(7), th:nth-child(7) {
 		padding-top: 3px;
 		font-size: 10px;
 	}
-	.tie-breaker-btn {
+	.mobile-tie-breaker-btn {
 		font-size: 8px;
+		margin-top: 15px;
+		margin-bottom: 15px;
 	}
-	.tie-breaker-flex, #tie-breaker-info-div {
+	#tie-breaker-info-div {
 		padding-bottom: 0px;
 	}
-	#tie-breaker-info {
+
+	.mobile-tie-breaker-info {
 		font-size: 8px;
+		margin-top: -10px;
 	}
 	#whole-page {
 		background-size: cover;

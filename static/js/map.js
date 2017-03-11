@@ -1145,7 +1145,7 @@ $(document).ready(function() {
             $(".desktop-tie-breaker #tie-breaker-info").html("");     
             $(this).css("background-color", "");
         } else {
-            $(".desktop-tie-breaker #tie-breaker-info").html(newHtml);
+            $(".desktop-tie-breaker #-destie-breaker-info").html(newHtml);
             $(".desktop-tie-breaker-btn").css("background-color", "");
             $(this).css("background-color", "#fad355");
 
@@ -1153,23 +1153,24 @@ $(document).ready(function() {
     });
     
     $(".mobile-tie-breaker").on('click', function(e) {
-        var $elem = $(".mobile-tie-breaker #tie-breaker-info-elem");
-        var $middle = $(".mobile-tie-breaker #tie-breaker-info-middle");
-        var $high = $(".mobile-tie-breaker #tie-breaker-info-high");
+        var $elem = $("#tie-breaker-info-elem");
+        var $middle = $("#tie-breaker-info-middle");
+        var $high = $("#tie-breaker-info-high");
         var tieBreakerHtmlHolder = [$elem, $middle, $high];
 
         currentHtml = $elem.html() || $middle.html() || $high.html();
-        htmlIndex = parseInt($(this)[0].dataset.htmlindex);
+        htmlIndex = parseInt(e.target.dataset.htmlindex);
         newHtml = tieBreakerHtml[htmlIndex];
+      
         if (currentHtml === newHtml) {
-            $(".mobile-tie-breaker .tie-breaker-info").html("");
-            $(this).css("background-color", "");
+            $(".mobile-tie-breaker-info").html("");
+            $(e.target).css("background-color", "");
         } else {
-            $(".mobile-tie-breaker .tie-breaker-btn").css("background-color","");
+            $(".mobile-tie-breaker-btn").css("background-color","");
             for (var i=0; i<tieBreakerHtmlHolder.length; ++i) {
                 if (i === htmlIndex) {
                     tieBreakerHtmlHolder[i].html(newHtml);
-                    $(this).css("background-color", "#fad355");
+                    $(e.target).css("background-color", "#fad355");
                 } else {
                     tieBreakerHtmlHolder[i].html("");
                 }
