@@ -1055,10 +1055,10 @@ function printElement(elem) {
 function onTabClick() {
     if ($("#tab-btn-plus").hasClass("toggled")) {
         $("#tab-btn-plus").html("+");
-        $("tab-btn-plus").css("margin-left", "-15px");
+        $("#tab-btn-plus").css("margin-left", "-15px");
     } else {
         $("#tab-btn-plus").html("-");
-        $("tab-btn-plus").css("margin-left", "0px");
+        $("#tab-btn-plus").css("margin-left", "0px");
     }
     $("#tab-btn-plus").toggleClass("toggled");
 
