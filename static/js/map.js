@@ -1109,14 +1109,12 @@ $(document).ready(function() {
     var tabLeft = $("#sidebar-wrapper").width();
     $("#tab-btn-plus").css("top", tabTop);
     $("#tab-btn-minus").css("top", tabTop);
-    $("#tab-btn-minus").css("left", "15px");
+    // $("#tab-btn-minus").css("left", "15px");
     // $("#tab-btn-minus").css("left", 250-$("#tab-btn-minus").width()-15);
 
     $(window).on("resize", function() {
         $("#tab-btn-plus").css("top", tabTop);
         $("#tab-btn-minus").css("top", tabTop);
-        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width());
-        $("#tab-btn-minus").css("left", 250-$("#tab-btn-minus").width()-15);
         console.log("tableft", $("#tab-btn-minus").css("left"));
 
     });
