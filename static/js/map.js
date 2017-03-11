@@ -1114,9 +1114,10 @@ $(document).ready(function() {
         $("#tab-btn-plus").css("top", tabTop);
         $("#tab-btn-minus").css("top", tabTop);
         $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
-
     });
-
+    $("#tab-btn-minus").on("resize", function() {
+        $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
+    });
 
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
