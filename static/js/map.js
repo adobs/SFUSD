@@ -1,15 +1,20 @@
 // TODO
 
 //// current list
+// geolocating - add back old one, check for bounds in SF or not
+// city wide - show only city wide schools.  show no city wide school -- change the select all to "Show all schools"
+// FIX HOW WHEN YOU ADD A HOME MARKING, IS CASES HTE STAR MARKERS TO DISAPPREA
 // add the link to the SARC report?
 // get a better way of getting IP addresses so its from HTTPS and is more accurates 
+// attendance area shading ONLY FOR ELEMENTARY NOT MIDDLE OR HIGH
+// add line between schools on compare list
+// notes full size of row
+// change show filters to a tab with a plus sign +
 
 //// mobile specific fixes
 // hide directions buttons in mobile
-// click submit - hides the window on mobile
 // link the address in mobile so that user can click using the q= thing
-// better home mobile experience (entering home address)
-// hide the favorite star buttons on the info window and hide the show my favorite schools button
+// fix the hierarchy buttons
 
 //// longer term considerations -- need to do
 // clean all the data, perfect the addresses for all the schools using googlemaps
@@ -31,8 +36,6 @@
 //// formatting
 // is the high school the right color?
 // the whole notebook page fix
-// fonts
-
 
 //// longer term condiersations -- nice to have
 // add in google analytics to the page?
@@ -43,7 +46,6 @@
 ///// to discuss with others
 // photoshop for the images -> must fix
 // send out my excels -> to add the SARC performance reports 
-// messaging to expalin attendance area - and how to use google maps w/ two fingers
 // rate limiting
 
 
@@ -909,7 +911,11 @@ $(".check-all").change(function () {
 
     } else {
         $("input[name='" + name + "']").prop("checked", false);
-        $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
+        if (name === "c-s") {
+            $(this)[0].labels[0].innerHTML = "&nbsp; Select All Schools"
+        } else {
+            $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
+        }
     }
 
     countCheckboxes(name);
@@ -1044,14 +1050,11 @@ function printElement(elem) {
     $printSection.appendChild(domClone);
     window.print();
 }
-
 $(document).ready(function() {
     // if user clicks back button during session
     if (window.history && window.history.pushState) {
-
-      window.history.pushState('', null, '');
-
-      $(window).on('popstate', function() {
+        window.history.pushState('', null, '');
+        $(window).on('popstate', function() {
         alert("Are you sure you want to leave?  \nYou'll lose any information saved in 'Compare Schools'");
       });
 
@@ -1059,7 +1062,6 @@ $(document).ready(function() {
     $(window).on("beforeunload", function() {
         return "bye";
     });
-
 
     var windowWidth = $(window).width();
     var MD_WIDTH = 992;
@@ -1072,8 +1074,6 @@ $(document).ready(function() {
     // setting up screen
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
-        // $("#show-side-nav").hide();
-        // $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").hide();
         $(".mobile-tie-breaker").hide();
         $(".desktop-tie-breaker").show();
@@ -1088,9 +1088,6 @@ $(document).ready(function() {
     var headerHeight = $("#header").height();
     var mapHeight = $("#map").height();
     $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
-    console.log("now map height ", $("#map").height());
-    // $("#header-row").height(headerHeight);
-    console.log("setting up w/ headerHeight");
     
     // modal window set up
     var pageWidth = $("#page-content-wrapper").width();
@@ -1105,6 +1102,19 @@ $(document).ready(function() {
         var innerHtml = e.currentTarget.innerHTML;
         window.open(innerHtml, "_blank");
     });
+
+    // set the tab btn (on mobile) 
+    var tabTop = 0.5*$("#map").height() + headerHeight;
+    var tabLeft = $("#sidebar-wrapper").width();
+    $("#tab-btn-plus").css("top", tabTop);
+    $("#tab-btn-minus").css("top", tabTop);
+    $("#tab-btn-minus").css("left", tabLeft-$("#tab-btn-minus").width() - 19);
+
+    $(window).on("resize", function() {
+        $("#tab-btn-plus").css("top", tabTop);
+        $("#tab-btn-minus").css("top", tabTop);
+    });
+
 
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
@@ -1124,54 +1134,50 @@ $(document).ready(function() {
     var tieBreakerHtml = [elemTieHtml, middleTieHtml, highTieHtml]
     
     // if (gtMdWidth >= MD_WIDTH) {
-        $(".desktop-tie-breaker-btn").on("click", function(e) {
-          
-            var currentHtml = $(".desktop-tie-breaker #tie-breaker-info").html();
-            var htmlIndex = $(this)[0].dataset.htmlindex; 
-            var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
-            console.log("currentHtml ", currentHtml);
-            console.log("newhtml ", newHtml);
-            if (currentHtml === newHtml) {
-                $(".desktop-tie-breaker #tie-breaker-info").html("");     
-                $(this).css("background-color", "");
-            } else {
-                $(".desktop-tie-breaker #tie-breaker-info").html(newHtml);
-                $(".desktop-tie-breaker-btn").css("background-color", "");
-                $(this).css("background-color", "#fad355");
+    $(".desktop-tie-breaker-btn").on("click", function(e) {
+      
+        var currentHtml = $(".desktop-tie-breaker #tie-breaker-info").html();
+        var htmlIndex = $(this)[0].dataset.htmlindex; 
+        var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
+        console.log("currentHtml ", currentHtml);
+        console.log("newhtml ", newHtml);
+        if (currentHtml === newHtml) {
+            $(".desktop-tie-breaker #tie-breaker-info").html("");     
+            $(this).css("background-color", "");
+        } else {
+            $(".desktop-tie-breaker #tie-breaker-info").html(newHtml);
+            $(".desktop-tie-breaker-btn").css("background-color", "");
+            $(this).css("background-color", "#fad355");
 
-            }
-        });
+        }
+    });
     
-        $(".mobile-tie-breaker").on('click', function(e) {
-            var $elem = $(".mobile-tie-breaker #tie-breaker-info-elem");
-            var $middle = $(".mobile-tie-breaker #tie-breaker-info-middle");
-            var $high = $(".mobile-tie-breaker #tie-breaker-info-high");
-            var tieBreakerHtmlHolder = [$elem, $middle, $high];
+    $(".mobile-tie-breaker").on('click', function(e) {
+        var $elem = $(".mobile-tie-breaker #tie-breaker-info-elem");
+        var $middle = $(".mobile-tie-breaker #tie-breaker-info-middle");
+        var $high = $(".mobile-tie-breaker #tie-breaker-info-high");
+        var tieBreakerHtmlHolder = [$elem, $middle, $high];
 
-            currentHtml = $elem.html() || $middle.html() || $high.html();
-            htmlIndex = parseInt($(this)[0].dataset.htmlindex);
-            newHtml = tieBreakerHtml[htmlIndex];
-            if (currentHtml === newHtml) {
-                $(".mobile-tie-breaker .tie-breaker-info").html("");
-                $(this).css("background-color", "");
-            } else {
-                $(".mobile-tie-breaker .tie-breaker-btn").css("background-color","");
-                for (var i=0; i<tieBreakerHtmlHolder.length; ++i) {
-                    if (i === htmlIndex) {
-                        tieBreakerHtmlHolder[i].html(newHtml);
-                        $(this).css("background-color", "#fad355");
-                    } else {
-                        tieBreakerHtmlHolder[i].html("");
-                    }
+        currentHtml = $elem.html() || $middle.html() || $high.html();
+        htmlIndex = parseInt($(this)[0].dataset.htmlindex);
+        newHtml = tieBreakerHtml[htmlIndex];
+        if (currentHtml === newHtml) {
+            $(".mobile-tie-breaker .tie-breaker-info").html("");
+            $(this).css("background-color", "");
+        } else {
+            $(".mobile-tie-breaker .tie-breaker-btn").css("background-color","");
+            for (var i=0; i<tieBreakerHtmlHolder.length; ++i) {
+                if (i === htmlIndex) {
+                    tieBreakerHtmlHolder[i].html(newHtml);
+                    $(this).css("background-color", "#fad355");
+                } else {
+                    tieBreakerHtmlHolder[i].html("");
                 }
             }
+        }
 
-        });
-    // }
-       
+    });
 
-    
-     
     // geolocate user by IP address
     $.get("https://freegeoip.net/json/github.com", function(data) {
         initialize(data.latitude, data.longitude);
@@ -1200,8 +1206,6 @@ $(document).ready(function() {
 
         $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
         $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
-
-       
     });
 
 });

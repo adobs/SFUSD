@@ -277,6 +277,18 @@ li{
 .map-icon{
 	z-index: 1;
 }
+
+/************************************/
+/* tab */
+#tab-btn-plus, #tab-btn-minus {
+	background-color: #fad355;
+	margin: 5px;
+	z-index: 1000;
+	position: absolute;
+	display: inline-block;
+	font-size: 20px;
+	font-weight: bold;
+}
 /************************************/
 /* map */
 #map {
