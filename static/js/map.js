@@ -1,15 +1,14 @@
 // TODO
 
 //// current list
-// geolocating - add back old one, check for bounds in SF or not
+// hide (i) log in mobile
+// geolocating - add back old one, check for bounds in SF or notv get a better way of getting IP addresses so its from HTTPS and is more accurates 
 // city wide - show only city wide schools.  show no city wide school -- change the select all to "Show all schools"
 // FIX HOW WHEN YOU ADD A HOME MARKING, IS CASES HTE STAR MARKERS TO DISAPPREA
 // add the link to the SARC report?
-// get a better way of getting IP addresses so its from HTTPS and is more accurates 
 // attendance area shading ONLY FOR ELEMENTARY NOT MIDDLE OR HIGH
 // add line between schools on compare list
 // notes full size of row
-// change show filters to a tab with a plus sign +
 // set background of body to be neutrla color
 
 //// mobile specific fixes
@@ -1089,7 +1088,7 @@ $(document).ready(function() {
         gtMdWidth = false;
         $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
-
+        $("#info-sign").hide();
     }
 
     var headerHeight = $("#header").height();
@@ -1145,18 +1144,16 @@ $(document).ready(function() {
     // if (gtMdWidth >= MD_WIDTH) {
     $(".desktop-tie-breaker-btn").on("click", function(e) {
       
-        var currentHtml = $(".desktop-tie-breaker #tie-breaker-info").html();
+        var currentHtml = $("#desktop-tie-breaker-info").html();
         var htmlIndex = $(this)[0].dataset.htmlindex; 
         var newHtml = tieBreakerHtml[parseInt(htmlIndex)];
-        console.log("currentHtml ", currentHtml);
-        console.log("newhtml ", newHtml);
         if (currentHtml === newHtml) {
-            $(".desktop-tie-breaker #tie-breaker-info").html("");     
-            $(this).css("background-color", "");
+            $("#desktop-tie-breaker-info").html("");     
+            $(e.target).css("background-color", "");
         } else {
-            $(".desktop-tie-breaker #-destie-breaker-info").html(newHtml);
+            $("#desktop-tie-breaker-info").html(newHtml);
             $(".desktop-tie-breaker-btn").css("background-color", "");
-            $(this).css("background-color", "#fad355");
+            $(e.target).css("background-color", "#fad355");
 
         }
     });
