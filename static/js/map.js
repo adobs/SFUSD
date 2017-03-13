@@ -1082,11 +1082,13 @@ $(document).ready(function() {
         $("#menu-toggle").hide();
         $(".mobile-tie-breaker").hide();
         $(".desktop-tie-breaker").show();
+        $(".tab-btn").hide();
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
         $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
+
     }
 
     var headerHeight = $("#header").height();
@@ -1119,7 +1121,8 @@ $(document).ready(function() {
     $(window).on("resize", function() {
         $(".tab").css("top", tabTop);
          $("#tab-btn-minus").css("left", tabLeft + "px !important");
-        $("#map").css("cssText", "height: " + ($(window).height() - $("#header").height()) + "px !important;");        
+        $("#map").css("cssText", "height: " + ($(window).height() - $("#header").height()) + "px !important;");
+        console.log("")        
     });
 
     // Tie breaker heirarchy buttons
