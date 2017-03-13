@@ -3,17 +3,6 @@
 #whole-page, #page, body, html {
 	height: 100%;
 }
-#whole-page {
-/*	background: url(/static/img/fullbackground2.png);
-	background-size: cover;
-	padding-left: 0px !important;
-*/	/*margin-left: -15px;*/
-	/*padding-right: 0px;*/
-	/*background-size: content: ntain;*/
-	/*background-size: auto 100%;*/
-	/*background-repeat: no-repeat;*/
-
-}
 
 #wrapper{
 	background: url(/static/img/fullbackground3.png);
@@ -272,7 +261,7 @@ li{
 
 /************************************/
 /* tab */
-#tab-btn {
+.tab-btn {
 	background-color: #fad355;
 	margin: 5px;
 	z-index: 1000;
@@ -280,6 +269,12 @@ li{
 	display: inline-block;
 	font-size: 20px;
 	font-weight: bold;
+}
+#tab-btn-minus {
+	
+	left: 20px;
+	top: 50px;
+	
 }
 /************************************/
 /* map */
@@ -518,6 +513,7 @@ tr td:nth-child(7), th:nth-child(7) {
 		color: #414141;
 	}
 	#home-search-div {
+		padding-top: 20px;
 		align-items: center;
 	}
 	#enter-address-intro, #pac-input {
@@ -539,6 +535,8 @@ tr td:nth-child(7), th:nth-child(7) {
 	.mobile-tie-breaker-info {
 		font-size: 8px;
 		margin-top: -10px;
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 	#whole-page {
 		background-size: cover;

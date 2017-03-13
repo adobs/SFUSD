@@ -1040,17 +1040,16 @@ function printElement(elem) {
 }
 
 function onTabClick() {
-    $("#tab-btn").toggleClass("toggled");
+    $("#tab-btn-plus").toggleClass("toggled");
 
-    if ($("#tab-btn").hasClass("toggled")) {
-        $("#tab-btn").html("-");
-        $("#tab-btn").css("margin-left", "-15px");
-        $('#wrapper').toggleClass("toggled");
-
+    if ($("#tab-btn-plus").hasClass("toggled")) {
+        console.log("had class toggled, hiding tab");
+        $("#tab-btn-plus").show();
+        $("#wrapper").toggleClass("toggled");
     } else {
-        $("#tab-btn").html("+");
-        $("#tab-btn").css("margin-left", "5px");
-        $('#wrapper').toggleClass("toggled");
+        console.log("does not have class toggled, hiding tab");
+        $("#tab-btn-plus").hide();
+        $("#wrapper").toggleClass("toggled");
     }
 
 }
@@ -1077,6 +1076,7 @@ $(document).ready(function() {
     });
 
     // setting up screen
+    // $("#tab-btn-plus").
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
         $("#menu-toggle").hide();
@@ -1090,7 +1090,6 @@ $(document).ready(function() {
     }
 
     var headerHeight = $("#header").height();
-    var mapHeight = $("#map").height();
     $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
     
     // modal window set up
@@ -1109,11 +1108,13 @@ $(document).ready(function() {
 
     // set the tab btn (on mobile) 
     var tabTop = 0.5*$("#map").height() + headerHeight;
-    var tabLeft = $("#sidebar-wrapper").width();
-    $("#tab-btn").css("top", tabTop);
+    var tabLeft = $("#sidebar-wrapper").width() - $("#tab-btn-minus").width() - 19;
+    $(".tab-btn").css("top", tabTop);
+    $("#tab-btn-minus").css("left", tabLeft);
 
     $(window).on("resize", function() {
-        $("#tab-btn").css("top", tabTop);
+        $(".tab").css("top", tabTop);
+        $("#map").css("cssText", "height: " + ($(window).height() - $("#header").height()) + "px !important;");        
     });
 
     // Tie breaker heirarchy buttons
