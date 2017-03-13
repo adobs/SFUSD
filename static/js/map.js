@@ -1113,7 +1113,7 @@ $(document).ready(function() {
     console.log("Taba-btn-minus width ", $("#tab-btn-minus").width());
     console.log("tableft ", tabLeft);
     $(".tab-btn").css("top", tabTop);
-    $("#tab-btn-minus").css("left", String(tabLeft) + "px");
+    $("#tab-btn-minus").css("left", String(10) + "px");
     console.log("#tab-btn-minus left ", $("#tab-btn-minus").css("left"));
 
     $(window).on("resize", function() {
