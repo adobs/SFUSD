@@ -1044,11 +1044,11 @@ function onTabClick() {
 
     if ($("#tab-btn-plus").hasClass("toggled")) {
         console.log("had class toggled, hiding tab");
-        $("#tab-btn-plus").show();
+        // $("#tab-btn-plus").show();
         $("#wrapper").toggleClass("toggled");
     } else {
         console.log("does not have class toggled, hiding tab");
-        $("#tab-btn-plus").hide();
+        // $("#tab-btn-plus").hide();
         $("#wrapper").toggleClass("toggled");
     }
 
