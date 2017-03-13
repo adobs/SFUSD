@@ -1040,16 +1040,16 @@ function printElement(elem) {
 }
 
 function onTabClick() {
+    $("#wrapper").toggleClass("toggled");
     $("#tab-btn-plus").toggleClass("toggled");
 
     if ($("#tab-btn-plus").hasClass("toggled")) {
         console.log("had class toggled, hiding tab");
-        // $("#tab-btn-plus").show();
-        $("#wrapper").toggleClass("toggled");
+        $("#tab-btn-plus").hide();
     } else {
-        console.log("does not have class toggled, hiding tab");
-        // $("#tab-btn-plus").hide();
-        $("#wrapper").toggleClass("toggled");
+        console.log("does not have class toggled, showing side");
+        $("#tab-btn-plus").show();
+        // 
     }
 
 }
@@ -1109,11 +1109,16 @@ $(document).ready(function() {
     // set the tab btn (on mobile) 
     var tabTop = 0.5*$("#map").height() + headerHeight;
     var tabLeft = $("#sidebar-wrapper").width() - $("#tab-btn-minus").width() - 19;
+    console.log("$sidebar-wrapper width ", $("#sidebar-wrapper").width());
+    console.log("Taba-btn-minus width ", $("#tab-btn-minus").width());
+    console.log("tableft ", tabLeft);
     $(".tab-btn").css("top", tabTop);
-    $("#tab-btn-minus").css("left", tabLeft);
+    $("#tab-btn-minus").css("left", String(tabLeft) + "px");
+    console.log("#tab-btn-minus left ", $("#tab-btn-minus").css("left"));
 
     $(window).on("resize", function() {
         $(".tab").css("top", tabTop);
+         $("#tab-btn-minus").css("left", tabLeft + "px !important");
         $("#map").css("cssText", "height: " + ($(window).height() - $("#header").height()) + "px !important;");        
     });
 
