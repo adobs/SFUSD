@@ -561,7 +561,7 @@ function getHtml(name, startTime, endTime,
                 '<b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
                 '<b>Website: </b><span id="website-span"><a id="website">' + website + '</a></span><br>' +
             '</div>' +
-            '<div id="instructions">' +
+            '<div id="directions-div">' +
                 '<button id="directions-to-here" class="btn" onclick="onDirectionsToHere()">Directions</button><br>' +
             '</div>' +
         '</div>';
@@ -881,13 +881,6 @@ function addMarkers(data){
     }
 }
 
-function configureForMobile() {
-    if (windowWidth >= MD_WIDTH) {
-        
-    } else {
-        $("#directions-to-here").hide();
-    }
-}
 
 $('#map-choices-form').on('submit', function (e) {
     e.preventDefault();
@@ -896,7 +889,6 @@ $('#map-choices-form').on('submit', function (e) {
 
     $.get("/map-checked.json", inputs, addMarkers);
 
-    configureForMobile();
     if (homeMarker) {
         homeMarker.setMap(map);
     }

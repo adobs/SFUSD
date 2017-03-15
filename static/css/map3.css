@@ -592,5 +592,9 @@ tr td {
 	#favorite-star-div {
 		visibility: hidden;
 	}
+	#directions-div {
+		height: 0px;
+		visibility: hidden;
+	}
 	
 }
