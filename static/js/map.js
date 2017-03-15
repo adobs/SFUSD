@@ -1,22 +1,18 @@
 // TODO
 
 //// current list
-// hide (i) log in mobile
+// deleting favorite isn't actually changing the star in the info window
 // geolocating - add back old one, check for bounds in SF or notv get a better way of getting IP addresses so its from HTTPS and is more accurates 
-// city wide - show only city wide schools.  show no city wide school -- change the select all to "Show all schools"
-// FIX HOW WHEN YOU ADD A HOME MARKING, IS CASES HTE STAR MARKERS TO DISAPPREA
 // add the link to the SARC report?
-// attendance area shading ONLY FOR ELEMENTARY NOT MIDDLE OR HIGH
-// add line between schools on compare list
 // notes full size of row
 // set background of body to be neutrla color
 
 //// mobile specific fixes
 // hide directions buttons in mobile
 // link the address in mobile so that user can click using the q= thing
-// fix the hierarchy buttons
 
 //// longer term considerations -- need to do
+// city wide - show only city wide schools.  show no city wide school -- change the select all to "Show all schools"
 // clean all the data, perfect the addresses for all the schools using googlemaps
 // general / massive formatting
 // add all relevant commenting to code
@@ -41,7 +37,6 @@
 // add in google analytics to the page?
 // fix overlapping icons
 // add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
-// ranking the favorites
 
 ///// to discuss with others
 // photoshop for the images -> must fix
@@ -195,12 +190,25 @@ function resetAttendanceArea() {
         homeInfoWindow.setContent(resetContent);
     }
 
-    $("#map-choices-form").submit();
+    for (var i=0; i<markers.length; ++i) {
+        markers[i].setMap(map);
+    }
+
     if (aarea) {
         aarea.setOptions({
             fillColor: "#000",
             fillOpacity: 0
         });
+    }
+}
+
+function showStarMarkers() {
+    for (var i=0; i<markers.length; ++i) {
+        var marker = markers[i];
+        if (marker.customInfo.starMarker) {
+            marker.customInfo.starred = "starred";
+            marker.customInfo.starMarker.setMap(map);
+        }
     }
 }
 
@@ -232,12 +240,12 @@ function onShowAttendanceArea() {
                     
                     //high
                     if (array[index].icon.fillColor === "#414141") {
-                        var fillColor = "#8c8c8c";
-                        color = "#414141";
+                        var fillColor = "#414141";
+                        color = "#000";
                     //middle
                     } else if (array[index].icon.fillColor === "#87CCE2") {
-                        fillColor = "#b5dfed";
-                        color = "#87CCE2";
+                        fillColor = "#87CCE2";
+                        color = "#000";
                     // elem
                     } else if (array[index].icon.fillColor === "#F54900") {
                         fillColor = "#ff9f75";
@@ -476,13 +484,13 @@ function onFavoriteStarClick(marker, e) {
     var numRows = document.getElementById("favorites-table-body").rows.length;
     var row = 
         '<tr id="' + name +'">' +
+            '<td class="rank">' +
+                (numRows + 1) +
+            '</td>' +
             '<td>' + 
                 '<button class="arrow-up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button><br>' +
                 '<button class="arrow-down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>' +
             '</td>' + 
-            '<td class="rank">' +
-                (numRows + 1) +
-            '</td>' +
             '<td>' +
                 '<b>' + name + '</b><br>' +
                 address + '<br>' +
@@ -492,7 +500,7 @@ function onFavoriteStarClick(marker, e) {
                 '<input type="checkbox">' +
             '</td>' +
             '<td>' +
-                '<input class="comments" type="textarea">' +
+                '<textarea class="comments" wrap="on" style="overflow:hidden;resize:none"></textarea>' +
             '</td>' +
             '<td>' +
                 '<button class="delete-row">Remove</button>'
@@ -554,7 +562,6 @@ function getHtml(name, startTime, endTime,
             '</div>' +
             '<div id="instructions">' +
                 '<button id="directions-to-here" class="btn" onclick="onDirectionsToHere()">Directions</button><br>' +
-              
             '</div>' +
         '</div>';
     
@@ -883,6 +890,7 @@ $('#map-choices-form').on('submit', function (e) {
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
+
     if (homeMarker) {
         homeMarker.setMap(map);
     }
@@ -1034,7 +1042,11 @@ function printElement(elem) {
     }
 
     $printSection.innerHTML = "";
-    $printSection.appendChild(domClone);
+    var printHtmlHeader = $("#favorites-table-head").html();
+    var printHtml = $("#favorites-table").html();
+    console.log("printHtmlHeader ", printHtml);
+    $("#printSection").html(printHtml);
+    // $("#printSection").append($("#printThis").clone());
     window.print();
 }
 
@@ -1089,6 +1101,7 @@ $(document).ready(function() {
         $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
         $("#info-sign").hide();
+        $("#directions-to-here").hide();
     }
 
     var headerHeight = $("#header").height();
