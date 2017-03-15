@@ -52,6 +52,7 @@ var infoWindow = new google.maps.InfoWindow({
 var homeInfoWindow = new google.maps.InfoWindow({
   width: 150
 });
+var MD_WIDTH = 992;
 var gtMdWidth, originalMapWidth;
 var aarea, aaname;
 var markers = [];
@@ -880,17 +881,22 @@ function addMarkers(data){
     }
 }
 
+function configureForMobile() {
+    if (windowWidth >= MD_WIDTH) {
+        
+    } else {
+        $("#directions-to-here").hide();
+    }
+}
 
 $('#map-choices-form').on('submit', function (e) {
     e.preventDefault();
-
-    // directionsDisplay.setMap(null);
-    // directionsDisplay.setPanel(null);
 
     var inputs = $("#map-choices-form").serializeArray();
 
     $.get("/map-checked.json", inputs, addMarkers);
 
+    configureForMobile();
     if (homeMarker) {
         homeMarker.setMap(map);
     }
@@ -1080,7 +1086,7 @@ $(document).ready(function() {
     });
 
     var windowWidth = $(window).width();
-    var MD_WIDTH = 992;
+  
 
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
@@ -1101,7 +1107,6 @@ $(document).ready(function() {
         $(".desktop-tie-breaker").hide();
         $(".mobile-tie-breaker").show();
         $("#info-sign").hide();
-        $("#directions-to-here").hide();
     }
 
     var headerHeight = $("#header").height();
