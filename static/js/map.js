@@ -1,6 +1,7 @@
 // TODO
 
 //// current list
+// fix the star showing after show only info area
 // deleting favorite isn't actually changing the star in the info window
 // geolocating - add back old one, check for bounds in SF or notv get a better way of getting IP addresses so its from HTTPS and is more accurates 
 // add the link to the SARC report?
@@ -310,8 +311,7 @@ function getDirections(origin, destination, travelMode) {
     var center = map.getCenter();
     // hide the left side nav
     $("#wrapper").toggleClass("toggled");
-    // $("#hide-side-nav").click();
-
+   
     var pageWidth = $("#page-content-wrapper").width() + 220;
     originalMapWidth = $("#map").width();
     
@@ -555,7 +555,7 @@ function getHtml(name, startTime, endTime,
                 '<b>Start Time: </b>'+ startTime + '<br>' +
                 '<b>End Time: </b>'+ endTime + '<br>' +
                 '<b>Principal: </b>'+ principal + '<br>' +
-                '<span id="address"><b>Address: </b>'+ address + '</span><br>' +
+                '<span id="address"><b>Address: </b><a href="http://maps.google.com/maps?q=' + address.replace(/ /g, "+") + '">' +address + '</a></span><br>' +
                 '<span id="city-wide"><b>City-Wide School: </b>' + citySchool + '</span><br>' +
                 '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
                 '<b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
