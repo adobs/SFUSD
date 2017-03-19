@@ -669,5 +669,11 @@ tr th {
 	#info-sign-span {
 		visibility: hidden;
 	}
-	
+	#curr-loc-btn {
+		border-radius: 15px;
+		padding-left: 5px;
+		padding-right: 5px;
+		font-size: 15px;
+	}
+
 }
