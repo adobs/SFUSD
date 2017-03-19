@@ -1369,6 +1369,7 @@ $(document).ready(function() {
     // geolocate user by IP address
     $.get("/ip-address.json", function(data) {
         data = JSON.parse(data.data);
+        $("#tab-btn-plus").html("lat "+ data.lat);
         initialize(data.lat, data.lng);
 
     // $.get("http://ip-api.com/json", function(data) {
