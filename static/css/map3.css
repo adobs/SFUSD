@@ -606,6 +606,9 @@ tr th {
 	align-items: flex-start;
 	padding-bottom: 5px;
 }*/
+	form {
+		font-size: 10px;
+	}
 	.pac-card {
 		/*box-sizing: unset;*/
 		/*-moz-box-sizing: unset;*/
