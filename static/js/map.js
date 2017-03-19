@@ -1233,7 +1233,7 @@ function onTabClick() {
         $("#tab-btn").html("&lt;&lt;");
     } else {
         $("#tab-btn").html("&gt;&gt;");
-        
+
     }
     $("#tab-btn").toggleClass("toggled");
 }
@@ -1248,56 +1248,37 @@ function onCurrentLocation() {
     });
 }
 
-$(document).ready(function() {
-    // if user clicks back button during session
-    // if (window.history && window.history.pushState) {
-    //     window.history.pushState('', null, '');
-    //     $(window).on('popstate', function() {
-    //     alert("Are you sure you want to leave?  \nYou'll lose any information saved");
-    //   });
-
-    // }
-    // $(window).on("beforeunload", function() {
-    //     return "bye";
-    // });
-
-    var windowWidth = $(window).width();
-  
-
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-
-    // setting up screen
-    if (windowWidth >= MD_WIDTH) {
-        gtMdWidth = true;
-        $("#menu-toggle").hide();
-        $(".tab-btn").hide();
-    } else {
-        $("#wrapper").removeClass("toggled");
-        gtMdWidth = false;
-        $("#info-sign").hide();
-    }
-
-    // map height set up
-    var headerHeight = $("#header").height();
-    $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
+function initCounters() {
+    var countArr = $(".count");
     
-    // modal window set up
-    var pageWidth = $("#page-content-wrapper").width();
-    $(".modal-dialog").width(pageWidth * .75);
-    $(".modal-body").height($("#map").height() * .75);
-    $("#print-btn").on("click", function() { 
-        printElement(document.getElementById("printThis"));
-    });
-   
-    // enable all websites in future info windows to open correctly
-    $('body').on('click', '#website', function (e) { 
-        var innerHtml = e.currentTarget.innerHTML;
-        window.open(innerHtml, "_blank");
+    for (var i=0; i < countArr.length; ++i) {
+        var element = countArr[i];
+        var name = ($(element).attr('id')).slice(0, -6);
+        var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
+        var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
+        $(element).html(numChecked + " / " + numTotal);            
+    };
+}
+
+function initMapInfo(data) {
+    initialize(data.latitude, data.longitude);
+    $.get("/map-checked.json", addMarkers);
+
+    initCounters();
+    $("input:checkbox").on("change", function() {
+        $("#map-choices-form").submit();
+        var name = $(this)[0].name;
+        countCheckboxes(name);
     });
 
+   
+
+    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
+    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
+    $("#show-favorites-btn").on("click", onShowFavoritesModal);
+}
+
+function initTieBreakerButtons() {
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
                       "2. Test score area<br>" +
@@ -1315,7 +1296,6 @@ $(document).ready(function() {
 
     var tieBreakerHtml = [elemTieHtml, middleTieHtml, highTieHtml]
 
-    
     $(".mobile-tie-breaker-btn").on('click', function(e) {
         var $elem = $("#tie-breaker-info-elem");
         var $middle = $("#tie-breaker-info-middle");
@@ -1343,41 +1323,55 @@ $(document).ready(function() {
 
     });
 
-    // geolocate user by IP address
-    // $.get("/ip-address.json", function(data) {
-    //     data = JSON.parse(data.data);
-    //     $("#tab-btn-plus").html("lat "+ data.lat);
-    //     initialize(data.lat, data.lng);
+}
 
-    $.get("https://ipapi.co/json/", function(data) {
-        initialize(data.latitude, data.longitude);
-    // $.get("https://freegeoip.net/json/github.com", function(data) {
-        // initialize(data.latitude, data.longitude);
-        // instantiate map and populate counts on criteria
-        var countArr = $(".count");
-        
-        for (var i=0; i < countArr.length; ++i) {
-            var element = countArr[i];
-            var name = ($(element).attr('id')).slice(0, -6);
-            var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
-            var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
-            $(element).html(numChecked + " / " + numTotal);            
-        };
+$(document).ready(function() {
+    // if user clicks back button during session
+    // if (window.history && window.history.pushState) {
+    //     window.history.pushState('', null, '');
+    //     $(window).on('popstate', function() {
+    //     alert("Are you sure you want to leave?  \nYou'll lose any information saved");
+    //   });
 
-        $.get("/map-checked.json", addMarkers);
+    // }
+    // $(window).on("beforeunload", function() {
+    //     return "bye";
+    // });
 
-        $("input:checkbox").on("change", function() {
-            console.log("clicked a box");
-            $("#map-choices-form").submit();
-            var name = $(this)[0].name;
-            countCheckboxes(name);
-        });
+    var windowWidth = $(window).width();
+  
+    // setting up screen
+    if (windowWidth >= MD_WIDTH) {
+        gtMdWidth = true;
+        $(".tab-btn").hide();
+    } else {
+        $("#wrapper").removeClass("toggled");
+        gtMdWidth = false;
+        $("#info-sign").hide();
+    }
+    $("#directions-panel").hide();
 
-        $("#directions-panel").hide();
-
-        $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
-        $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
-        $("#show-favorites-btn").on("click", onShowFavoritesModal);
+    // map height set up
+    var headerHeight = $("#header").height();
+    $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
+    
+    // modal window set up
+    var pageWidth = $("#page-content-wrapper").width();
+    $(".modal-dialog").width(pageWidth * .75);
+    $(".modal-body").height($("#map").height() * .75);
+    $("#print-btn").on("click", function() { 
+        printElement(document.getElementById("printThis"));
     });
+   
+    // enable all websites in future info windows to open correctly
+    $('body').on('click', '#website', function (e) { 
+        var innerHtml = e.currentTarget.innerHTML;
+        window.open(innerHtml, "_blank");
+    });
+
+    initTieBreakerButtons();
+
+    // get user's IP address / location
+    $.get("https://ipapi.co/json/", initMapInfo);
 
 });
