@@ -53,29 +53,52 @@
 
 <!-- Sidebar -->
   <div id="sidebar-wrapper">
-  <div class="tab-div">
-      <button class="btn tab-btn" id="tab-btn-minus" onclick="onTabClick()">-</button>
-    </div>
-    <form id='map-choices-form'>
-      <div class='form-group' id="flex-box-parent">
-        <div id="flex-box-contents">
+    <div class="tab-div">
+        <button class="btn tab-btn" id="tab-btn-minus" onclick="onTabClick()">-</button>
+    </div> <!-- close tab div -->
+    <div class="tie-breaker-mobile-flex">
+      <div class="heading" id="mobile-tie-breaker-heading">
+        <h4>Tie-breaker Hierarchies</h4>
+      </div> <!-- close mobile tie breaker heading -->
+      <button class="mobile-tie-breaker-btn btn" id="elem-tie-btn" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" data-htmlindex="0">
+        <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Elementary Schools
+      </button>&nbsp;
+      <div>      
+        <div id="tie-breaker-info-elem" class="mobile-tie-breaker-info"></div>
+      </div>
+      <button class="mobile-tie-breaker-btn btn" id="middle-tie-btn" data-htmlindex="1">
+        <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Middle Schools
+      </button>&nbsp;
+      <div>      
+        <div id="tie-breaker-info-middle" class="mobile-tie-breaker-info"></div>
+      </div>
+      <button class="mobile-tie-breaker-btn btn" id="high-tie-btn" data-htmlindex="2">
+        <span class="map-icon map-icon-school icon-legend"></span>&nbsp;High Schools
+      </button>
+      <div>      
+        <div id="tie-breaker-info-high" class="mobile-tie-breaker-info"></div>
+      </div>
+      
+    </div> <!-- close tie-breaker-flex -->   
 
-        <div class="heading">
-          <h4 id="filter-schools-heading">Filter Schools</h4>
-        </div>
-
+    <div class="heading" id="filter-schools-heading-div">
+      <h4 id="filter-schools-heading">Filter Schools</h4>
+    </div> <!-- close filter schools heading div -->
+    <div id="flex-box-parent">
+      <form id='map-choices-form'>
+    
         <!-- Grades Served Section = g-s --> 
         <div id="g-s-form" class="flex-box-child">
           <ul class="list-group">
-            <li class="list-group-item">
-              <a class="arrow-collapse-link" data-toggle="collapse" href="#g-s-collapse" aria-expanded="false" aria-controls="g-s-collapse">  
+            <a class="arrow-collapse-link" data-toggle="collapse" href="#g-s-collapse" aria-expanded="false" aria-controls="g-s-collapse">  
+              <li class="list-group-item">
                 <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
                 <label for="g-s" class="checkbox-label">Grades Served</label>
-              </a>
-              <span class="count badge" id="g-s-count"></span>
-            </li>
+                <span class="count badge" id="g-s-count"></span>
+              </li>
+            </a>
           </ul>
-         {% for key, value in checkbox_labels.iteritems() %}  
+          {% for key, value in checkbox_labels.iteritems() %}  
           {% if key == "grades_served" %}
           <div class="collapse" id="g-s-collapse">
             <div class="card card-block">
@@ -86,7 +109,7 @@
               </li>
               {% for gradesserved in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked><span class="map-icon map-icon-school {{ gradesserved }} icon-legend"></span>
+                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked><span class="map-icon map-icon-school grade{{ gradesserved }} icon-legend"></span>
                 &nbsp; {{ gradesserved }}
               </li>
               {% endfor %}
@@ -94,22 +117,24 @@
             </div> <!-- close div card card-block -->
           </div> <!-- close collapseExample -->
           {% endif %}
-        {% endfor %}
+          {% endfor %}
         </div> <!-- close div form -->
         <!-- End of Grades Served Section -->
 
-          <!-- City School Section = c-s --> 
+        <!-- City School Section = c-s --> 
         <div id="c-s-form" class="flex-box-child">
           <ul class="list-group">
-            <li class="list-group-item">
-              <a class="arrow-collapse-link" data-toggle="collapse" href="#c-s-collapse" aria-expanded="false" aria-controls="c-s-collapse"> 
+            <a class="arrow-collapse-link" data-toggle="collapse" href="#c-s-collapse" aria-expanded="false" aria-controls="c-s-collapse"> 
+              <li class="list-group-item">
                 <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
-                <label for="c-s" class="checkbox-label">City-Wide School <span id="info-sign" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Attendance area tie-breaker does not apply for city-wide schools"></span></label>
-              </a>
-              <span class="count badge" id="c-s-count"></span>
-            </li>
+                <label for="c-s" class="checkbox-label">City-Wide School 
+                  <span id="info-sign" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Attendance area tie-breaker does not apply for city-wide schools"></span>
+                </label>
+                <span class="count badge" id="c-s-count"></span>
+              </li>
+            </a>
           </ul>
-         {% for key, value in checkbox_labels.iteritems() %}  
+          {% for key, value in checkbox_labels.iteritems() %}  
           {% if key == "city_school" %}
           <div class="collapse" id="c-s-collapse">
             <div class="card card-block">
@@ -127,22 +152,22 @@
             </div> <!-- close div card card-block -->
           </div> <!-- close collapseExample -->
           {% endif %}
-        {% endfor %}
+          {% endfor %}
         </div> <!-- close div form -->
         <!-- End of City School Section -->
 
-         <!-- Multilingual Pathways Section = m-p --> 
+        <!-- Multilingual Pathways Section = m-p --> 
         <div id="m-p-form" class="flex-box-child">
-        <ul class="list-group">
-          <li class="list-group-item">
+          <ul class="list-group">
             <a class="arrow-collapse-link" data-toggle="collapse" href="#m-p-collapse" aria-expanded="false" aria-controls="m-p-collapse">
-              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
-              <label for="m-p" class="checkbox-label">Multilingual Pathways</label>
+              <li class="list-group-item">
+                <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
+                  <label for="m-p" class="checkbox-label">Multilingual Pathways</label>
+                <span class="count badge" id="m-p-count"></span>
+              </li>
             </a>
-            <span class="count badge" id="m-p-count"></span>
-          </li>
-        </ul>
-        {% for key, value in checkbox_labels.iteritems() %}  
+          </ul>
+          {% for key, value in checkbox_labels.iteritems() %}  
           {% if key == "multilingual_pathways" %}
           <div class="collapse" id="m-p-collapse">
             <div class="card card-block">
@@ -160,22 +185,22 @@
             </div> <!-- close div card card-block -->
           </div> <!-- close collapseExample -->
           {% endif %}   
-        {% endfor %}     
+          {% endfor %}     
         </div>
         <!-- End Multilingual Pathways Section -->
 
         <!-- Before School Program Section = b-s-p --> 
         <div id="b-s-p-form" class="flex-box-child">
-        <ul class="list-group">
-          <li class="list-group-item">
+          <ul class="list-group">
             <a class="arrow-collapse-link" data-toggle="collapse" href="#b-s-p-collapse" aria-expanded="false" aria-controls="b-s-p-collapse">
-              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
-              <label for="b-s-p" class="checkbox-label">Before School Programs</label>
+              <li class="list-group-item">
+                <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
+                  <label for="b-s-p" class="checkbox-label">Before School Programs</label>
+                <span class="count badge" id="b-s-p-count"></span>
+              </li>
             </a>
-            <span class="count badge" id="b-s-p-count"></span>
-          </li>
-        </ul>
-        {% for key, value in checkbox_labels.iteritems() %}  
+          </ul>
+          {% for key, value in checkbox_labels.iteritems() %}  
           {% if key == "before_school_program" %}
           <div class="collapse" id="b-s-p-collapse">
             <div class="card card-block">
@@ -192,23 +217,23 @@
             </div> <!-- close div card card-block -->
           </div> <!-- close collapseExample -->
           {% endif %}   
-        {% endfor %}     
+          {% endfor %}     
         </div>
         <!-- End of Before School Program Section -->
 
        
         <!-- After School Program Section = a-s-p --> 
         <div id="a-s-p-form" class="flex-box-child">
-        <ul class="list-group">
-          <li class="list-group-item">
+          <ul class="list-group">
             <a class="arrow-collapse-link" data-toggle="collapse" href="#a-s-p-collapse" aria-expanded="false" aria-controls="a-s-p-collapse">
-              <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
-              <label for="a-s-p" class="checkbox-label">Afterschool Programs</label>
+              <li class="list-group-item">
+                <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
+                  <label for="a-s-p" class="checkbox-label">Afterschool Programs</label>
+                <span class="count badge" id="a-s-p-count"></span>
+              </li>
             </a>  
-            <span class="count badge" id="a-s-p-count"></span>
-          </li>
-        </ul>
-        {% for key, value in checkbox_labels.iteritems() %}  
+          </ul>
+          {% for key, value in checkbox_labels.iteritems() %}  
           {% if key == "after_school_program" %}
           <div class="collapse" id="a-s-p-collapse">
             <div class="card card-block">
@@ -227,49 +252,12 @@
         {% endfor %}     
         </div>
         <!-- End After School Program Section -->
-
-        <input type="button" class='btn btn-default' id="form-submit" type="submit" value="Submit" onclick="onSubmitForm()"> 
-    </div> <!-- close flexbox contents -->
-    </div> <!-- close div class -->
-    
-  </form>    
+      </form> 
+    </div> <!-- close flexbox parent -->
   
+    
+   
 
-    <div class="mobile-tie-breaker">  
-      <div class="tie-breaker-mobile-flex">
-        <div class="heading" id="mobile-tie-breaker-heading">
-          <h4>Tie-breaker Hierarchies</h4>
-        </div>
-
-        <button class="mobile-tie-breaker-btn btn" id="elem-tie-btn" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" data-htmlindex="0">
-          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Elementary Schools
-          </button>&nbsp;
-             <div>      
-          <div id="tie-breaker-info-elem" class="mobile-tie-breaker-info">
-          </div>
-        </div>
-
-        <button class="mobile-tie-breaker-btn btn" id="middle-tie-btn" data-htmlindex="1">
-          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Middle Schools
-        </button>&nbsp;
-        <div>      
-          <div id="tie-breaker-info-middle" class="mobile-tie-breaker-info">
-          </div>
-        </div>
-
-
-
-        <button class="mobile-tie-breaker-btn btn" id="high-tie-btn" data-htmlindex="2">
-          <span class="map-icon map-icon-school icon-legend"></span>&nbsp;High Schools
-        </button>
-           <div>      
-          <div id="tie-breaker-info-high" class="mobile-tie-breaker-info">
-          </div>
-        </div>
-      </div> <!-- close tie-breaker-flex -->
-        
-     
-    </div> <!-- mobile-tie-breaker div -->
 
 
   <div id="compare-schools-div">  
@@ -278,7 +266,7 @@
       </div>
 
       <div class="flex-box-child">
-        <button id="show-favorites-btn" class='btn btn-default'>Compare My Favorite Schools <img id="star-img" src="/static/img/star.png"></button>
+        <button id="show-favorites-btn" class='btn btn-default'><img id="star-img" src="/static/img/star.png">&nbsp;Compare My Favorite Schools </button>
       </div>
   </div> <!-- compare schools div -->
   </div><!-- /#sidebar-wrapper -->
@@ -286,7 +274,10 @@
 
   <div id="page-content-wrapper" class="page-content">
     <div class="tab-div">
-      <button class="btn tab-btn toggled" id="tab-btn-plus" onclick="onTabClick()">+</button>
+      <button class="btn tab-btn toggled" id="tab-btn-plus" onclick="onTabClick()">&gth;&gth;</button>
+    </div>
+    <div>
+      <button class="btn" id="curr-loc-btn" onclick="onCurrentLocation()">&#x2316;</button>
     </div>
     <div class="container-fluid" id="whole-page">
 
@@ -303,31 +294,6 @@
       
           </div> <!-- close header-flex -->
           
-
-
-          <div class="desktop-tie-breaker">
-            <div id="tie-breaker-title" class="tie-breaker-flex">
-              Tie-breaker Hierarchies
-            </div>
-            <div class="tie-breaker-flex">
-                <button class="desktop-tie-breaker-btn btn" id="elem-tie-btn" data-htmlindex="0">
-                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Elementary Schools
-                  </button>&nbsp;
-                <button class="desktop-tie-breaker-btn btn" id="middle-tie-btn" data-htmlindex="1">
-                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;Middle Schools
-                </button>&nbsp;
-                <button class="desktop-tie-breaker-btn btn" id="high-tie-btn" data-htmlindex="2">
-                  <span class="map-icon map-icon-school icon-legend"></span>&nbsp;High Schools
-                </button>
-            </div> <!-- close tie-breaker-flex -->
-          <div id="tie-breaker-info-div" class="tie-breaker-flex">      
-              <div id="desktop-tie-breaker-info" class="tie-breaker-info">
-              </div>
-  
-              </div>
-          </div> <!-- close desktop tie-breaker -->
-
-
         </div> <!-- close header -->
       </div> <!-- close row -->
        <div class="row" id="map-row"> 
@@ -356,7 +322,7 @@
            <thead id="favorites-table-head">
               <tr>
                 <th colspan="6">
-                  <button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  
+                  <button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-  ="true">&times;</span></button>  
         </div>
                     <h4 class="modal-title heading" id="myModalLabel">My Favorite Schools</h4>
                 </th>
@@ -372,7 +338,7 @@
             </thead>
             <tbody id="favorites-table-body">
             </tbody>
-            <tfoot>
+            <tfoot id="favorites-table-foot">
               <tr>
                 <td colspan="6">
                   <textarea class="comments" placeholder="General notes"></textarea>

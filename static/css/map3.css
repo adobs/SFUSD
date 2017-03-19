@@ -14,6 +14,7 @@
 }	
 body {
 	font-family: Arial !important;
+	background-color: #EDEDED;
 }
 .container, #whole-page, #header, body, #header-row {
 	/*background-clip: content-box;*/
@@ -57,6 +58,19 @@ a:hover{
 	padding-right: 6px;
 	padding-left: 6px;
 }
+
+.gradeK-5, .gradeK-8, .gradePreK-5, .gradePreK-8 {
+	color: #F54900;
+}
+
+.grade6-8 {
+	color: #87CCE2;
+}
+
+.grade9-12 {
+	color: #414141;
+}
+
 /*********************************************/
 /* left side of page */
 
@@ -74,14 +88,6 @@ a:hover{
 	padding-left: 15px;
 }
 
-#flex-box-parent {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	align-content: flex-start;
-}
 
 .badge {
 	font-size: 10px;
@@ -117,16 +123,65 @@ li{
 }
 
 #compare-schools {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 #star-img {
 	zoom: 40%;
 }
 
-.mobile-tie-breaker {
+/*tie breaker hierarchies*/
+/*.mobile-tie-breaker {
 	visibility: hidden;
 }
+*/
+#mobile-tie-breaker-heading{
+	display: inline-block;
+}
+#tie-breaker-info-mobile-div {
+	float: right;
+	position: relative;
+}
+#tie-breaker-mobile-row-flex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+#elem-tie-btn {
+	background-color: #F54900;
+	color: #fff;
+}
+#middle-tie-btn {
+	background-color: #87CCE2;
+	color: #fff;
+}
+#high-tie-btn {
+	background-color: #414141;
+	color: #fff;
+}
+
+#tie-breaker-title {
+		padding-top: 3px;
+		font-size: 10px;
+	}
+	.mobile-tie-breaker-btn {
+		font-size: 10px;
+		margin-top: 15px;
+		margin-bottom: 15px;
+		margin-left: 10px;
+	}
+	#tie-breaker-info-div {
+		padding-bottom: 0px;
+	}
+
+	.mobile-tie-breaker-info {
+		font-size: 10px;
+		margin-top: -10px;
+		padding-left: 10px;
+		padding-right: 5px;
+	}
 /*********************************************/
 /* right side of webpage */
 
@@ -136,6 +191,11 @@ li{
 	width: 100%;
 	display: block;
 }
+
+#filter-schools-heading-div {
+	margin-top: 15px;
+}
+
 #filter-schools-heading {
 	display: inline-block;
 }
@@ -143,10 +203,10 @@ li{
 #header-flex {
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
-	align-items: flex-end;
-	padding-right: 20%;
-	padding-top: 10px;
+	justify-content: center;
+	align-items: center;
+	/*padding-right: 20%;*/
+	padding-top: 70px;
 }
 
 /* search bar to enter address */
@@ -155,13 +215,12 @@ li{
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
-	align-items: flex-end;
-	padding-bottom: 0px;
+	align-items: center;
+	padding-bottom: 10px;
 	padding-top: 10px;
 }
 
 #enter-address-intro {
-	color: #F54900;
 	font-size: 18px;
 }
 .pac-card {
@@ -207,21 +266,10 @@ li{
 
 /*********************************/
 /* hierarchy tie breaker buttons */
-.desktop-tie-breaker {
-	visibility: visible;
-}
-#elem-tie-btn {
-	background-color: #F54900;
-	color: #fff;
-}
-#middle-tie-btn {
-	background-color: #87CCE2;
-	color: #fff;
-}
-#high-tie-btn {
-	background-color: #414141;
-	color: #fff;
-}
+/*.desktop-tie-breaker {*/
+	/*visibility: visible;*/
+/*}*/
+/*
 .tie-breaker-btn, #tie-breaker-info{
 	font-size: 10px;
 }
@@ -247,7 +295,7 @@ li{
 	align-items: center;
 	padding-bottom: 5px;
 }
-
+*/
 .icon-legend {
 	display: inline; 
 	font-size: 12px; 
@@ -301,6 +349,19 @@ li{
 	float: right;
 }
 
+/*********************************************/
+/* get current location button */
+#curr-loc-btn {
+	border-radius: 20px;
+	font-weight: bold;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 20px;
+	z-index: 1000;
+	position: absolute;
+	color: #fff;
+	background-color: #3367d6;
+}
 
 /*********************************************/
 /* directions */
@@ -363,7 +424,7 @@ li{
     padding-right: 0px;
     height: 100%;
     /*border-right: .5px #414141 solid;*/
-    /*background-color: #414141;*/
+    background-color: #fff;
     padding-bottom: 0px;
 }
 
@@ -402,6 +463,11 @@ li{
 
 #contact-epc {
 	text-align: center;
+}
+
+#close-btn {
+	margin-right: -15px;
+	color: #fff;
 }
 
 input {
@@ -526,26 +592,13 @@ tr th {
 /*********************************************/
 /* on a mobile device */
 @media(max-width:991px) {
-	.desktop-tie-breaker {
-		visibility: hidden;
-	}
-	.mobile-tie-breaker {
-		visibility: visible;
-	}
-#mobile-tie-breaker-heading{
-	display: inline-block;
-}
-#tie-breaker-info-mobile-div {
-	float: right;
-	position: relative;
-}
-#tie-breaker-mobile-row-flex {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: flex-start;
-}
+	/*.desktop-tie-breaker {*/
+		/*visibility: hidden;*/
+	/*}*/
+	/*.mobile-tie-breaker {*/
+		/*visibility: visible;*/
+	/*}*/
+
 
 /*.tie-breaker-mobile-flex {
 	display: flex;
@@ -596,25 +649,7 @@ tr th {
 	#enter-address-intro, #pac-input {
 		font-size: 12px;
 	}
-	#tie-breaker-title {
-		padding-top: 3px;
-		font-size: 10px;
-	}
-	.mobile-tie-breaker-btn {
-		font-size: 8px;
-		margin-top: 15px;
-		margin-bottom: 15px;
-	}
-	#tie-breaker-info-div {
-		padding-bottom: 0px;
-	}
-
-	.mobile-tie-breaker-info {
-		font-size: 8px;
-		margin-top: -10px;
-		padding-left: 5px;
-		padding-right: 5px;
-	}
+	
 	#whole-page {
 		background-size: cover;
 		min-width: 100%;
@@ -628,6 +663,9 @@ tr th {
 	}
 	#directions-div {
 		height: 0px;
+		visibility: hidden;
+	}
+	#info-sign-span {
 		visibility: hidden;
 	}
 	

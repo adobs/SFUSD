@@ -135,15 +135,18 @@ def get_unique_row_data_from_specified_headers(school_objects_list):
 	return unique_content
 
 
-def get_matching_schools(school_objects_list, matching_parameters):
+def get_schools(school_objects_list):
 	output_schools = []
 	for school in school_objects_list:
-		if ([grades_served for grades_served in matching_parameters["grades_served"] if grades_served in school.grades_served or "" == school.grades_served] 
-			and [city_school for city_school in matching_parameters["city_school"] if city_school in school.city_school or "" == school.city_school] 
-			and (school.before_school_program != "" or school.before_school_program_offerings != "")
-			and [multilingual_pathways for multilingual_pathways in matching_parameters["multilingual_pathways"] if multilingual_pathways in school.multilingual_pathways or "" == school.multilingual_pathways]  
-			and (school.after_school_program != "" or school.after_school_program_offerings != "")):
-			output_schools.append({"name": school.name, 
+		before_school_program = "No"
+		after_school_program = "No"
+
+		if school.before_school_program or school.before_school_program_offerings:
+			before_school_program = "Yes"
+
+		if school.after_school_program or school.after_school_program_offerings:
+			after_school_program = "Yes"
+		output_schools.append({"name": school.name, 
 		   						   "start_time": school.start_time,
 		   						   "end_time": school.end_time,
 		   						   "address": school.address,
@@ -154,7 +157,11 @@ def get_matching_schools(school_objects_list, matching_parameters):
 		   						   "email": school.email,
 		   						   "principal": school.principal,
 		   						   "grades_served": school.grades_served, 
-		   						   "city_school": school.city_school})
+		   						   "city_school": school.city_school,
+		   						   "multilingual_pathways": school.multilingual_pathways,
+		   						   "before_school_program": before_school_program,
+		   						   "after_school_program": after_school_program
+		   						   })
 
 	return output_schools
 
