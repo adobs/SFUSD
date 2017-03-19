@@ -15,10 +15,7 @@
 // add in a delete link at end of the home address to clear the button
 
 //// mobile
-// keep tab on right of left side nav
-// change + - to >> << // invert the black and yellow
 // make the search bar taller -> check google maps
-// bring me to local
 // add in a notification system for how to use / add instructions on the webpage
 // look at zooming of markers
 // change the filter link to be clickable in the button -> turn the whole thing into a button beveled
@@ -972,8 +969,6 @@ function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checke
 
         var isMultilingualPathways = false;
         checkedMP.forEach(function(multilingualPathways) {
-            console.log("marker.customInfo ", marker.customInfo);
-            console.log("marker.custominfo");
             if (marker.customInfo.multilingualPathways) {
                 for (var i=0; i<marker.customInfo.multilingualPathways.length; ++i) {
                     if (marker.customInfo.multilingualPathways[i] === multilingualPathways) {
@@ -1007,7 +1002,6 @@ function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checke
 }
 
 $('#map-choices-form').on('submit', function (e) {
-    console.log("in the submit");
     e.preventDefault();
 
     var checkedInputs = $("#map-choices-form").serializeArray();
@@ -1086,7 +1080,7 @@ function countCheckboxes(name) {
 // change the arrow direction when toggling to collapse / show checkboxes
 $(".arrow-collapse-link").on("click", function(e) {
     $(this).toggleClass("isExpanded")
-    console.log("$this ", $(this));
+    
     var isExpanded = $(this).hasClass("isExpanded");
     if (isExpanded) {
         $($(this)[0].children[0].children[0]).removeClass("glyphicon-chevron-right").addClass("glyphicon glyphicon-chevron-down");         
@@ -1219,7 +1213,7 @@ function printElement(elem) {
     $printSection.innerHTML = "";
     var printHtmlHeader = $("#favorites-table-head").html();
     var printHtml = $("#favorites-table").html();
-    console.log("printHtmlHeader ", printHtml);
+    
     $("#printSection").html(printHtml);
     // $("#printSection").append($("#printThis").clone());
     window.print();
