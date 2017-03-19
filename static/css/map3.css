@@ -354,14 +354,11 @@ li{
 #curr-loc-btn {
 	border-radius: 100%;
 	font-weight: bold;
-	padding-left: 10px;
-	padding-right: 10px;
 	font-size: 20px;
 	z-index: 1000;
-	/*position: absolute;*/
 	color: #fff;
 	background-color: #3367d6;
-	margin-right: 10px;
+	margin-right: 7px;
 }
 
 /*********************************************/
@@ -670,8 +667,6 @@ tr th {
 		visibility: hidden;
 	}
 	#curr-loc-btn {
-		padding-left: 7px;
-		padding-right: 7px;
 		font-size: 15px;
 	}
 

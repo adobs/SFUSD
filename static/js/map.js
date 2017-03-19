@@ -8,7 +8,6 @@
 // clean all the data, perfect the addresses for all the schools using googlemaps
 // fix on reverse driving directions buttons
 
-// geolocating - add back old one, check for bounds in SF or notv get a better way of getting IP addresses so its from HTTPS and is more accurates 
 // add the link to the SARC report?
 // swap out the picture in the header
 
@@ -1231,9 +1230,10 @@ function onTabClick() {
     $("#wrapper").toggleClass("toggled");
 
     if ($("#tab-btn").hasClass("toggled")) {
-        $("#tab-btn").html("&gt;&gt;");
-    } else {
         $("#tab-btn").html("&lt;&lt;");
+    } else {
+        $("#tab-btn").html("&gt;&gt;");
+        
     }
     $("#tab-btn").toggleClass("toggled");
 }
@@ -1280,6 +1280,7 @@ $(document).ready(function() {
         $("#info-sign").hide();
     }
 
+    // map height set up
     var headerHeight = $("#header").height();
     $("#map").css("cssText", "height:" + ($(window).height() - headerHeight) + "px !important;");
     
@@ -1291,34 +1292,11 @@ $(document).ready(function() {
         printElement(document.getElementById("printThis"));
     });
    
-    // enable all websites in future info windows to open correclty
+    // enable all websites in future info windows to open correctly
     $('body').on('click', '#website', function (e) { 
         var innerHtml = e.currentTarget.innerHTML;
         window.open(innerHtml, "_blank");
     });
-
-    // var mapHeight = $("#map").height();
-    // // set the tab btn (on mobile) 
-    // var tabTop = 0.5 * mapHeight + headerHeight;
-    // var tabLeft = 250 - $("#tab-btn-minus").width() - 19;
-    // // $(".tab-btn").css("top", tabTop);
-    // // $("#tab-btn-minus").css("left", tabLeft);
-    
-    // var googleMapsBtns = 150;
-    // var currLocTop = mapHeight + headerHeight - googleMapsBtns;
-    // var currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() + 4;
-    // // $("#curr-loc-btn").css("top", currLocTop);
-    // // $("#curr-loc-btn").css("left", currLocLeft);
-
-    // // set the current location btn
-    // $(window).on("resize", function() {
-    //     $(".tab").css("top", tabTop);
-    //     $("#tab-btn-minus").css("left", tabLeft + "px !important");     
-    //     currLocTop = gtMdWidth ? $("#map").height() + $("#header").height() - googleMapsBtns : $("#map").height() + $("#header").height() - googleMapsBtns - 10;
-    //     currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() +4;
-    //     // $("#curr-loc-btn").css("top", currLocTop);
-    //     // $("#curr-loc-btn").css("left", currLocLeft);  
-    // });
 
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
