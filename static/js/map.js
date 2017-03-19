@@ -1239,10 +1239,9 @@ function onTabClick() {
 }
 
 function onCurrentLocation() {
-    $.get("/ip-address.json", function(data) {
-        data = JSON.parse(data.data);
-        var lat = data.lat || 37.760099;
-        var lng = data.lng || -122.434633;
+    $.get("https://ipapi.co/json/", function(data) {
+        var lat = data.latitude || 37.760099;
+        var lng = data.longitude || -122.434633;
         var center = { lat: lat, lng: lng };
         map.setCenter(center);
         map.setZoom(14);
@@ -1367,13 +1366,13 @@ $(document).ready(function() {
     });
 
     // geolocate user by IP address
-    $.get("/ip-address.json", function(data) {
-        data = JSON.parse(data.data);
-        $("#tab-btn-plus").html("lat "+ data.lat);
-        initialize(data.lat, data.lng);
+    // $.get("/ip-address.json", function(data) {
+    //     data = JSON.parse(data.data);
+    //     $("#tab-btn-plus").html("lat "+ data.lat);
+    //     initialize(data.lat, data.lng);
 
-    // $.get("http://ip-api.com/json", function(data) {
-        // initialize(data.lat, data.lon);
+    $.get("https://ipapi.co/json/", function(data) {
+        initialize(data.latitude, data.longitude);
     // $.get("https://freegeoip.net/json/github.com", function(data) {
         // initialize(data.latitude, data.longitude);
         // instantiate map and populate counts on criteria
