@@ -88,6 +88,9 @@ function initialize(latitude, longitude) {
         draggable: true
     });
     console.log("center is ", center);
+
+    var tabBtn = document.getElementById("tab-btn");
+    map.controls[google.maps.ControlPosition.LEFT_CENTER].push(tabBtn);
     var currLocBtn = document.getElementById('curr-loc-btn');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(currLocBtn);
     initAutocomplete();
@@ -1224,19 +1227,15 @@ function printElement(elem) {
 }
 
 function onTabClick() {
-    console.log("clicked on a tab");
+
     $("#wrapper").toggleClass("toggled");
 
-    if ($("#tab-btn-plus").hasClass("toggled")) {
-        console.log("had class toggled, hiding tab");
-        $("#tab-btn-plus").hide();
+    if ($("#tab-btn").hasClass("toggled")) {
+        $("#tab-btn").html("&gt;&gt;");
     } else {
-        console.log("does not have class toggled, showing side");
-        $("#tab-btn-plus").show();
-        // 
+        $("#tab-btn").html("&lt;&lt;");
     }
-    $("#tab-btn-plus").toggleClass("toggled");
-
+    $("#tab-btn").toggleClass("toggled");
 }
 
 function onCurrentLocation() {
@@ -1298,28 +1297,28 @@ $(document).ready(function() {
         window.open(innerHtml, "_blank");
     });
 
-    var mapHeight = $("#map").height();
-    // set the tab btn (on mobile) 
-    var tabTop = 0.5 * mapHeight + headerHeight;
-    var tabLeft = 250 - $("#tab-btn-minus").width() - 19;
-    $(".tab-btn").css("top", tabTop);
-    $("#tab-btn-minus").css("left", tabLeft);
+    // var mapHeight = $("#map").height();
+    // // set the tab btn (on mobile) 
+    // var tabTop = 0.5 * mapHeight + headerHeight;
+    // var tabLeft = 250 - $("#tab-btn-minus").width() - 19;
+    // // $(".tab-btn").css("top", tabTop);
+    // // $("#tab-btn-minus").css("left", tabLeft);
     
-    var googleMapsBtns = 150;
-    var currLocTop = mapHeight + headerHeight - googleMapsBtns;
-    var currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() + 4;
-    // $("#curr-loc-btn").css("top", currLocTop);
-    // $("#curr-loc-btn").css("left", currLocLeft);
+    // var googleMapsBtns = 150;
+    // var currLocTop = mapHeight + headerHeight - googleMapsBtns;
+    // var currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() + 4;
+    // // $("#curr-loc-btn").css("top", currLocTop);
+    // // $("#curr-loc-btn").css("left", currLocLeft);
 
-    // set the current location btn
-    $(window).on("resize", function() {
-        $(".tab").css("top", tabTop);
-        $("#tab-btn-minus").css("left", tabLeft + "px !important");     
-        currLocTop = gtMdWidth ? $("#map").height() + $("#header").height() - googleMapsBtns : $("#map").height() + $("#header").height() - googleMapsBtns - 10;
-        currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() +4;
-        // $("#curr-loc-btn").css("top", currLocTop);
-        // $("#curr-loc-btn").css("left", currLocLeft);  
-    });
+    // // set the current location btn
+    // $(window).on("resize", function() {
+    //     $(".tab").css("top", tabTop);
+    //     $("#tab-btn-minus").css("left", tabLeft + "px !important");     
+    //     currLocTop = gtMdWidth ? $("#map").height() + $("#header").height() - googleMapsBtns : $("#map").height() + $("#header").height() - googleMapsBtns - 10;
+    //     currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() +4;
+    //     // $("#curr-loc-btn").css("top", currLocTop);
+    //     // $("#curr-loc-btn").css("left", currLocLeft);  
+    // });
 
     // Tie breaker heirarchy buttons
     var elemTieHtml = "1. Applicant has an older sibling enrolled in school<br>" +
