@@ -88,7 +88,8 @@ function initialize(latitude, longitude) {
         draggable: true
     });
     console.log("center is ", center);
-   
+    var currLocBtn = document.getElementById('curr-loc-btn');
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(currLocBtn);
     initAutocomplete();
    
     return map;
@@ -1307,8 +1308,8 @@ $(document).ready(function() {
     var googleMapsBtns = 150;
     var currLocTop = mapHeight + headerHeight - googleMapsBtns;
     var currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() + 4;
-    $("#curr-loc-btn").css("top", currLocTop);
-    $("#curr-loc-btn").css("left", currLocLeft);
+    // $("#curr-loc-btn").css("top", currLocTop);
+    // $("#curr-loc-btn").css("left", currLocLeft);
 
     // set the current location btn
     $(window).on("resize", function() {
@@ -1316,8 +1317,8 @@ $(document).ready(function() {
         $("#tab-btn-minus").css("left", tabLeft + "px !important");     
         currLocTop = gtMdWidth ? $("#map").height() + $("#header").height() - googleMapsBtns : $("#map").height() + $("#header").height() - googleMapsBtns - 10;
         currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width() +4;
-        $("#curr-loc-btn").css("top", currLocTop);
-        $("#curr-loc-btn").css("left", currLocLeft);  
+        // $("#curr-loc-btn").css("top", currLocTop);
+        // $("#curr-loc-btn").css("left", currLocLeft);  
     });
 
     // Tie breaker heirarchy buttons

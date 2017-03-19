@@ -359,7 +359,7 @@ li{
 	padding-right: 10px;
 	font-size: 20px;
 	z-index: 1000;
-	position: absolute;
+	/*position: absolute;*/
 	color: #fff;
 	background-color: #3367d6;
 }
