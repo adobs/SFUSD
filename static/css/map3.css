@@ -353,7 +353,7 @@ li{
 /*********************************************/
 /* get current location button */
 #curr-loc-btn {
-	border-radius: 20px;
+	border-radius: 100%;
 	font-weight: bold;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -670,9 +670,8 @@ tr th {
 		visibility: hidden;
 	}
 	#curr-loc-btn {
-		border-radius: 15px;
-		padding-left: 8px;
-		padding-right: 8px;
+		padding-left: 7px;
+		padding-right: 7px;
 		font-size: 15px;
 	}
 

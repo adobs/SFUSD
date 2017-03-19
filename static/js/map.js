@@ -1250,16 +1250,16 @@ function onCurrentLocation() {
 
 $(document).ready(function() {
     // if user clicks back button during session
-    if (window.history && window.history.pushState) {
-        window.history.pushState('', null, '');
-        $(window).on('popstate', function() {
-        alert("Are you sure you want to leave?  \nYou'll lose any information saved");
-      });
+    // if (window.history && window.history.pushState) {
+    //     window.history.pushState('', null, '');
+    //     $(window).on('popstate', function() {
+    //     alert("Are you sure you want to leave?  \nYou'll lose any information saved");
+    //   });
 
-    }
-    $(window).on("beforeunload", function() {
-        return "bye";
-    });
+    // }
+    // $(window).on("beforeunload", function() {
+    //     return "bye";
+    // });
 
     var windowWidth = $(window).width();
   
