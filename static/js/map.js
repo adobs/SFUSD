@@ -1307,8 +1307,7 @@ $(document).ready(function() {
     
     var googleMapsBtns = 150;
     var currLocTop = mapHeight + headerHeight - googleMapsBtns;
-    var currLocLeft = $("#map").width() + 24;
-    console.log("currLocLeft ", currLocLeft);
+    var currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width();
     $("#curr-loc-btn").css("top", currLocTop);
     $("#curr-loc-btn").css("left", currLocLeft);
 
@@ -1316,8 +1315,8 @@ $(document).ready(function() {
     $(window).on("resize", function() {
         $(".tab").css("top", tabTop);
         $("#tab-btn-minus").css("left", tabLeft + "px !important");     
-        currLocTop = mapHeight + headerHeight - googleMapsBtns;
-        currLocLeft = $("#map").width() + 24;
+        currLocTop = gtMdWidth ? $("#map").height() + $("#header").height() - googleMapsBtns : $("#map").height() + $("#header").height() - googleMapsBtns - 10;
+        currLocLeft = gtMdWidth ? $("#map").width() + 24 : $("#map").width();
         $("#curr-loc-btn").css("top", currLocTop);
         $("#curr-loc-btn").css("left", currLocLeft);  
     });

@@ -222,6 +222,7 @@ li{
 
 #enter-address-intro {
 	font-size: 18px;
+	padding-bottom: 5px;
 }
 .pac-card {
 	display: inline-block;
