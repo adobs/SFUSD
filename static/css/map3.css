@@ -4,6 +4,9 @@
 	height: 100%;
 }
 
+#sidebar-wrapper, #flex-box-parent {
+	background-color: #EDEDED;	
+}
 #wrapper{
 	background: url(/static/img/fullbackground3.png);
 	background-size: contain;
@@ -98,16 +101,27 @@ ul {
 }
 li{
   margin-right: 0;
+  list-style-type: none;
 }
 
+#flex-box-parent {
+	padding-right: 15px;
+	padding-left: 15px;
+}
 .flex-box-child {
 	width: 100%;
 	background: white;
 	border: none;
 	border-radius: 2px;
-	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	font-size: 0.8em;
 	display: inline-block;
+}
+
+.card-block {
+	padding-bottom: 10px;
+	padding-top: 5px;
 }
 #form-submit{
 	height: 30px;
@@ -120,16 +134,16 @@ li{
 	
 #show-favorites-btn {
 	font-size: 12px;
-}
-
-#compare-schools {
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 #star-img {
 	zoom: 40%;
 }
 
+#show-favorites-div {
+	margin-left: 15px;
+}
 /*tie breaker hierarchies*/
 /*.mobile-tie-breaker {
 	visibility: hidden;
@@ -170,7 +184,7 @@ li{
 		font-size: 10px;
 		margin-top: 15px;
 		margin-bottom: 15px;
-		margin-left: 10px;
+		margin-left: 15px;
 	}
 	#tie-breaker-info-div {
 		padding-bottom: 0px;
@@ -190,10 +204,6 @@ li{
 .header-div {
 	width: 100%;
 	display: block;
-}
-
-#filter-schools-heading-div {
-	margin-top: 15px;
 }
 
 #filter-schools-heading {
@@ -336,6 +346,10 @@ li{
 	line-height: 1.4;
 }
 
+#home-label {
+	color: #000;
+}
+
 
 /*********************************************/
 /* info window */
@@ -452,6 +466,10 @@ li{
 	padding-bottom: 5px;
 	padding-left: 15px;
 	width: 100%;
+}
+
+#compare-schools, #filter-schools-heading-div {
+	margin-top: 30px;
 }
 
 #info-sign {
@@ -579,28 +597,13 @@ tr th {
 /*********************************************/
 /* on a mobile device */
 @media(max-width:991px) {
-	/*.desktop-tie-breaker {*/
-		/*visibility: hidden;*/
-	/*}*/
-	/*.mobile-tie-breaker {*/
-		/*visibility: visible;*/
-	/*}*/
 
-
-/*.tie-breaker-mobile-flex {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	padding-bottom: 5px;
-}*/
 	form {
 		font-size: 10px;
 	}
-	.pac-card {
-		/*box-sizing: unset;*/
-		/*-moz-box-sizing: unset;*/
+
+	#compare-schools, #filter-schools-heading-div {
+		margin-top: 0px;
 	}
 	#pac-input {
 		margin-left: 0px;
@@ -617,7 +620,6 @@ tr th {
 	#map {
 		border: 5px solid #fad355;
 		height: 100%;
-		/*padding-bottom: 5px !important;*/
 	}
 	#map-row {
 		margin-right: -20px;
