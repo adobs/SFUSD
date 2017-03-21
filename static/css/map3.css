@@ -26,7 +26,8 @@ body {
 
 
 #header-row {
-	background: url(/static/img/fullbackground2.png);
+	/*background: url(/static/img/fullbackground2.png);*/
+	background: url(/static/img/bg-paper-plus-logo.jpg);
 	background-size: cover;
 	background-position: center-top;
 }
@@ -62,6 +63,9 @@ a:hover{
 	padding-left: 6px;
 }
 
+.tab-btn {
+	visibility: hidden;
+}
 .gradeK-5, .gradeK-8, .gradePreK-5, .gradePreK-8 {
 	color: #F54900;
 }
@@ -454,6 +458,8 @@ li{
 }
 .comments {
 	width: 100%;
+	overflow: hidden;
+	resize: none;
 	height: 100%;
 }
 
@@ -601,6 +607,13 @@ tr th {
 	form {
 		font-size: 10px;
 	}
+	#info-sign {
+		visibility: hidden;
+	}
+
+	.tab-btn {
+		visibility: visible;
+	}
 
 	#compare-schools, #filter-schools-heading-div {
 		margin-top: 0px;
@@ -608,7 +621,6 @@ tr th {
 	#pac-input {
 		margin-left: 0px;
 		margin-right: 0px;
-		font-size: 10px;
 	}
 	#header-flex {
 		justify-content: center;
@@ -640,7 +652,11 @@ tr th {
 		align-items: center;
 	}
 	#enter-address-intro, #pac-input {
-		font-size: 12px;
+		font-size: 14px;
+	}
+
+	#enter-address-intro {
+		padding-bottom: 0px;
 	}
 	
 	#whole-page {

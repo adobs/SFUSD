@@ -1,44 +1,17 @@
 // TODO
 
 //// current list
-// add cookies https://www.w3schools.com/js/js_cookies.asp
-// cookies for the text in the form,
-// cookies for the star markers 
-// move 'setting up screen' to css
-// clean all the data, perfect the addresses for all the schools using googlemaps
-
-// add the link to the SARC report?
 // swap out the picture in the header
-
-// fix logic for checkbox deselect all when there is nothing checked?
-// add in a delete link at end of the home address to clear the button
-
-//// mobile
-// make the search bar taller -> check google maps
-// add in a notification system for how to use / add instructions on the webpage
-// look at zooming of markers
-// change the filter link to be clickable in the button -> turn the whole thing into a button beveled
-
-
-//// longer term considerations -- need to do
-// city wide - show only city wide schools.  show no city wide school -- change the select all to "Show all schools"
-// general / massive formatting
 // add all relevant commenting to code
-// add in remaining elementary school
-// make map dynamically 100% height
-// for the directions - have the destination not be latlong, but be the school address (once correctly formatted)
 
 //// data clean
 // compare number of schools in excel vs some other source
 // add websites; confirm all websites are correct
 // correctly label all city schools
 // add in all emails
-// fix instances of multiple addresses
-// make addresses conform to google maps
 // add in SARC url
 
 //// formatting
-// is the high school the right color?
 // the whole notebook page fix
 
 //// longer term condiersations -- nice to have
@@ -47,8 +20,6 @@
 // add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
 
 ///// to discuss with others
-// photoshop for the images -> must fix
-// send out my excels -> to add the SARC performance reports 
 // rate limiting
 
 
@@ -66,8 +37,7 @@ var aarea, aaname, isOnlyAttendanceArea;
 var markers = [];
 var homeMarker;
 var starMarkers = [];
-var infoWindowLat, infoWindowLng, infoWindowName;
-var destinationLat, destinationLng;
+var infoWindowName, infoWindowAddress;
 var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
@@ -168,7 +138,7 @@ function initAutocomplete() {
             });
             
             bindInfoWindowHomeMarker(homeMarker, map);
-            // console.log("line 180");
+            
             // Bias the SearchBox results towards current map's viewport.
             isOnlyAttendanceArea = false;
             $("#map-choices-form").submit();
@@ -310,13 +280,7 @@ function onShowAttendanceArea() {
         var resetContent = homeInfoWindow.content.replace(/Reset/, "Show only " + aaname.toUpperCase() + " schools");
         homeInfoWindow.setContent(resetContent);
        
-       
-        $("#map-choices-form").submit();
-        console.log("line 328");
-
-        // resetAttendanceArea();
-        
-        
+        $("#map-choices-form").submit();       
 
     } else {
         
@@ -381,7 +345,7 @@ function getDirections(origin, destination, travelMode) {
 
 function onToHere (travelMode) {
     var el = document.querySelector('#info-window-content');
-    var destination = new google.maps.LatLng(infoWindowLat, infoWindowLng);
+    var destination = infoWindowAddress;
     if (!originAddress) {
         return;
     }
@@ -391,9 +355,7 @@ function onToHere (travelMode) {
 function onFromHere (travelMode) {
     var el = document.querySelector('#info-window-content');
 
-
-    var origin = new google.maps.LatLng(infoWindowLat, infoWindowLng);
-    // var destination = new google.maps.LatLng(destinationLat, destinationLng);
+    var origin = infoWindowAddress;
     if (!destinationAddress) {
         return;
     }
@@ -459,9 +421,7 @@ function setOnDirectionsToHere(address) {
 function onDirectionsToHere() {
     var el = document.querySelector('#info-window-content');
     infoWindowName = el.dataset.name;
-    infoWindowLat = el.dataset.lat;
-    infoWindowLng = el.dataset.lng;
-
+    infoWindowAddress = el.dataset.address;
     setOnDirectionsToHere();
 }
 
@@ -507,9 +467,8 @@ function setOnDirectionsFromHere (address) {
 function onDirectionsFromHere() {
     var el = document.querySelector('#info-window-content');
     infoWindowName = el.dataset.name;
-    infoWindowLat = el.dataset.lat;
-    infoWindowLng = el.dataset.lng;
-
+    infoWindowAddress = el.dataset.address;
+    
     setOnDirectionsFromHere();
 }
 
@@ -543,10 +502,10 @@ function onFavoriteStarClick(marker, e) {
                 '<input type="checkbox">' +
             '</td>' +
             '<td>' +
-                '<textarea class="comments" wrap="on" style="overflow:hidden;resize:none"></textarea>' +
+                '<textarea class="comments" wrap="on"></textarea>' +
             '</td>' +
             '<td>' +
-                '<button class="delete-row">Remove</button>'
+                '<button class="delete-row">Remove</button>' +
             '</td>' + 
         '</tr>'; 
 
@@ -584,11 +543,11 @@ function onFavoriteStarClick(marker, e) {
 
 }
 
-function getHtml(name, startTime, endTime,
+function getHtml(name, gradesServed, startTime, endTime,
                         principal, address, phone, fax, email, website, lat, lng, citySchool){
 
     var html =
-        '<div id="info-window-content" data-lat="' + lat + '" data-lng="' + lng + '" data-name="' + name + '" data-citySchool="' + citySchool + '">' +
+        '<div id="info-window-content" data-address="' + address + '" data-lat="' + lat + '" data-lng="' + lng + '" data-name="' + name + '" data-citySchool="' + citySchool + '">' +
             '<div id="favorite-star-div">' + 
                 '<button type="button" id="favorite-star-btn" aria-label="Left Align">' +
                     '<span id="favorite-star" class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>' + 
@@ -596,6 +555,7 @@ function getHtml(name, startTime, endTime,
             '</div>' + 
             '<div id="content" data-name="' + name + '" data-address="' + address + '" data-phone="' + phone + '" data-email="' + email + '" data-website="' + website + '">' +
                 '<b>' + name + '</b><br>' +
+                '<b>Grades Served: </b>' + gradesServed + '<br>' +
                 '<b>Start Time: </b>'+ startTime + '<br>' +
                 '<b>End Time: </b>'+ endTime + '<br>' +
                 '<b>Principal: </b>'+ principal + '<br>' +
@@ -931,7 +891,7 @@ function addMarkers(data){
     removeAllMarkers();
 
     data = JSON.parse(data);
-    console.log("HOW MANY SCHOOLS? ", data.length);
+    
     for (var i=0; i<data.length; ++i){
         var school = data[i];
         var lat = parseFloat(school.lat);
@@ -953,7 +913,7 @@ function addMarkers(data){
         var afterSchool = school.after_school_program;
         
 
-        var html = getHtml(name, startTime, endTime,
+        var html = getHtml(name, gradesServed, startTime, endTime,
                         principal, address, phone, fax, email, website, lat, lng, citySchool);
 
         var marker = createMarker(lat, lng, name, address, phone, gradesServed, citySchool, multilingualPathways, beforeSchool, afterSchool);
@@ -983,7 +943,7 @@ function addMarkers(data){
 
 function updateFavoritesTable() {
     var favoritesTableBodyHtml = getCookies("favoritesTable");
-    console.log("the htaml is ", favoritesTableBodyHtml)
+    
     $("#favorites-table-body").html(favoritesTableBodyHtml);
 }
 
@@ -1010,6 +970,7 @@ function updateStarMarkers() {
 function getCookies(cookieName) {
     var name = cookieName + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
+    
     var ca = decodedCookie.split(';');
     for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
@@ -1058,10 +1019,7 @@ function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checke
         } else {
             isMultilingualPathways = true;
         }
-        if (!isMultilingualPathways) {
-            console.log("multilingualPathways is ", marker.customInfo.multilingualPathways);
-        }
- 
+     
         var isBeforeSchool = false;
         checkedBeforeSchool.forEach(function(beforeSchool) {
             if (!marker.customInfo.beforeSchool || marker.customInfo.beforeSchool === beforeSchool) {
@@ -1082,16 +1040,9 @@ function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checke
             if (marker.customInfo.starred === "starred") {
                 marker.customInfo.starMarker.setMap(map);
             }
-        } else {
-            console.log("\n\n\nis gradesServed ", isGradeServed);
-            console.log("isCitySchool ", isCitySchool);
-            console.log("isMultilingualPathways ", isMultilingualPathways);
-            console.log("isBeforeSchool ", isBeforeSchool);
-            console.log('isAfterSchool ', isAfterSchool);
         }
     });
-    console.log("counter ",counter);
-    console.log("nullCounter" , nullCounter);
+    
     return Promise.resolve();
 }
 
@@ -1123,8 +1074,8 @@ $('#map-choices-form').on('submit', function (e) {
             checkedAfterSchool.push(value);
         }
     }   
-    console.log("1067 markers.length is ", markers.length);
     
+
     filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checkedBeforeSchool, checkedAfterSchool)
     .then(function() {
         if (isOnlyAttendanceArea) {
@@ -1143,11 +1094,12 @@ $('#map-choices-form').on('submit', function (e) {
 
 //check all checkboxes
 $(".check-all").change(function () {
- 
+
     // slice the 'check-all'
     var num = "check-all-".length;
     var name = ($(this).attr('id')).slice(num);
     if ($(this).prop("checked")) {
+        console.log("its checked ,goingn to say deselect all");
         // check all boxes     
         $("input[name='" + name + "']").prop("checked", true);
         
@@ -1161,9 +1113,12 @@ $(".check-all").change(function () {
         } else {
             $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
         }
-    }
+    } 
 
-    countCheckboxes(name);
+    var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
+    var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
+    $("#" + name + "-count").html(numChecked + " / "+ numTotal);
+    
 });
 
 function countCheckboxes(name) {
@@ -1171,6 +1126,10 @@ function countCheckboxes(name) {
     var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
     var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
     $("#" + name + "-count").html(numChecked + " / "+ numTotal);
+    
+    if (numChecked === 0 || numChecked === numTotal ) {
+        $("#check-all-"+ name).click();
+    }
 }
 
 // change the arrow direction when toggling to collapse / show checkboxes
@@ -1420,7 +1379,6 @@ function initTieBreakerButtons() {
 function updateFavoritesTableCookies() {
     document.cookie = "favoritesTable=;";
     var favoritesTableBodyHtml = $("#favorites-table-body").html();
-    console.log("favoritesTableBodyHtml in update ", favoritesTableBodyHtml);
     document.cookie = "favoritesTable=" + favoritesTableBodyHtml + ";";
 }
 
@@ -1435,7 +1393,6 @@ function updateStarCookies() {
         }
     }
     var starNamesString = starNames.join(",");
-    console.log("starNamesString ",starNamesString);
     document.cookie = "starNames=" + starNamesString + ";";
 }
 
@@ -1457,12 +1414,11 @@ $(document).ready(function() {
     // setting up screen
     if (windowWidth >= MD_WIDTH) {
         gtMdWidth = true;
-        $(".tab-btn").hide();
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
-        $("#info-sign").hide();
     }
+  
     $("#directions-panel").hide();
 
     // map height set up
