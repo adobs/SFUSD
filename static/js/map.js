@@ -1091,45 +1091,59 @@ $('#map-choices-form').on('submit', function (e) {
 
 })
 
-
-//check all checkboxes
-$(".check-all").change(function () {
-
-    // slice the 'check-all'
-    var num = "check-all-".length;
-    var name = ($(this).attr('id')).slice(num);
-    if ($(this).prop("checked")) {
-        console.log("its checked ,goingn to say deselect all");
-        // check all boxes     
-        $("input[name='" + name + "']").prop("checked", true);
-        
-        // change "Select All" text
-        $(this)[0].labels[0].innerHTML = "&nbsp; Deselect All"
-
+function onSelectAllCheck(e, name) {
+    console.log("e is ",e);
+    if ($(e.currentTarget).prop("checked")) {
+        $("input[name='" +name + "']").prop("checked", true);
     } else {
-        $("input[name='" + name + "']").prop("checked", false);
-        if (name === "c-s") {
-            $(this)[0].labels[0].innerHTML = "&nbsp; Select All Schools"
-        } else {
-            $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
-        }
-    } 
+        $("input[name='" +name + "']").prop("checked", false);        
+    }
+    console.log($("input[name='" +name + "']").prop("checked"));
+    checkforSelectDeselect(e, name);
+}
 
+function checkforSelectDeselect (e, name) {
+    var isAllSelected;    
     var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
     var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
-    $("#" + name + "-count").html(numChecked + " / "+ numTotal);
+
+    if (numChecked === numTotal) {
+        console.log("in equality");
+        isAllSelected = true;
+        $("#check-all-" + name).prop("checked", true);
+        $("input[name='" + name + "']").prop("checked", true);
+        $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Deselect All";
+   
+ 
+    } else if (numChecked === 0) {
+        $("#check-all-"+name).prop("checked",false);
+        isAllSelected = false;
+        $("input[name='" + name + "']").prop("checked", false);
     
-});
+        if (name === "c-s") {
+            $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All Schools";
+        
+            // $(this)[0].labels[0].innerHTML = "&nbsp; Select All Schools"
+        } else {
+
+            $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All";
+        
+            // $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
+        }
+    
+    } 
+    countCheckboxes(name);
+ 
+}
+
+//check all checkboxes
+// $(".check-all").on("change", checkforSelectDeselect);
 
 function countCheckboxes(name) {
     // var name = $(this)[0].name;
     var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
     var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
     $("#" + name + "-count").html(numChecked + " / "+ numTotal);
-    
-    if (numChecked === 0 || numChecked === numTotal ) {
-        $("#check-all-"+ name).click();
-    }
 }
 
 // change the arrow direction when toggling to collapse / show checkboxes
@@ -1316,10 +1330,21 @@ function initMapInfo(data) {
 
     initCounters();
     
-    $("input:checkbox").on("change", function() {
+    $("input:checkbox").on("change", function(e) {
+        e.preventDefault();
         $("#map-choices-form").submit();
         var name = $(this)[0].name;
-        countCheckboxes(name);
+
+        var num = "check-all-".length;
+        var isIndividualCheck = name.indexOf('check-all-') === -1;
+        
+        if (isIndividualCheck) {
+            checkforSelectDeselect(e, name);
+        } else {
+            name = name.slice(num);
+            onSelectAllCheck(e, name);   
+        }
+
     });
 
    

@@ -101,12 +101,12 @@
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-g-s" class="check-all" name="check-all-g-s" value="select-all" checked>
+                <input type="checkbox" id="check-all-g-s" class="check-all" name="check-all-g-s" value="select-all" checked="true">
                 <label for="check-all-g-s"> &nbsp; Deselect All</label>
               </li>
               {% for gradesserved in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked><span class="map-icon map-icon-school grade{{ gradesserved }} icon-legend"></span>
+                <input type="checkbox" name="g-s" class="check" value="{{ gradesserved }}" checked="true"><span class="map-icon map-icon-school grade{{ gradesserved }} icon-legend"></span>
                 &nbsp; {{ gradesserved }}
               </li>
               {% endfor %}
@@ -137,12 +137,12 @@
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-c-s" class="check-all" name="check-all-c-s" value="select-all" checked>
+                <input type="checkbox" id="check-all-c-s" class="check-all" name="check-all-c-s" value="select-all" checked="true">
                 <label for="check-all-c-s"> &nbsp; Deselect All</label>
               </li>
               {% for cityschool in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="c-s" class="check" value="{{ cityschool }}" checked>&nbsp; {{ cityschool }}
+                <input type="checkbox" name="c-s" class="check" value="{{ cityschool }}" checked="true">&nbsp; {{ cityschool }}
               </li>
               {% endfor %}
             </ul>
@@ -170,12 +170,12 @@
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-m-p" class="check-all" name="check-all-m-p" value="select-all" checked>
+                <input type="checkbox" id="check-all-m-p" class="check-all" name="check-all-m-p" value="select-all" checked="true">
                 <label for="check-all-m-p"> &nbsp; Deselect All </label>
               </li>
               {% for multilingualPathways in value %}
               <li class="checkbox-li">
-                <input type="checkbox" name="m-p" class="check" value="{{ multilingualPathways }}" checked> &nbsp; {{ multilingualPathways }}
+                <input type="checkbox" name="m-p" class="check" value="{{ multilingualPathways }}" checked="true"> &nbsp; {{ multilingualPathways }}
               </li>
               {% endfor %}
             </ul>
@@ -203,11 +203,11 @@
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-b-s-p" class="check-all" name="check-all-b-s-p" value="select-all" checked>
+                <input type="checkbox" id="check-all-b-s-p" class="check-all" name="check-all-b-s-p" value="select-all" checked="true">
                 <label for="check-all-b-s-p"> &nbsp; Deselect All </label>
               </li>
               <li class="checkbox-li">
-                <input type="checkbox" name="b-s-p" class="check" value="Yes" checked> &nbsp; Yes
+                <input type="checkbox" name="b-s-p" class="check" value="Yes" checked="true"> &nbsp; Yes
               </li>
             
             </ul>
@@ -236,11 +236,11 @@
             <div class="card card-block">
             <ul>
               <li class="checkbox-li">
-                <input type="checkbox" id="check-all-a-s-p" class="check-all" name="check-all-a-s-p" value="select-all" checked>
+                <input type="checkbox" id="check-all-a-s-p" class="check-all" name="check-all-a-s-p" value="select-all" checked="true">
                 <label for="check-all-a-s-p"> &nbsp; Deselect All </label>
               </li>
               <li class="checkbox-li">
-                <input type="checkbox" name="a-s-p" class="check" value="Yes" checked> &nbsp; Yes
+                <input type="checkbox" name="a-s-p" class="check" value="Yes" checked="true"> &nbsp; Yes
               </li>
             </ul>
             </div> <!-- close div card card-block -->
