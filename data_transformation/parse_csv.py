@@ -38,9 +38,9 @@ def read_csv():
 	# edit the multilingual pathways
 	schools_objects_list = fix_multilingual_pathways(school_objects_list)
 
-	joblib.dump(school_objects_list, 'static/pkl/school_objects.pkl')
+	# joblib.dump(school_objects_list, 'static/pkl/school_objects.pkl')
 
-	school_objects_list = joblib.load('static/pkl/school_objects.pkl')
+	# school_objects_list = joblib.load('static/pkl/school_objects.pkl')
 
 	return school_objects_list
 
