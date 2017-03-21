@@ -1092,24 +1092,19 @@ $('#map-choices-form').on('submit', function (e) {
 })
 
 function onSelectAllCheck(e, name) {
-    console.log("e is ",e);
     if ($(e.currentTarget).prop("checked")) {
         $("input[name='" +name + "']").prop("checked", true);
     } else {
         $("input[name='" +name + "']").prop("checked", false);        
     }
-    console.log($("input[name='" +name + "']").prop("checked"));
     checkforSelectDeselect(e, name);
 }
 
 function checkforSelectDeselect (e, name) {
-    var isAllSelected;    
     var numChecked = $("#" + name + "-form").find($("input[name='"+ name  + "']:checked")).length;
     var numTotal = $("#" + name + "-form").find($("input[name='"+ name  + "']")).length;
 
     if (numChecked === numTotal) {
-        console.log("in equality");
-        isAllSelected = true;
         $("#check-all-" + name).prop("checked", true);
         $("input[name='" + name + "']").prop("checked", true);
         $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Deselect All";
@@ -1117,18 +1112,12 @@ function checkforSelectDeselect (e, name) {
  
     } else if (numChecked === 0) {
         $("#check-all-"+name).prop("checked",false);
-        isAllSelected = false;
         $("input[name='" + name + "']").prop("checked", false);
     
         if (name === "c-s") {
             $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All Schools";
-        
-            // $(this)[0].labels[0].innerHTML = "&nbsp; Select All Schools"
         } else {
-
             $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All";
-        
-            // $(this)[0].labels[0].innerHTML = "&nbsp; Select All"
         }
     
     } 
