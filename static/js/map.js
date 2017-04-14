@@ -1,27 +1,23 @@
 // TODO
 
-//// current list
-// swap out the picture in the header
-// add all relevant commenting to code
+//// FRIDAY 
 
-//// data clean
+//// SATURDAY data clean
 // compare number of schools in excel vs some other source
 // add websites; confirm all websites are correct
 // correctly label all city schools
 // add in all emails
 // add in SARC url
 
-//// formatting
-// the whole notebook page fix
-
+//// SUNDAY
+// add all relevant commenting to code
+// APIs used
+// add a comment section => come up w checklist
 //// longer term condiersations -- nice to have
+// add an FAQ / how to use page
 // add in google analytics to the page?
 // fix overlapping icons
 // add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
-
-///// to discuss with others
-// rate limiting
-
 
 
 var map;
@@ -42,24 +38,20 @@ var originAddress, destinationAddress;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();        
 
-function initialize(latitude, longitude) {
+function initGoogleMaps() {
 
-    var lat = latitude || 37.760099;
-    var lng = longitude || -122.434633;
-    var center = { lat: lat, lng: lng };
+    var SF_LAT = 37.760099;
+    var SF_LNG = -122.434633;
+    var center = { lat: SF_LAT, lng: SF_LNG };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: center,
         draggable: true
     });
-    console.log("center is ", center);
 
     var tabBtn = document.getElementById("tab-btn");
     map.controls[google.maps.ControlPosition.LEFT_CENTER].push(tabBtn);
-    var currLocBtn = document.getElementById('curr-loc-btn');
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(currLocBtn);
-    initAutocomplete();
-   
+    
     return map;
 }
 
@@ -114,14 +106,6 @@ function initAutocomplete() {
                 return;
             }
 
-            var image = new google.maps.MarkerImage(
-                '/static/img/home.png',
-                new google.maps.Size(32, 32),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(0, 32),
-                new google.maps.Size(25, 25)
-            );
-
             // Create a marker for each place.
             homeMarker = new Marker({
                 map: map,
@@ -131,7 +115,8 @@ function initAutocomplete() {
                     fillColor: "#fad355",
                     fillOpacity: 1,
                     strokeColor: '#000',
-                    strokeWeight: 1
+                    strokeWeight: 1,
+                    scale: 0.7
                 },
                 map_icon_label: '<div class="map-icon-label-div" id="home-label">HOME<br>&nbsp;<br>&nbsp;</div>'
 
@@ -145,13 +130,8 @@ function initAutocomplete() {
    
             map.setCenter(place.geometry.location);
 
-
         });
-
-    
     });
-    
-
 }
 
 
@@ -233,15 +213,14 @@ function showOnlyAttendanceArea() {
                 if (marker.customInfo.citySchool === "Yes" && array[index].icon.fillColor === "#F54900") {
                     fillColor = "#FF9F75";
                     color = "#F54900";
-                    var html = marker.customInfo.html.replace(/id="city-wide"/, 'id="city-wide" style="color:' + color +'"').replace(/<span id="info-sign-span">/, '&nbsp;<span id="info-sign-span" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Attendance area tie-breaker does not apply for city-wide schools"></span>');    
+                    var html = marker.customInfo.html.replace(/id="city-wide"/, 'id="city-wide" style="color:' + color +'"').replace(/<span id="info-sign-span">/, '&nbsp;<span id="info-sign-span" class="glyphicon glyphicon-info-sign" aria-hidden="true" <span id="info-sign" class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Attendance area tie-breaker does not apply for city-wide schools"></span>');    
                     customInfo.html = html;                
                 } else {
                     html = marker.customInfo.html;
                 }
                 
-                var map_icon_label = marker.map_icon_label;
                 var starMarker = marker.customInfo.starMarker;
-                
+
                 markers[index] = new Marker({
                                 name: marker.name,
                                 customInfo: customInfo,
@@ -250,13 +229,12 @@ function showOnlyAttendanceArea() {
                                 icon: {
                                     path: SQUARE_PIN,
                                     fillColor: fillColor,
-                                    fillOpacity: 2,
+                                    fillOpacity: 1,
                                     strokeColor: '#fff',
-                                    strokeWeight: 0
+                                    strokeWeight: 0,
+                                    scale: 0.7
                                 },
-                                optimized: false,
-                                zIndex: -1,
-                                map_icon_label: map_icon_label
+                                map_icon_label: marker.map_icon_label
                             });
 
                 bindInfoWindow(markers[index], map, html);
@@ -767,11 +745,12 @@ function createMarker(lat, lng, name, address, phone, gradesServed, citySchool, 
             fillColor: fillColor,
             fillOpacity: 1,
             strokeColor: '#fff',
-            strokeWeight: 0
+            strokeWeight: 0,
+            scale: 0.7
         },
         optimized: false,
         zIndex: -1,
-        map_icon_label: '<div class="map-icon-label-div">'+ grade +  '<br><span class="map-icon map-icon-school"><span class="marker-label"></span></span><br>&nbsp;</div>'
+        map_icon_label: '<div class="map-icon-label-div">'+ grade +  '<br><span class="map-icon map-icon-school"><span class="marker-label"></span></span><br>&nbsp;</div>'  
     });
 
     return marker;
@@ -943,8 +922,12 @@ function addMarkers(data){
 
 function updateFavoritesTable() {
     var favoritesTableBodyHtml = getCookies("favoritesTable");
-    
     $("#favorites-table-body").html(favoritesTableBodyHtml);
+    
+    // add back click events on buttons
+    $(".arrow-up").on("click", onArrowUp);
+    $(".arrow-down").on("click", onArrowDown);
+    $(".delete-row").on("click", onDeleteRow);
 }
 
 function updateStarMarkers() {
@@ -981,6 +964,7 @@ function getCookies(cookieName) {
             return c.substring(name.length, c.length);
         }
     }
+
     return "";
 }
 
@@ -1252,9 +1236,8 @@ function onShowFavoritesModal() {
     }
     $("#favorites-table-foot").html(html);
 
-
     $("#modal").modal('show');
-
+    $(".modal-body").height($(window).height() - 150);
 }
 
 function printElement(elem) {
@@ -1290,16 +1273,6 @@ function onTabClick() {
     $("#tab-btn").toggleClass("toggled");
 }
 
-function onCurrentLocation() {
-    $.get("https://ipapi.co/json/", function(data) {
-        var lat = data.latitude || 37.760099;
-        var lng = data.longitude || -122.434633;
-        var center = { lat: lat, lng: lng };
-        map.setCenter(center);
-        map.setZoom(14);
-    });
-}
-
 function initCounters() {
     var countArr = $(".count");
     
@@ -1312,12 +1285,10 @@ function initCounters() {
     };
 }
 
-function initMapInfo(data) {
-    
-    initialize(data.latitude, data.longitude);
+function initMapInfo() {
     $.get("/map-checked.json", addMarkers);
-
-    initCounters();
+    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
+    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
     
     $("input:checkbox").on("change", function(e) {
         e.preventDefault();
@@ -1333,13 +1304,7 @@ function initMapInfo(data) {
             name = name.slice(num);
             onSelectAllCheck(e, name);   
         }
-
     });
-
-   
-
-    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
-    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
     $("#show-favorites-btn").on("click", onShowFavoritesModal);
 }
 
@@ -1410,18 +1375,10 @@ function updateStarCookies() {
     document.cookie = "starNames=" + starNamesString + ";";
 }
 
-$(document).ready(function() {
-    // if user clicks back button during session
-    // if (window.history && window.history.pushState) {
-    //     window.history.pushState('', null, '');
-    //     $(window).on('popstate', function() {
-    //     alert("Are you sure you want to leave?  \nYou'll lose any information saved");
-    //   });
 
-    // }
-    // $(window).on("beforeunload", function() {
-    //     return "bye";
-    // });
+$(document).ready(function() {
+    // tooltip for info button
+   $('[data-toggle="tooltip"]').tooltip(); 
 
     var windowWidth = $(window).width();
   
@@ -1453,9 +1410,10 @@ $(document).ready(function() {
         window.open(innerHtml, "_blank");
     });
 
+    // initialize functionality
     initTieBreakerButtons();
-
-    // get user's IP address / location
-    $.get("https://ipapi.co/json/", initMapInfo);
-
+    initMapInfo();
+    initGoogleMaps();
+    initCounters();
+    initAutocomplete(); 
 });

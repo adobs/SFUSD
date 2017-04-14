@@ -125,7 +125,7 @@
               <li class="list-group-item">
                 <span id="g-s-chevron" class="glyphicon glyphicon-chevron-right"></span>    
                 <label for="c-s" class="checkbox-label">City-Wide School 
-                  <span id="info-sign" class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Attendance area tie-breaker does not apply for city-wide schools"></span>
+                  <span id="info-sign" class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Attendance area tie-breaker does not apply for city-wide schools"></span>
                 </label>
                 <span class="count badge" id="c-s-count"></span>
               </li>
@@ -273,9 +273,7 @@
     <div class="tab-div">
       <button class="btn tab-btn toggled" id="tab-btn" onclick="onTabClick()">&gt;&gt;</button>
     </div>
-    <div>
-      <button class="btn" id="curr-loc-btn" onclick="onCurrentLocation()">&#x25c9;</button>
-    </div>
+  
     <div class="container-fluid" id="whole-page">
 
       <div class="row" id="header-row">
@@ -319,13 +317,13 @@
            <thead id="favorites-table-head">
               <tr>
                 <th colspan="6">
-                  <button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-  ="true">&times;</span></button>  
+                  <button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  
         </div>
                     <h4 class="modal-title heading" id="myModalLabel">My Favorite Schools</h4>
                 </th>
               </tr>
               <tr>
-                <th>Rank</th>
+                <th>Ranking</th>
                 <th></th>
                 <th>School</th>
                 <th>Have I booked a school tour?</th>

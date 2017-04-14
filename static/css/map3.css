@@ -347,13 +347,12 @@ li{
 .map-icon-label-div {
 	font-size: 10px;
 	font-family: Arial;
-	line-height: 1.4;
+	line-height: 0.95;
 }
 
 #home-label {
 	color: #000;
 }
-
 
 /*********************************************/
 /* info window */
@@ -365,18 +364,6 @@ li{
 #favorite-star-div {
 	position: relative;
 	float: right;
-}
-
-/*********************************************/
-/* get current location button */
-#curr-loc-btn {
-	border-radius: 100%;
-	font-weight: bold;
-	font-size: 20px;
-	z-index: 1000;
-	color: #fff;
-	background-color: #3367d6;
-	margin-right: 7px;
 }
 
 /*********************************************/
@@ -477,11 +464,6 @@ li{
 #compare-schools, #filter-schools-heading-div {
 	margin-top: 30px;
 }
-
-#info-sign {
-	padding-left: 15px;
-}
-
 
 #contact-epc {
 	text-align: center;
@@ -676,9 +658,6 @@ tr th {
 	}
 	#info-sign-span {
 		visibility: hidden;
-	}
-	#curr-loc-btn {
-		font-size: 15px;
 	}
 
 }
