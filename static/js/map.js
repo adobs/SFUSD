@@ -1,12 +1,8 @@
-// TODO
-
-//// FRIDAY 
+// TODO 
 
 //// SATURDAY data clean
 // compare number of schools in excel vs some other source
-// add websites; confirm all websites are correct
 // correctly label all city schools
-// add in all emails
 // add in SARC url
 
 //// SUNDAY
@@ -276,12 +272,15 @@ function onShowAttendanceArea() {
 
 
 function onReturn() {
+    $("#page-content-wrapper").width("100%");
     $("#wrapper").toggleClass("toggled");
     $("#directions-panel").hide();
      directionsDisplay.setMap(null);
      directionsDisplay.setPanel(null);
     showMarkers();
-    $("#map").width(originalMapWidth);
+    // $("#map").width(originalMapWidth);
+    //TODO fix this
+    
     
 }
 function getDirections(origin, destination, travelMode) {
@@ -461,7 +460,9 @@ function onFavoriteStarClick(marker, e) {
     var lat = marker.customInfo.lat;
     var lng = marker.customInfo.lng;
 
+
     var numRows = document.getElementById("favorites-table-body").rows.length;
+    
     var row = 
         '<tr id="' + name +'">' +
             '<td class="rank">' +
@@ -524,6 +525,7 @@ function onFavoriteStarClick(marker, e) {
 function getHtml(name, gradesServed, startTime, endTime,
                         principal, address, phone, fax, email, website, lat, lng, citySchool){
 
+    var shortAddress = address.split(",")[0];
     var html =
         '<div id="info-window-content" data-address="' + address + '" data-lat="' + lat + '" data-lng="' + lng + '" data-name="' + name + '" data-citySchool="' + citySchool + '">' +
             '<div id="favorite-star-div">' + 
@@ -537,7 +539,7 @@ function getHtml(name, gradesServed, startTime, endTime,
                 '<b>Start Time: </b>'+ startTime + '<br>' +
                 '<b>End Time: </b>'+ endTime + '<br>' +
                 '<b>Principal: </b>'+ principal + '<br>' +
-                '<span id="address"><b>Address: </b><a href="http://maps.google.com/maps?q=' + address.replace(/ /g, "+") + '">' +address + '</a></span><br>' +
+                '<span id="address"><b>Address: </b><a href="http://maps.google.com/maps?q=' + address.replace(/ /g, "+") + '">' + shortAddress + '</a></span><br>' +
                 '<span id="city-wide"><b>City-Wide School: </b>' + citySchool + '<span id="info-sign-span"></span></span><br>' +
                 '<b>Phone: </b>'+ '<a href="tel:' + phone +'">' + phone + '</a><br>' +
                 '<b>Email: </b><a href="mailto:"' + email + '">' + email + '</a><br>' +
@@ -970,13 +972,14 @@ function getCookies(cookieName) {
 
 
 function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checkedBeforeSchool, checkedAfterSchool) {
-    var counter =0;
-    var nullCounter = 0;
-    markers.forEach(function(marker, index, array) {
+    
+    var filterMarkersFn = function(marker, index, array) {
         var customInfo = marker.customInfo;
         marker.setMap(null);
-        marker.customInfo.starMarker.setMap(null);
-        ++nullCounter;
+        if (marker.customInfo.starMarker) {
+            marker.customInfo.starMarker.setMap(null);
+        }
+        
         var isGradeServed = false;
         checkedGradesServed.forEach(function(gradesServed) {
             if (!marker.customInfo.gradesServed || marker.customInfo.gradesServed === gradesServed) {
@@ -1020,13 +1023,14 @@ function filterMarkers(checkedGradesServed, checkedCitySchool, checkedMP, checke
         
         if (isGradeServed && isCitySchool && isMultilingualPathways && isBeforeSchool && isAfterSchool) {
             marker.setMap(map);
-            ++counter;
-            if (marker.customInfo.starred === "starred") {
+            if (marker.customInfo.starred === "starred" && marker.customInfo.type !== "starMarker") {
                 marker.customInfo.starMarker.setMap(map);
             }
         }
-    });
-    
+    }
+    markers.forEach(filterMarkersFn);
+    repopulateStarMarkers();
+
     return Promise.resolve();
 }
 
@@ -1077,11 +1081,18 @@ $('#map-choices-form').on('submit', function (e) {
 
 function onSelectAllCheck(e, name) {
     if ($(e.currentTarget).prop("checked")) {
+        $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Deselect All";
         $("input[name='" +name + "']").prop("checked", true);
     } else {
+        if (name === "c-s") {
+            $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All Schools";
+        } else {
+            $("#check-all-"+name)[0].labels[0].innerHTML = "&nbsp; Select All";
+        }
         $("input[name='" +name + "']").prop("checked", false);        
     }
-    checkforSelectDeselect(e, name);
+    countCheckboxes(name);
+    $("#map-choices-form").submit();
 }
 
 function checkforSelectDeselect (e, name) {
@@ -1106,11 +1117,8 @@ function checkforSelectDeselect (e, name) {
     
     } 
     countCheckboxes(name);
- 
+    $("#map-choices-form").submit();
 }
-
-//check all checkboxes
-// $(".check-all").on("change", checkforSelectDeselect);
 
 function countCheckboxes(name) {
     // var name = $(this)[0].name;
@@ -1237,7 +1245,6 @@ function onShowFavoritesModal() {
     $("#favorites-table-foot").html(html);
 
     $("#modal").modal('show');
-    $(".modal-body").height($(window).height() - 150);
 }
 
 function printElement(elem) {
@@ -1285,14 +1292,8 @@ function initCounters() {
     };
 }
 
-function initMapInfo() {
-    $.get("/map-checked.json", addMarkers);
-    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
-    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
-    
-    $("input:checkbox").on("change", function(e) {
+function onCheckboxChange(e) {
         e.preventDefault();
-        $("#map-choices-form").submit();
         var name = $(this)[0].name;
 
         var num = "check-all-".length;
@@ -1304,7 +1305,14 @@ function initMapInfo() {
             name = name.slice(num);
             onSelectAllCheck(e, name);   
         }
-    });
+        
+};
+
+function initMapInfo() {
+    $.get("/map-checked.json", addMarkers);
+    $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
+    $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
+    $("input:checkbox").on("change", onCheckboxChange);
     $("#show-favorites-btn").on("click", onShowFavoritesModal);
 }
 

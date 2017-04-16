@@ -21,16 +21,6 @@ def map():
  
     return render_template("map3.html", checkbox_labels=checkbox_labels)
 
-# @app.route("/ip-address.json")
-# def ip_address():
-
-# 	r = requests.get("http://ip-api.com/json")
-# 	print "r is ", r.text
-# 	# print "r.lon ", r.lon
-# 	# for key, value in r:
-# 		# print "key ", key, "value", value
-# 	return jsonify({"data": r.content})
-
 @app.route("/attendance-area-coordinates.json")
 def attendance_area_coordinates():
 	""" Retrieves parsed attendance area and sends back in AJAX GET request """
