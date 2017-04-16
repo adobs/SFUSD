@@ -8,14 +8,8 @@ from school import School
 import googlemaps 
 from sklearn.externals import joblib
 
-def read_csv():
+def get_schools():
 	""" Read csv file and create School objects from it """
-
-
-	# TODO strip all input of spaces
-
-	""" If adding a new school, uncomment the below code ONCE to run the fix_neighborhoods code.  
-	 The result of the code is pickled, so the new neighborhood information will persist over new sessions  """
 
 	school_objects_list = []
 	
@@ -35,17 +29,14 @@ def read_csv():
 		new_school_object = School(high_school)
 		school_objects_list.append(new_school_object)
 
-	# edit the multilingual pathways
+	# edit the multilingual pathways and before/after school programs
 	schools_objects_list = fix_multilingual_pathways(school_objects_list)
-
-	# joblib.dump(school_objects_list, 'static/pkl/school_objects.pkl')
-
-	# school_objects_list = joblib.load('static/pkl/school_objects.pkl')
-
+	school_objects_list = fix_school_programs(school_objects_list)
 	return school_objects_list
 
 def fix_multilingual_pathways(school_objects_list):
 	""" Condense the inputs for Multilingual Pathways (e.g. Cantonese Biliteracy Pathway => Cantonese """
+	
 	output = []
 	for school in school_objects_list:
 		new_multilingual_pathway = []
@@ -121,7 +112,7 @@ def get_unique_row_data_from_specified_headers(school_objects_list):
 
 		return output
 
-
+	# unique content is in alphabetical order
 	unique_content = {"grades_served": grades_sorted(grades_served), 
 					  "city_school": reversed(sorted(city_school)),
 					  "start_time": sorted(start_time), 
@@ -135,7 +126,8 @@ def get_unique_row_data_from_specified_headers(school_objects_list):
 	return unique_content
 
 
-def get_schools(school_objects_list):
+def fix_school_programs(school_objects_list):
+	""" """
 	output_schools = []
 	for school in school_objects_list:
 		before_school_program = "No"

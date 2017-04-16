@@ -1,6 +1,7 @@
 import json
 
 def get_ctip1_information():
+	""" Using ctip1.json file, parses the ctip xy coordinates"""
 	with open('static/json/ctip1.json', 'r') as f:
 		ctip1string = f.read()
 
