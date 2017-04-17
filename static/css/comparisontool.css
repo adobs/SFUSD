@@ -63,9 +63,7 @@ a:hover{
 	padding-left: 6px;
 }
 
-#tab-btn {
-	visibility: hidden;
-}
+
 .gradeK-5, .gradeK-8, .gradePreK-5, .gradePreK-8 {
 	color: #F54900;
 }
@@ -276,6 +274,7 @@ li{
 /************************************/
 /* tab */
 #tab-btn {
+	visibility: hidden;
 	background-color: #fad355;
 	/*margin: 5px;*/
 	display: inline-block;
@@ -543,6 +542,9 @@ tr th {
 	}
 	#info-sign {
 		visibility: hidden;
+	}
+	#tab-btn {
+		visibility: visible;
 	}
 
 	#compare-schools, #filter-schools-heading-div {

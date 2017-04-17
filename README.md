@@ -124,6 +124,7 @@ Only visible on desktop (not mobile), there is a feature where users can favorit
 * SFUSD needs to have a clear link on the main SFUSD page
 
 ### Future Enhancements
+* fix modal window row sizing on Mozilla Firefox
 * add an FAQ / how to use page
 * add in google analytics to the page
 * fix overlapping marker icons

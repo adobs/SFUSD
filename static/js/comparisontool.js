@@ -17,7 +17,7 @@ $(document).ready(function() {
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
-        $("#tab-btn").css("visibility", "visible");
+        // $("#tab-btn").css("visibility", "visible");
     }
     $("#directions-panel").hide();
 

@@ -189,7 +189,6 @@ function getCookies (cookieName) {
  */
 function createMarker (lat, lng, name, address, phone, gradesServed, citySchool, multilingualPathways, beforeSchool, afterSchool) {
     var position = {lat: lat, lng: lng};
-
     var fillColor;
     var grade;
 
@@ -589,7 +588,7 @@ function addMarkers (data) {
         var endTime = school.end_time;
         var principal = school.principal;
         var address = school.address;
-        var phone = school.phone_number;
+        var phone = school.phone;
         var fax = school.fax_number;
         var email = school.email;
         var website = school.website;

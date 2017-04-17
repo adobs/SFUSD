@@ -47,11 +47,10 @@ function onPrintElement(elem, e) {
         $printSection.id = "printSection";
         document.body.appendChild($printSection);
     }
-
+    $("#tab-btn").remove();
     $printSection.innerHTML = "";
-    var printHtmlHeader = $("#favorites-table-head").html();
     var printHtml = $("#favorites-table").html();
-    console.log("print ht ", printHtml);
+    
     $("#printSection").html(printHtml);
     window.print();
 }
