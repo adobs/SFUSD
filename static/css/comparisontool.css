@@ -577,8 +577,13 @@ tr th {
 		font-size: 8px;
 		color: #414141;
 	}
+
+	#home-search {
+		padding-top: 5px;
+	}
+	
 	#home-search-div {
-		padding-top: 20px;
+		padding-top: 25px;
 		align-items: center;
 	}
 	#enter-address-intro, #pac-input {
@@ -586,7 +591,7 @@ tr th {
 	}
 
 	#enter-address-intro {
-		padding-bottom: 0px;
+		padding-bottom: 5px;
 	}
 	
 	#whole-page {
