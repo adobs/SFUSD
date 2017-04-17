@@ -138,7 +138,7 @@ function onShowAttendanceArea(e) {
     if (homeInfoWindow.content.indexOf("Reset") !== -1) {
         isOnlyAttendanceArea = false;
 
-        var resetContent = homeInfoWindow.content.replace(/Reset/, "Show only " + aaname.toUpperCase() + " schools");
+        var resetContent = homeInfoWindow.content.replace(/Reset/, "Show " + aaname.toUpperCase() + " schools");
         homeInfoWindow.setContent(resetContent);
        
         $("#map-choices-form").submit();       
@@ -146,7 +146,7 @@ function onShowAttendanceArea(e) {
     // user clicked on the button to show only attendance area, so now will show only valid markers, and change text on button
     } else {
         isOnlyAttendanceArea = true;
-        resetContent = homeInfoWindow.content.replace(/Show only .* schools/, 'Reset');
+        resetContent = homeInfoWindow.content.replace(/Show .* schools/, 'Reset');
         homeInfoWindow.setContent(resetContent);
 
         showOnlyAttendanceArea();      

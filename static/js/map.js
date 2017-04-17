@@ -394,7 +394,7 @@ function getHomeMarkerHtml (homeMarker, data) {
     var html = '<div id="home-info-window-content">' +
             '<b>Test Score Area: </b>'+ ctipBool + '<br>' +
             '<b>Attendance Area: </b>'+ aaname + '<br>' +
-            '<button id="show-attendance-area">Show only ' + aaname.toUpperCase() + ' schools</button>' +
+            '<button id="show-attendance-area">Show ' + aaname.toUpperCase() + ' schools</button>' +
         '</div>';
     
     return html;
@@ -460,7 +460,7 @@ function bindInfoWindowHomeMarker (homeMarker) {
             homeInfoWindow.setContent(html);
            
         } else {
-            var resetContent = html.replace(/Show only .* schools/, 'Reset');
+            var resetContent = html.replace(/Show .* schools/, 'Reset');
             homeInfoWindow.setContent(resetContent);
         }
 
