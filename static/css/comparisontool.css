@@ -7,31 +7,31 @@
 #sidebar-wrapper, #flex-box-parent {
 	background-color: #EDEDED;	
 }
+
 #wrapper{
-	background: url(/static/img/fullbackground3.png);
+	background: url(/static/img/fullbackground.png);
 	background-size: contain;
 }
+
 #page-content-wrapper {	
 	margin-left: -5px;
 	padding-right: 0px;
 }	
+
 body {
 	font-family: Arial !important;
 	background-color: #EDEDED;
 }
+
 .container, #whole-page, #header, body, #header-row {
-	/*background-clip: content-box;*/
 	margin-bottom: 0px;
 }
 
-
 #header-row {
-	/*background: url(/static/img/fullbackground2.png);*/
 	background: url(/static/img/bg-paper-plus-logo.jpg);
 	background-size: cover;
 	background-position: center-top;
 }
-
 
 a:hover{
     text-decoration: none;
@@ -63,7 +63,7 @@ a:hover{
 	padding-left: 6px;
 }
 
-.tab-btn {
+#tab-btn {
 	visibility: hidden;
 }
 .gradeK-5, .gradeK-8, .gradePreK-5, .gradePreK-8 {
@@ -148,25 +148,12 @@ li{
 #show-favorites-div {
 	margin-left: 15px;
 }
+
 /*tie breaker hierarchies*/
-/*.mobile-tie-breaker {
-	visibility: hidden;
-}
-*/
-#mobile-tie-breaker-heading{
+#tie-breaker-heading{
 	display: inline-block;
 }
-#tie-breaker-info-mobile-div {
-	float: right;
-	position: relative;
-}
-#tie-breaker-mobile-row-flex {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: flex-start;
-}
+
 #elem-tie-btn {
 	background-color: #F54900;
 	color: #fff;
@@ -181,25 +168,24 @@ li{
 }
 
 #tie-breaker-title {
-		padding-top: 3px;
-		font-size: 10px;
-	}
-	.mobile-tie-breaker-btn {
-		font-size: 10px;
-		margin-top: 15px;
-		margin-bottom: 15px;
-		margin-left: 15px;
-	}
-	#tie-breaker-info-div {
-		padding-bottom: 0px;
-	}
+	padding-top: 3px;
+	font-size: 10px;
+}
 
-	.mobile-tie-breaker-info {
-		font-size: 10px;
-		margin-top: -10px;
-		padding-left: 10px;
-		padding-right: 5px;
-	}
+.tie-breaker-btn {
+	font-size: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 15px;
+}
+
+.tie-breaker-info {
+	font-size: 10px;
+	margin-top: -10px;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
 /*********************************************/
 /* right side of webpage */
 
@@ -219,7 +205,6 @@ li{
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	/*padding-right: 20%;*/
 	padding-top: 70px;
 }
 
@@ -279,38 +264,6 @@ li{
 	border-color: #4d90fe;
 }
 
-/*********************************/
-/* hierarchy tie breaker buttons */
-/*.desktop-tie-breaker {*/
-	/*visibility: visible;*/
-/*}*/
-/*
-.tie-breaker-btn, #tie-breaker-info{
-	font-size: 10px;
-}
-
-.tie-breaker-info {
-	font-size: 10px;
-	display: inline-block;
-}
-
-#tie-breaker-info-div {
-	padding-bottom: 10px;
-}
-
-#tie-breaker-title {
-	padding-top: 10px;
-}
-
-.tie-breaker-flex {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	padding-bottom: 5px;
-}
-*/
 .icon-legend {
 	display: inline; 
 	font-size: 12px; 
@@ -322,7 +275,7 @@ li{
 
 /************************************/
 /* tab */
-.tab-btn {
+#tab-btn {
 	background-color: #fad355;
 	/*margin: 5px;*/
 	display: inline-block;
@@ -441,7 +394,6 @@ li{
 	padding-left: 0px;
 	border-top: none;
 	border-bottom: none;
-	/*border-right: .5px #fff solid;*/
 }
 .comments {
 	width: 100%;
@@ -591,10 +543,6 @@ tr th {
 	}
 	#info-sign {
 		visibility: hidden;
-	}
-
-	.tab-btn {
-		visibility: visible;
 	}
 
 	#compare-schools, #filter-schools-heading-div {

@@ -37,6 +37,25 @@ class School:
     	self.middle_school_feeder = self.inputs["Middle school feeder"]
         self.city_school = self.inputs["City School"].split(",")
 
+    def flatten(self):
+        return {
+            "name": self.name,
+            "lat": self.lat,
+            "lng": self.long,
+            "city_school": self.city_school,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "principal": self.principal,
+            "address": self.address,
+            "phone": self.phone_number,
+            "fax": self.fax_number,
+            "email": self.email,
+            "website": self.website,
+            "grades_served": self.grades_served,
+            "multilingual_pathways": self.multilingual_pathways,
+            "before_school_program": self.before_school_program,
+            "after_school_program": self.after_school_program
+        }
 
     def __repr__(self):
     	return self.name

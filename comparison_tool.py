@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, session, jso
 from jinja2 import StrictUndefined
 import json
 import requests
-from data_transformation.parse_csv import get_unique_row_data_from_specified_headers, get_schools	
+from data_transformation.parse_csv import get_unique_row_data_from_specified_headers, get_schools, flatten_school_object_to_json
 from data_transformation.parse_ctip import get_ctip1_information
 from data_transformation.parse_xml import get_xml_information
 
@@ -14,7 +14,7 @@ app.jinja_env.undefined = StrictUndefined
 def map():
     """ Renders the page """
     
-    checkbox_labels = get_unique_row_data_from_specified_headers(read_csv())
+    checkbox_labels = get_unique_row_data_from_specified_headers(get_schools())
     return render_template("comparisontool.html", checkbox_labels=checkbox_labels)
 
 
@@ -31,7 +31,6 @@ def ctip1_area_xy_coordinates():
 	""" AJAX: Sends back low testing-score geographical information """
 
 	ctip1 = get_ctip1_information()
-	print "ctip1 is ", ctip1
 	return jsonify(result=ctip1)
 
 
@@ -39,8 +38,8 @@ def ctip1_area_xy_coordinates():
 def map_checked():
 	""" AJAX: Gets ALL school information to populate the entire map """
 
-	schools = get_schools()
-	return json.dumps(schools)
+	schools = flatten_school_object_to_json(get_schools())
+	return jsonify(result=schools)
 
 
 if __name__ == "__main__":

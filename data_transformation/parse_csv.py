@@ -6,7 +6,17 @@ File creates a list of School objects based on the input csv file
 import csv
 from school import School
 import googlemaps 
-from sklearn.externals import joblib
+
+
+def flatten_school_object_to_json(school_objects_list):
+	""" Returns list of school JSON objects to be used in AJAX instead of Python School Class objects"""
+	
+	output_schools = []
+	for school in school_objects_list:
+		output_schools.append(school.flatten())
+
+	return output_schools
+
 
 def get_schools():
 	""" Read csv file and create School objects from it """
@@ -30,14 +40,14 @@ def get_schools():
 		school_objects_list.append(new_school_object)
 
 	# edit the multilingual pathways and before/after school programs
-	schools_objects_list = fix_multilingual_pathways(school_objects_list)
 	school_objects_list = fix_school_programs(school_objects_list)
+	school_objects_list = fix_multilingual_pathways(school_objects_list)
 	return school_objects_list
 
 def fix_multilingual_pathways(school_objects_list):
 	""" Condense the inputs for Multilingual Pathways (e.g. Cantonese Biliteracy Pathway => Cantonese """
 	
-	output = []
+	output_schools = []
 	for school in school_objects_list:
 		new_multilingual_pathway = []
 		for multilingual_pathway in school.multilingual_pathways:
@@ -46,10 +56,28 @@ def fix_multilingual_pathways(school_objects_list):
 			new_multilingual_pathway.append(multilingual_pathway)
 
 		school.multilingual_pathways = new_multilingual_pathway
-		output.append(school)
+		output_schools.append(school)
 
-	return output 
+	return output_schools
 
+def fix_school_programs(school_objects_list):
+	""" """
+	output_schools = []
+	for school in school_objects_list:
+		before_school_program = "No"
+		after_school_program = "No"
+
+		if school.before_school_program or school.before_school_program_offerings:
+			before_school_program = "Yes"
+
+		if school.after_school_program or school.after_school_program_offerings:
+			after_school_program = "Yes"
+
+		school.before_school_program = before_school_program
+		school.after_school_program = after_school_program
+
+		output_schools.append(school)
+	return output_schools
 
 def get_unique_row_data_from_specified_headers(school_objects_list):
 	""" Based on HARDCODED specified identyfing column names, returns data to populate checkboxes """
@@ -124,37 +152,4 @@ def get_unique_row_data_from_specified_headers(school_objects_list):
 					  "after_school_program_offerings": sorted(after_school_program_offerings)}
 	
 	return unique_content
-
-
-def fix_school_programs(school_objects_list):
-	""" """
-	output_schools = []
-	for school in school_objects_list:
-		before_school_program = "No"
-		after_school_program = "No"
-
-		if school.before_school_program or school.before_school_program_offerings:
-			before_school_program = "Yes"
-
-		if school.after_school_program or school.after_school_program_offerings:
-			after_school_program = "Yes"
-		output_schools.append({"name": school.name, 
-		   						   "start_time": school.start_time,
-		   						   "end_time": school.end_time,
-		   						   "address": school.address,
-		   						   "lat": school.lat,
-		   						   "long": school.long,
-		   						   "phone_number": school.phone_number,
-		   						   "website": school.website,
-		   						   "email": school.email,
-		   						   "principal": school.principal,
-		   						   "grades_served": school.grades_served, 
-		   						   "city_school": school.city_school,
-		   						   "multilingual_pathways": school.multilingual_pathways,
-		   						   "before_school_program": before_school_program,
-		   						   "after_school_program": after_school_program
-		   						   })
-
-	return output_schools
-
 

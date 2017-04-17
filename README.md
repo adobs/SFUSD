@@ -1,53 +1,24 @@
-![alt text](/static/img/okc_logo.png)
-
-***
-
-# Project Description
-
-Ever heard of the dating site [OkCupid](https://www.okcupid.com/)? OKC+ takes OkCupid to the next level with innovative analytics and tools. The OKC+ database contains 58K profiles that were scraped from OkCupid. Users can explore the most commonly used adjectives from these profiles on a map, and filter results by 22 genders, 12 orientations, and an 80+ year age range. Alternatively, users can discover how different portions of people's profiles cluster based on machine learning using a mean shift clustering algorithm, displayed with interactive D3 and Chart.js visuals. Users can create an OkCupid account on the app, or login with their existing OkCupid credentials to access additional features, such as a messaging bot and a profile generator that uses Markov Chains.
-
-
-# About the Logo
-
-I created an OkCupid account.  I then analyzed **58K profiles** across the country of people that are interested in the group I fall into: straight woman aged 18-36 years old.
-
-This site shows you the profiles that I, *as a woman*, found.
-
+# README for SFUSD:ComparisonTool
 
 # Table of Contents
 
 * [Setup](#setup)
 
+* [Data Sources](#datasources)
+
 * [Usage](#usage)
 
 * [Tech Stack](#techstack)
 
-* [APIs Used](#api)
+* [APIs and Third-Party Libraries Used ](#api)
 
-* [Developer](#developer)
+* [Next Steps](#nextsteps)
 
 
-
-# <a name=“setup”></a>Setup
+----
+## <a name=“setup”></a>Setup
 
 ### Dependencies and Compatibility
-
-* OSX.  Install [PostgreSQL](http://postgresapp.com/). In the *.bash_profile* in your home directory, add the following line to the bottom of the file: ```export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin/:$PATH```
-
-* Linux.  Install dependencies using commands below
-
-```$ sudo apt-get install libxml2-dev libxslt1-dev python-dev libz-dev```
-
-```$ sudo apt-get install xvfb```
-
-```$ sudo apt-get install gfortran libopenblas-dev liblapack-dev```
-
-```$ sudo apt-get install postgresql```
-
-```$ sudo apt-get install libpq-dev```
-
-* Windows.  Not compatible.  *Feel free to install a virtual machine with a supported environment in order to access OKC+.  Example: [VirtualBox](https://www.virtualbox.org/wiki/Downloads).*
-
 
 ### Installation
 
@@ -59,94 +30,104 @@ This site shows you the profiles that I, *as a woman*, found.
 ### Install requirements 
 * ```$ pip install -r requirements.txt```
 
-* From the command line of the terminal, run ```$ python flask_app.py```.
+* From the command line of the terminal, navigate to this location in the file system and run ```$ python comparison_tool.py```.
 
 * In a browser window, type localhost:5000 to access the home page
 
-* You are ready to party if you see the following: 
-![Home Page](/static/gif/home.gif)
 
+# <a name=datasources></a>Data Sources
 
-### Data
+### Data Clean
+There are 3 sources of data that come from SFUSD:
+1. Elementary schools data (csv file)
+2. Middle schools data (csv file)
+3. High schools data (csv file)
 
-I used PostgreSQL to store the 58K profiles that I scraped.  I did not put my database on Github, so in order to access meaningful analytics, you will need to pull your own data after you have created an OkCupid account, and populate your own database.  Create your own PostgreSQL database called profiles_final by typing ```$ createdb profiles_final```.  Run the model.py file to create all the tables in the database with ```$ python model.py```.  
+There are 2 sources of data that were found on the internet:
+1. Low test score information (/static/json/ctip1.json)
+Originally found at (https://www.arcgis.com/home/item.html?id=18d875f6d25b468489b0c6e440f3ddc6), put up by Tomas, who has since removed it
+2. Attendance area information (/static/kml/esaa.xml)
+Originally found at (http://enrollinschool.org/lookup/maps/)
 
+First, clean all data.  Ensure that there is only one logical response. The following columns are used, with relevant cleanup instructions:
+* School name
+* Grades served - should be one of the following: [PreK-5, PreK-8, K-5, K-8, 6-8, 9-12]; nothing else
+* School address - VERY IMPORTANT - must get the Google Maps version of all addresses - not just the raw input
+* School start time
+* School end time
+* School phone number - consistent formatting means it should be (XXX) XXX-XXXX
+* School website link - must have leading "http://"
+* Before school programs - formatting not necessary, binary check to see if programs exist or not
+* Does your before school program offer: - formatting not necessary, binary check to see if programs exist or not
+* Afterschool programs - formatting not necessary, binary check to see if programs exist or not
+* Does your afterschool program offer: - formatting not necessary, binary check to see if programs exist or not
+* Multilingual Pathways
+* City School - needs to say "Yes" or "No"
 
-Add zipcodes to the Zipcodes table of locations you would like to search.  Then edit the file seeding_profile_database.py and enter in your own OkCupid username and password where the code currently says ```session = Session.login('username', 'password')```. To begin populating the database, run ```$ python seeding_profile_database.py```.  After you are done, populate the remaining tables by running the following programs:
+Second, add the following Columns, using the EXACT title, and populate for each school:
+* Lat - using Google maps, get the exact Lat degrees of the school address
+* Long - using Google maps, get the exact Lat degrees of the school address
 
-```$ python postgres_querying.py```
+----
+## <a name=“usage”></a>Usage
 
-```$ python seed_adjective_table.py```
+### Tie Breaker Hierarchy buttons
+Provide information on tie breaker hierarchies for different school levels
 
-```$ python seed_location_table.py```
+### Home address search
+Enter home address in search bar.  Google maps autocomplete enabled.  This will drop a marker on the map of where home is.  Clicking on home marker reveals more information, such as whether or not it is in a tie-breaker zone based on test scores, as well as the attendance area the home is in.  There is a button that when clicked, shows the perimeter of the attendance area and the schools that are within its bounds.
 
-```$ python seed_person_gender_table.py```
+### Checkboxes/ Markers
+Selecting/deselecting checkboxes automatically repopulates the map with markers that represent the schools that fit the criteria selected.  Markers are color-coded based on the grades served.  Clicking on a marker reveals an infowindow, that has additional demographic information about the school.  Additionally, there is a button that says "Directions"; when clicked, it will open up another panel displaying Google maps directions to the given school.
 
-```$ python seed_person_orientation_table.py```
+### Favorites Table
+Only visible on desktop (not mobile), there is a feature where users can favorite/ star schools.  To do so, a user clicks on the star logo on the upper right corner of a school's info window.  To see all the favorited schools in tabular form, user can click the button "Compare My Favorite Schools".  A modal window will display a table of all the schools, in user-ranked order, of favorited schools.  Here, there is an option to print (print and/or save to PDF).
 
+## <a name=“techstack"></a>Tech Stack
 
-Of note, the analytics you will see will be catered to the profiles you pull down.  This is determined by your self-selected demographic information (gender, orientation, age).  
-
-
-# <a name=“usage”></a>Usage
-
-### Account creation 
-Create an account on OKC+.  Through use of Selenium, the creation of an account on OKC+ also simultaneously registers the account with OkCupid.
-
-
-### Login
-Login to OKC+ using OkCupid credentials to access all the features of the site
-
-
-### OKCBot: Messaging Bot 
-Fill out the form to send messages from your account to as many people on OkCupid that you would like.
-
-
-### OKCBot: Profile Generator 
-Fill out the form to generate a self-summary for your profile using Markov Chains, and click “Generate” when done.  A self-summary will populate, and then click on the button “Add to 'Self Summary' in my profile” to change your OkCupid profile to the generated text.
-
-
-### Analytics: Adjective Map 
-Based on the profiles in the database, this Google Maps map will display the most common adjective used in people's self-summary per location. Filter by orientations, genders, and age, then click “Submit.”  Click on the marker for each location to open an info window that allows you to message OkCupid users that match your search in that location.
-
-![Adjective Map](/static/gif/adjective_map_limited.gif)
-
-
-### Analytics: Sankey Profile 
-Based on the profiles in the database, a D3 Sankey Chart will display the results of a Scikit-Learn Mean Shift clustering algorithm.  The clustering algorithm clusters profiles based on the words used in the “Self-Summary” portion of the profile, and also clusters profiles based on the words used in the “Message Me If” section of the profile.  On hover, the words used to form the clusters appears, as well as a breakdown of demographics for each cluster using Chart.js.
-
-![Sankey Profile](/static/gif/sankey_profile_limited.gif)
-
-
-# <a name=“techstack"></a>Tech Stack
-
-* Scikit-Learn 
-* D3 
-* Chart.js
-* Selenium 
-* NLTK 
-* PostgreSQL 
-* SQLAlchemy
 * Python
-* Numpy 
 * Flask
 * AJAX
 * Javascript 
 * jQuery 
-* Pickle 
+* Promises
 * Jinja 
-* Geocoder 
 * HTML 
 * CSS
 * Bootstrap
+* KML
 
+----
+## <a name=“api”></a>APIs and Third-Party Libraries Used 
 
-# <a name=“api”></a>APIs Used 
-
-* [Okcupyd](http://okcupyd.readthedocs.org/en/latest/#)
+### APIs
 * [Google Maps](https://developers.google.com/maps/?hl=en)
+* [ArcGIS](https://developers.arcgis.com/javascript/3/)
+
+### Third-Party Libraries
+* [jquery](https://jquery.com/)
+* [simple-sidebar](https://github.com/dcdeiv/simple-sidebar)
+* [map-icons](http://map-icons.com/)
 
 
-# <a name=“developer”></a>Developer
+## <a name=“nextsteps”>NextSteps</a>Next Steps
 
-Alexandra Dobkin aka Dobs lives in San Francisco, CA.  Check out her professional life on [LinkedIn](https://www.linkedin.com/in/alexandradobkin).  Check out her personal life on [OkCupid](http://www-tc.pbs.org/prod-media/newshour/photos/2013/11/20/cat_meme_blog_main_horizontal.jpg).
+### Refining
+* SFUSD needs to have parents and other targeted users in focus groups to test the site on both desktop and mobile, cross multiple popular browsers
+* SFUSD needs to iterate in response to focus group results
+* Edit the image so it's smoother background (notebook on blue background)
+* This project should be open source.  Will have free help, free publicity, etc
+
+### Integration
+* SFUSD needs to get their own developer key for the Google maps API (currently using Alexandra Dobkin's personal key)
+* SFUSD needs to have a decided URL that points to this page
+* SFUSD needs to have a clear link on the main SFUSD page
+
+### Future Enhancements
+* add an FAQ / how to use page
+* add in google analytics to the page
+* fix overlapping marker icons
+* add in a tally of # of elem / middle / high schools matched and put in upper right corner on map
+* write tests 
+* refactor
+* streamline data sources, so when things change, it is easily updated

@@ -1,1 +1,1 @@
-web: python flask_app.py
+web: python comparison_tool.py

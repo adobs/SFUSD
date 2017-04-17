@@ -48,6 +48,7 @@ function initGoogleMaps() {
         draggable: true
     });
 
+    // place #tab-btn on (mobile) screen where desired at left center
     var tabBtn = document.getElementById("tab-btn");
     map.controls[google.maps.ControlPosition.LEFT_CENTER].push(tabBtn);
     
@@ -64,16 +65,16 @@ function initAutocomplete() {
     var searchBox = new google.maps.places.SearchBox(input);
     
     var windowWidth = $(window).width();
-    // if (gtMdWidth) {
-        var inputDiv = document.createElement('div');
-    
-        inputDiv.appendChild(input);
+    var inputDiv = document.createElement('div');
 
-        inputDiv.index = 1;
+    inputDiv.appendChild(input);
 
-        var homeSearch = document.getElementById("home-search");
-        homeSearch.appendChild(inputDiv);
+    inputDiv.index = 1;
 
+    var homeSearch = document.getElementById("home-search");
+    homeSearch.appendChild(inputDiv);
+
+    // on mobile device, set the width to not be default
     if (!gtMdWidth) {
         var searchBarWidth = $(window).width() - 70;
         $(".pac-card").width(searchBarWidth);
@@ -123,10 +124,9 @@ function initAutocomplete() {
             
             bindInfoWindowHomeMarker(homeMarker, map);
             
-            // Bias the SearchBox results towards current map's viewport.
-            isOnlyAttendanceArea = false;
             $("#map-choices-form").submit();
    
+            // Bias the SearchBox results towards current map's viewport.
             map.setCenter(place.geometry.location);
 
         });
@@ -140,8 +140,6 @@ function initMapInfo() {
     $.get("/map-checked.json", addMarkers);
     $.get("/attendance-area-coordinates.json", populateAttendanceAreaPolygon);
     $.get("/ctip1-area-xy-coordinates.json", populateCtip1Polygon);
-    $("input:checkbox").on("change", onCheckboxChange);
-    $("#show-favorites-btn").on("click", onShowFavoritesModal);
 }
 
 ////////////////////
@@ -194,6 +192,8 @@ function createMarker (lat, lng, name, address, phone, gradesServed, citySchool,
 
     var fillColor;
     var grade;
+
+    // color coding icons based on grade
     switch(gradesServed) {
         case "9-12":
             fillColor = '#414141';
@@ -254,13 +254,12 @@ function createMarker (lat, lng, name, address, phone, gradesServed, citySchool,
  * @return     {Promise}   fulfill promise
  */
 function filterMarkers (checkedGradesServed, checkedCitySchool, checkedMP, checkedBeforeSchool, checkedAfterSchool) {
-    
+
     var filterMarkersFn = function(marker, index, array) {
-        var customInfo = marker.customInfo;
         marker.setMap(null);
-        if (marker.customInfo.starMarker) {
+        // if (marker.customInfo.starMarker) {
             marker.customInfo.starMarker.setMap(null);
-        }
+        // }
         
         var isGradeServed = false;
         checkedGradesServed.forEach(function(gradesServed) {
@@ -305,14 +304,9 @@ function filterMarkers (checkedGradesServed, checkedCitySchool, checkedMP, check
         
         if (isGradeServed && isCitySchool && isMultilingualPathways && isBeforeSchool && isAfterSchool) {
             marker.setMap(map);
-            if (marker.customInfo.starred === "starred" && marker.customInfo.type !== "starMarker") {
-                marker.customInfo.starMarker.setMap(map);
-            }
-        }
+        } 
     }
     markers.forEach(filterMarkersFn);
-    repopulateStarMarkers();
-
     return Promise.resolve();
 }
 
@@ -323,10 +317,8 @@ function showMarkers () {
     for (var i=0; i<markers.length; ++i) {
         var marker = markers[i];
         marker.setMap(map);
-        if (marker.customInfo.starred === "starred") {
-            marker.customInfo.starMarker.setMap(map);
-        }
     }
+    repopulateStarMarkers();
 }
 
 /**
@@ -412,10 +404,9 @@ function getHomeMarkerHtml (homeMarker, data) {
  * bindInfoWindow - binds click events to show correct html for a given marker's info window
  *
  * @param      {Marker}  marker  - The marker clicked on
- * @param      {Map}     map     - The map
  * @param      {String}  html    - The html for the info window
  */
-function bindInfoWindow (marker, map, html) {
+function bindInfoWindow (marker, html) {
     
     google.maps.event.addListener(infoWindow,'closeclick',function(){
        directionsDisplay.setMap(null);
@@ -445,9 +436,8 @@ function bindInfoWindow (marker, map, html) {
  * bindInfoWindowHomeMarker - binds click events to show correct html for the home marker info window
  *
  * @param      {Marker}  homeMarker  - The home marker clicked on
- * @param      {Map}     map         - The map
  */
-function bindInfoWindowHomeMarker (homeMarker, map) {
+function bindInfoWindowHomeMarker (homeMarker) {
     var ctip = false;
     
     google.maps.event.addListener(homeMarker, "click", function(event) { 
@@ -463,7 +453,7 @@ function bindInfoWindowHomeMarker (homeMarker, map) {
                 ctip = true;
             } 
         });
-        html = getHomeMarkerHtml(homeMarker, { ctip: ctip });
+        var html = getHomeMarkerHtml(homeMarker, { ctip: ctip });
         
         homeInfoWindow.close();
         if (homeInfoWindow.content === undefined || homeInfoWindow.content === html) {
@@ -494,7 +484,7 @@ function bindInfoWindowHomeMarker (homeMarker, map) {
  * @param      {Map}     map         - The map
  * @param      {String}  html        - The html for the info window
  */
-function bindInfoWindowFavoriteStar(starMarker, map, html) {
+function bindInfoWindowFavoriteStar(starMarker, html) {
     google.maps.event.addListener(starMarker, 'click', function(event) {
         infoWindow.close();
         for (var i=0; i<markers.length; ++i) {
@@ -584,16 +574,15 @@ function onSubmit(e) {
  *
  * @param      {JSON}  data    - The data returned from backend of all marker information
  */
-function addMarkers (data){
+function addMarkers (data) {
     removeAllMarkers();
-
-    data = JSON.parse(data);
-    
+   
+    data = data.result;
     for (var i=0; i<data.length; ++i){
         var school = data[i];
+        
         var lat = parseFloat(school.lat);
-        var lng = parseFloat(school.long);
-
+        var lng = parseFloat(school.lng);
         var name = school.name;
         var citySchool = school.city_school[0];
         var startTime = school.start_time;
@@ -612,11 +601,10 @@ function addMarkers (data){
 
         var html = getHtml(name, gradesServed, startTime, endTime,
                         principal, address, phone, fax, email, website, lat, lng, citySchool);
-
         var marker = createMarker(lat, lng, name, address, phone, gradesServed, citySchool, multilingualPathways, beforeSchool, afterSchool);
         var starMarker = new Marker({
             name: name,
-            customInfo: {marker: marker, starred: "unstarred", type: "starMarker", citySchool: citySchool, name: name, address: address, phone: phone, citySchool, lat: lat, lng: lng},
+            customInfo: {marker: marker, type: "starMarker", citySchool: citySchool, name: name, address: address, phone: phone, citySchool, lat: lat, lng: lng},
             position: {lat: lat, lng: lng},
             icon: "static/img/star.png",
             map: null,
@@ -626,13 +614,12 @@ function addMarkers (data){
         marker.customInfo.starMarker = starMarker;
         marker.customInfo.html = html;
         markers.push(marker);
-        starMarkers.push(starMarker);
-        bindInfoWindow(marker, map, html);
-        bindInfoWindowFavoriteStar(starMarker, map, html);
+        bindInfoWindow(marker, html);
+        bindInfoWindowFavoriteStar(starMarker, html);
     }
     
-    updateStarMarkers();
-    updateFavoritesTable();
+    loadStarMarkers();
+    loadFavoritesTable();
 
     $("#map-choices-form").submit();
 }
