@@ -346,7 +346,7 @@ function removeAllMarkers() {
  * @param      {String}  website       - The website
  * @param      {String}  lat           - The lat
  * @param      {String}  lng           - The lng
- * @param      {String}  citySchool    - The city school status (yes / no)
+ * @param      {String}  citySchool    - The city school status (yes / no / N/A)
  * @return     {String}  The html.
  */
 function getHtml (name, gradesServed, startTime, endTime,

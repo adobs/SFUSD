@@ -62,7 +62,7 @@ First, clean all data.  Ensure that there is only one logical response. The foll
 * Afterschool programs - formatting not necessary, binary check to see if programs exist or not
 * Does your afterschool program offer: - formatting not necessary, binary check to see if programs exist or not
 * Multilingual Pathways
-* City School - needs to say "Yes" or "No"
+* City School - needs to say "Yes" or "No" or "N/A" (for middle + high)
 
 Second, add the following Columns, using the EXACT title, and populate for each school:
 * Lat - using Google maps, get the exact Lat degrees of the school address

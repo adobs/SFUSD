@@ -1,10 +1,3 @@
-// TODO 
-//// SATURDAY data clean
-// compare number of schools in excel vs some other source
-// correctly label all city schools
-// add in SARC url
-
-
 $(document).ready(function() {
     // tooltip for info button
    $('[data-toggle="tooltip"]').tooltip(); 
@@ -17,7 +10,6 @@ $(document).ready(function() {
     } else {
         $("#wrapper").removeClass("toggled");
         gtMdWidth = false;
-        // $("#tab-btn").css("visibility", "visible");
     }
     $("#directions-panel").hide();
 
